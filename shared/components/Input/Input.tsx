@@ -1,6 +1,12 @@
 import { forwardRef, useId } from "react";
 import type { InputProps, InputSize } from "./Input.types";
 
+const heightClasses: Record<InputSize, string> = {
+  sm: "h-9 text-sm",
+  md: "h-12 text-base",
+  lg: "h-[60px] text-base",
+};
+
 const sizeClasses: Record<InputSize, string> = {
   sm: "h-9 px-3 text-sm",
   md: "h-12 px-4 text-base",
@@ -36,6 +42,16 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       .filter(Boolean)
       .join(" ");
 
+    const rightElementContainerClasses = [
+      "flex items-center gap-2 rounded-[10px] bg-[#F6F5FB] border",
+      error ? "border-error" : "border-gray-200",
+      "focus-within:border-primary pl-4 pr-1.5",
+      heightClasses[size],
+      className,
+    ]
+      .filter(Boolean)
+      .join(" ");
+
     return (
       <div className={containerClassName}>
         {label && (
@@ -45,9 +61,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
 
         {rightElement ? (
-          <div
-            className={`flex items-center gap-2 rounded-[10px] bg-[#F6F5FB] border ${error ? "border-error" : "border-gray-200"} focus-within:border-primary ${sizeClasses[size]}`}
-          >
+          <div className={rightElementContainerClasses}>
             <input
               ref={ref}
               id={inputId}
