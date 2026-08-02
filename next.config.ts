@@ -5,7 +5,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'api.sarkhanrahimli.dev', 
+        hostname: 'uploads.sarkhanrahimli.dev',
+        pathname: '/**',
       },
     ],
     dangerouslyAllowSVG: true,
