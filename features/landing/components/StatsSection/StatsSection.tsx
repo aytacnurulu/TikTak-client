@@ -76,14 +76,16 @@ const StatsSection = () => {
         {stats.map((stat) => (
           <Card
             key={stat.label}
-            className="p-5 flex flex-col justify-between min-h-[130px]"
+            className="p-6 flex flex-col justify-between min-h-[250px]"
           >
-            <div className="text-3xl font-bold text-[#195233]">
+            <div className="text-5xl font-bold text-[#195233]">
               {stat.value}
             </div>
             <div className="flex items-end justify-between mt-4">
-              <span className="text-sm text-gray-400">{stat.label}</span>
-              <span className="text-primary">{stat.icon}</span>
+              <span className="text-lg text-gray-500">{stat.label}</span>
+              <span className="text-primary [&_svg]:w-9 [&_svg]:h-9">
+                {stat.icon}
+              </span>
             </div>
           </Card>
         ))}

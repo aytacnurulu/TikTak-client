@@ -55,38 +55,55 @@ const footerLinks: Record<string, string[]> = {
     "Haqqımızda",
     "Kartlar",
     "İcarəyə vermək yeriniz var?",
+    "Xəbərlər",
+    "Karyera",
+    "Müştəri xidmətləri",
   ],
-  Digər: ["Xəbərlər", "Karyera", "Müştəri xidmətləri", "Korporativ satış"],
+  Digər: ["Onlayın market", "Marketlərimiz", "Korporativ satış"],
   Hüquq: ["İstifadə şərtləri", "İmtina"],
 };
 
 const Footer = () => {
   return (
     <footer className="w-full bg-white border-t border-gray-100 mt-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-10">
         <div className="flex flex-col lg:flex-row lg:justify-between gap-10">
           <div className="flex flex-col sm:flex-row gap-16">
-            {Object.entries(footerLinks).map(([title, links]) => (
-              <div key={title}>
-                <h4 className="font-semibold text-[#195233] mb-3">{title}</h4>
-                <ul className="space-y-2">
-                  {links.map((link) => (
-                    <li key={link}>
-                      <Link
-                        href="#"
-                        className="text-sm text-[#195233] hover:opacity-80"
-                      >
-                        {link}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {Object.entries(footerLinks).map(([title, links]) => {
+              const chunkSize = 4;
+              const columns: string[][] = [];
+              for (let i = 0; i < links.length; i += chunkSize) {
+                columns.push(links.slice(i, i + chunkSize));
+              }
+
+              return (
+                <div key={title}>
+                  <h4 className="text-lg font-semibold text-[#195233] mb-3">
+                    {title}
+                  </h4>
+                  <div className="flex gap-10">
+                    {columns.map((columnLinks, i) => (
+                      <ul key={i} className="space-y-2">
+                        {columnLinks.map((link) => (
+                          <li key={link}>
+                            <Link
+                              href="#"
+                              className="text-sm text-[#195233] hover:opacity-80"
+                            >
+                              {link}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           <div className="min-w-[420px]">
-            <h4 className="font-semibold text-[#195233] mb-3">
+            <h4 className="text-lg font-semibold text-[#195233] mb-3">
               Yeniliklərə abunə olun
             </h4>
             <Input
@@ -94,7 +111,11 @@ const Footer = () => {
               placeholder="E-mail daxil edin"
               size="lg"
               rightElement={
-                <Button variant="success" size="md" className="rounded-[10px]">
+                <Button
+                  variant="success"
+                  size="md"
+                  className="rounded-[10px] px-8"
+                >
                   Göndər
                 </Button>
               }
