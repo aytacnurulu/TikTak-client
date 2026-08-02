@@ -2,10 +2,15 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
+remotePatterns: [
       {
         protocol: 'https',
         hostname: 'uploads.sarkhanrahimli.dev',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'encrypted-tbn0.gstatic.com',
         pathname: '/**',
       },
     ],
@@ -13,7 +18,7 @@ const nextConfig: NextConfig = {
     contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-    
+
 };
 
 

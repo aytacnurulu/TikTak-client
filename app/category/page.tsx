@@ -2,9 +2,9 @@ import PromoBanner from '@/shared/components/PromoBanner';
 import { Metadata } from 'next';
 import Header from '@/shared/components/Header';
 import { getCategories } from '@/shared/lib/api/categories';
-import CategoryGrid from '@/features/category/components/CategoryGrid';
 import Link from 'next/link';
 import CategoryCard from '@/features/category/components/CategoryCard';
+import Grid from '@/shared/components/Grid'
 
 export const metadata: Metadata = {
     title: 'Category Page',
@@ -25,7 +25,7 @@ export default async function CategoryPage() {
                 imageAlt="Çiyələk və süd"
                 className="w-[330px]"
             />
-            <CategoryGrid ariaLabel="Kateqoriyalar" columns={6}>
+            <Grid ariaLabel="Kateqoriyalar" columns={6}>
                 {categories.map((category) => (
                     <Link key={category.id} href={`/category/${category.id}`}>
                         <CategoryCard
@@ -34,7 +34,7 @@ export default async function CategoryPage() {
                         />
                     </Link>
                 ))}
-            </CategoryGrid>
+            </Grid>
         </section>
     </div>
 }
