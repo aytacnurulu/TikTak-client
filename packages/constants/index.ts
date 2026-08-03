@@ -61,7 +61,7 @@ export const API = {
       CLEAR: "/api/tiktak/basket/clear",
     },
     ORDERS: {
-      CREATE: "/api/tiktak/orders/user",
+      CHECKOUT: "/api/tiktak/orders/checkout",
       LIST: "/api/tiktak/orders/user",
     },
   },

@@ -74,3 +74,25 @@ export interface SignupPayload {
   password: string;
   full_name: string;
 }
+
+export type PaymentMethod = "CASH" | "CARD";
+
+export interface BasketItem {
+  id: number;
+  quantity: number;
+  total_price: string;
+  product: Product;
+}
+
+export interface Basket {
+  items: BasketItem[];
+  total: string;
+  count: number;
+}
+
+export interface CheckoutPayload {
+  paymentMethod: PaymentMethod;
+  note?: string;
+  address: string;
+  phone: string;
+}

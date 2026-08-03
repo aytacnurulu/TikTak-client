@@ -1,1 +1,5 @@
-export default function CheckoutPage() { return <></>; }
+import CheckoutPage from "@/features/checkout/pages/CheckoutPage";
+
+export default function Page() {
+  return <CheckoutPage />;
+}

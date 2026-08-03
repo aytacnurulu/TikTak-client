@@ -13,7 +13,7 @@ const SpecialOffers = () => {
         {images.map((src) => (
           <div
             key={src}
-            className="relative overflow-hidden rounded-[10px] min-h-[220px]"
+            className="relative overflow-hidden rounded-[10px] min-h-[320px]"
           >
             <img
               src={src}
