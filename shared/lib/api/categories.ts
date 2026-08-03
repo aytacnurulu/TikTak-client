@@ -4,7 +4,7 @@ import { getServiceAccessToken } from "../serviceAuth";
 export async function getCategories(): Promise<Category[]> {
   const token = await getServiceAccessToken();
 
-  const res = await fetch(`${process.env.BACKEND_URL}/api/tiktak/categories`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tiktak/categories`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -5,7 +5,7 @@ export async function getProductsByCategory(categoryId: number): Promise<Product
   const token = await getServiceAccessToken();
 
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/tiktak/products?category_id=${categoryId}`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tiktak/products?category_id=${categoryId}`,
     {
       headers: { Authorization: `Bearer ${token}` },
       next: { revalidate: 3600 },

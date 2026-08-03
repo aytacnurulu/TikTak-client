@@ -10,7 +10,7 @@ let cachedToken: TokenCache | null = null;
 const ACCESS_TOKEN_TTL_MS = 10 * 60 * 1000;
 
 async function refreshAccessToken(refreshToken: string): Promise<TokenPair> {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/tiktak/auth/refresh`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tiktak/auth/refresh`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ refresh_token: refreshToken }),
@@ -28,7 +28,7 @@ async function refreshAccessToken(refreshToken: string): Promise<TokenPair> {
 }
 
 async function loginWithCredentials(): Promise<TokenPair> {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/tiktak/auth/login`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tiktak/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
