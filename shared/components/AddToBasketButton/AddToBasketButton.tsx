@@ -34,7 +34,7 @@ interface BasketResponse {
 }
 
 async function fetchBasket(token: string): Promise<BasketItem[]> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tiktak/basket/list`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tiktak/basket`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!res.ok) throw new Error('Basket fetch failed');

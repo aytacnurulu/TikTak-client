@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Grid from "@/shared/components/Grid";
+import Card from "@/shared/components/Card";
 import { getCategories } from "@/shared/lib/api/categories";
 import { getProductsByCategory } from "@/shared/lib/api/products";
 import CategorySidebar from "@/features/category/components/CategorySidebar";
 import ProductCard from "@/features/products/components/ProductCard";
 import AddToBasketButton from "@/shared/components/AddToBasketButton";
+import Header from "@/shared/components/Header";
+import BasketPanel from "@/features/basket/components/BasketPanel";
 
 interface CategoryPageProps {
   params: Promise<{ id: string }>;
@@ -44,32 +48,47 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const currentCategory = categories.find((c) => c.id === categoryId);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-[240px_1fr_320px] gap-6">
-      <CategorySidebar
-        categories={categories}
-        currentCategoryId={categoryId}
-      />
-
-      <section aria-label={currentCategory?.name ?? "Məhsullar"}>
-        <h1 className="text-2xl font-semibold text-gray-900 mb-4">
-          {currentCategory?.name}
-        </h1>
-
-        <Grid columns={4} ariaLabel="Məhsullar">
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              id={product.id}
-              image={product.img_url || '/image/apple.svg'}
-              title={product.title}
-              price={product.price}
-              actionSlot={<AddToBasketButton productId={product.id} />}
+    <main className="bg-[rgb(246,245,251)]">
+      <Header/>
+        <div className="max-w-7xl mx-auto py-2 grid grid-cols-[240px_1fr_320px] gap-6">
+          <div className="flex flex-col gap-4">
+            <CategorySidebar
+              categories={categories}
+              currentCategoryId={categoryId}
             />
-          ))}
-        </Grid>
-      </section>
 
-      {/* <BasketPanel /> */}
-    </div>
+            <Card className="relative w-full aspect-[3/4] overflow-hidden p-0">
+              <Image
+                src="/image/categorydetailbanner.svg"
+                alt="Meyvələrə endirim"
+                fill
+                className="object-cover"
+              />
+            </Card>
+          </div>
+
+          <section aria-label={currentCategory?.name ?? "Məhsullar"}>
+            <h1 className="text-2xl font-semibold text-gray-900 mb-4">
+              {currentCategory?.name}
+            </h1>
+
+            <Grid columns={4} ariaLabel="Məhsullar">
+              {products.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  image={product.img_url || '/image/apple.svg'}
+                  title={product.title}
+                  price={product.price}
+                  actionSlot={<AddToBasketButton productId={product.id} />}
+                />
+              ))}
+            </Grid>
+          </section>
+
+          <BasketPanel />
+        </div>
+    </main>
+
   );
 }

@@ -8,6 +8,8 @@ const variantClasses: Record<ButtonVariant, string> = {
   danger: "bg-error text-white hover:opacity-90",
   accent: "bg-accent text-dark hover:opacity-90",
   dark: "bg-dark text-white hover:opacity-90",
+  light: "bg-white text-dark border border-gray-200 hover:opacity-90",
+
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -50,7 +52,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       .join(" ");
 
     const spinnerColor =
-      variant === "primary" || variant === "danger" ? "white" : "primary";
+      variant === "primary" || variant === "danger" ? "white" : "primary";;
 
     return (
       <button
