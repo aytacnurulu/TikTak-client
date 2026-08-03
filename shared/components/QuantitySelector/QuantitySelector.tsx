@@ -1,5 +1,6 @@
-// shared/components/QuantitySelector.tsx
 'use client';
+
+import Button from "../Button";
 
 interface QuantitySelectorProps {
   value: number;
@@ -25,27 +26,32 @@ const QuantitySelector = ({
 
   return (
     <div className="flex items-center gap-1 w-full">
-      <button
+      <Button
         type="button"
+        variant="accent"
+        size="sm"
         onClick={onDecrease}
         disabled={isDecreaseDisabled}
         aria-label="Sayı azalt"
-        className="h-9 w-9 flex items-center justify-center rounded-full bg-accent text-white text-lg font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+        className="rounded-full w-9 px-0 text-lg"
       >
         −
-      </button>
-      <span className="flex-1 h-9 flex items-center justify-center rounded-full bg-gray-50 border border-gray-200 text-sm font-medium">
+      </Button>
+      <span className="flex-1 h-9 flex items-center justify-center rounded-xl bg-gray-50 border border-gray-200 text-sm font-medium">
         {value} {unit}
       </span>
-      <button
+
+      <Button
         type="button"
+        variant="primary"
+        size="sm"
         onClick={onIncrease}
         disabled={isIncreaseDisabled}
         aria-label="Sayı artır"
-        className="h-9 w-9 flex items-center justify-center rounded-full bg-primary text-white text-lg font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+        className="rounded-full w-9 px-0 text-lg"
       >
         +
-      </button>
+      </Button>
     </div>
   );
 };

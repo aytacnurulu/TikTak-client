@@ -22,7 +22,7 @@ export default function CategorySidebar({
         Kateqoriyalar
       </h2>
       <nav aria-label="Kateqoriyalar naviqasiyası">
-        <ul className="flex flex-col gap-1">
+        <ul className="flex flex-col gap-1  rounded-xl bg-white p-3">
           {categories.map((category) => {
             const isActive = category.id === currentCategoryId;
 
