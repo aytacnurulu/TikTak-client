@@ -17,7 +17,7 @@ export const useLoginMutation = () => {
         refreshToken: data.tokens.refresh_token,
         role: data.profile.role,
       });
-      router.replace("/home");
+      router.replace("/category");
     },
   });
 };
