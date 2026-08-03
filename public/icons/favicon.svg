@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <clipPath id="circleClip">
+      <circle cx="250" cy="250" r="230" />
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#circleClip)">
+    <rect x="0" y="0" width="250" height="500" fill="#72C135" />
+    <rect x="250" y="0" width="250" height="500" fill="#41981D" />
+
+    <g transform="translate(10, -10)">
+      <path d="M 315 170 C 315 170, 395 180, 405 260 C 415 330, 350 405, 310 435 C 270 405, 245 345, 250 280 C 255 215, 300 170, 315 170 Z" fill="#D3232A" />
+
+      <path d="M 315 170 C 295 140, 260 135, 260 135 C 275 160, 300 165, 315 170 Z" fill="#41981D" />
+      <path d="M 320 170 C 335 140, 370 130, 370 130 C 355 155, 335 165, 320 170 Z" fill="#41981D" />
+      <path d="M 315 170 C 310 135, 318 110, 318 110 C 322 135, 318 155, 315 170 Z" fill="#41981D" />
+
+      <circle cx="290" cy="250" r="3.5" fill="#FFFFFF" opacity="0.9" />
+      <circle cx="335" cy="255" r="3.5" fill="#FFFFFF" opacity="0.9" />
+      <circle cx="370" cy="285" r="3.5" fill="#FFFFFF" opacity="0.9" />
+      <circle cx="280" cy="305" r="3.5" fill="#FFFFFF" opacity="0.9" />
+      <circle cx="320" cy="320" r="3.5" fill="#FFFFFF" opacity="0.9" />
+      <circle cx="355" cy="340" r="3.5" fill="#FFFFFF" opacity="0.9" />
+      <circle cx="295" cy="365" r="3.5" fill="#FFFFFF" opacity="0.9" />
+      <circle cx="330" cy="385" r="3.5" fill="#FFFFFF" opacity="0.9" />
+    </g>
+
+    <path d="M 95 175 C 95 150, 115 140, 150 140 L 225 140 C 240 140, 248 152, 248 165 C 248 178, 238 185, 220 185 L 188 185 L 188 325 C 188 340, 175 350, 160 350 C 145 350, 135 340, 135 325 L 135 185 L 125 185 C 105 185, 95 188, 95 175 Z" fill="#FFFFFF" />
+
+    <path d="M 100 310 C 100 370, 155 395, 205 365 C 215 358, 205 342, 192 350 C 155 372, 122 352, 120 310 Z" fill="#FFFFFF" />
+
+    <path d="M 230 215 C 230 190, 250 180, 285 180 L 360 180 C 375 180, 383 192, 383 205 C 383 218, 373 225, 355 225 L 323 225 L 323 365 C 323 380, 310 390, 295 390 C 280 390, 270 380, 270 365 L 270 225 L 260 225 C 240 225, 230 228, 230 215 Z" fill="#FFFFFF" />
+  </g>
+</svg>
