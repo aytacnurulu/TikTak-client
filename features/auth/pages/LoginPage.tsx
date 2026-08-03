@@ -1,21 +1,21 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import Input from "@/shared/components/Input";
 import Button from "@/shared/components/Button";
 import AuthTabs from "../components/AuthTabs/AuthTabs";
-import { useLoginMutation } from "../hooks/useAuth";
+import { useLoginForm } from "../hooks/useLoginForm";
 
 const LoginPage = () => {
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const { mutate, isPending, isError } = useLoginMutation();
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    mutate({ phone, password });
-  };
+  const {
+    phone,
+    setPhone,
+    password,
+    setPassword,
+    isPending,
+    isError,
+    handleSubmit,
+  } = useLoginForm();
 
   return (
     <div>
@@ -23,8 +23,8 @@ const LoginPage = () => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           label="Telefon nömrəsi"
-          size="lg"
           type="tel"
+          size="lg"
           placeholder="+994 XX XXX XX XX"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
@@ -32,8 +32,8 @@ const LoginPage = () => {
         />
         <Input
           label="Parol"
-          size="lg"
           type="password"
+          size="lg"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
