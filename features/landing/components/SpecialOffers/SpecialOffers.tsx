@@ -1,30 +1,25 @@
-import type { Campaign } from "@tiktak/types";
-
-interface SpecialOffersProps {
-  campaigns: Campaign[];
-}
-
-const SpecialOffers = ({ campaigns }: SpecialOffersProps) => {
-  if (campaigns.length === 0) return null;
+const SpecialOffers = () => {
+  const images = ["/image/card3.png", "/image/card4.png"];
 
   return (
     <section>
-      <h2 className="text-2xl font-bold text-success mb-1">
+      <h2 className="text-2xl font-bold text-[#195233] mb-1">
         Xüsusi təkliflər!
       </h2>
-      <p className="text-gray-500 mb-4">
-        TIK TAK hər gün üçün super təklifləri qaçırmayın!
+      <p className="text-[#195233] mb-4">
+        BRAVO-da hər gün üçün super təklifləri qaçırmayın!
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {campaigns.map((campaign) => (
+        {images.map((src) => (
           <div
-            key={campaign.id}
-            className="relative overflow-hidden rounded-[10px] min-h-[180px] p-6 flex flex-col justify-end bg-gray-800 text-white"
+            key={src}
+            className="relative overflow-hidden rounded-[10px] min-h-[220px]"
           >
-            <h3 className="text-lg font-semibold">{campaign.title}</h3>
-            {campaign.description && (
-              <p className="text-sm opacity-80 mt-1">{campaign.description}</p>
-            )}
+            <img
+              src={src}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+            />
           </div>
         ))}
       </div>

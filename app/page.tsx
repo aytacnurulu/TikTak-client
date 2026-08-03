@@ -6,7 +6,7 @@ import Footer from "@/shared/components/Footer";
 export default function RootPage() {
   return (
     <>
-      <Header />
+      <Header showAddress={false} showSearch={false} />
       <main>
         <Container>
           <LandingPage />

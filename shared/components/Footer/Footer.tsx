@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import Link from "next/link";
 import Input from "../Input";
 import Button from "../Button";
@@ -13,7 +12,7 @@ const socialLinks = [
   { name: "WhatsApp", href: "#" },
 ];
 
-const socialIcons: Record<string, ReactNode> = {
+const socialIcons: Record<string, React.ReactNode> = {
   Facebook: (
     <path d="M13 22v-8h3l1-4h-4V7.5c0-1.1.4-2 2-2h2.2V2.1C16.7 2 15.4 2 14 2c-3 0-5 1.8-5 5.1V10H6v4h3v8h4z" />
   ),
@@ -50,38 +49,46 @@ const socialIcons: Record<string, ReactNode> = {
   ),
 };
 
-const footerLinks = {
+const footerLinks: Record<string, string[]> = {
   Şirkət: [
-    [
-      "Xüsusi təkliflər",
-      "Haqqımızda",
-      "Kartlar",
-      "İcarəyə vermək yeriniz var?",
-    ],
-    ["Xəbərlər", "Karyera", "Müştəri xidmətləri"],
+    "Xüsusi təkliflər",
+    "Haqqımızda",
+    "Kartlar",
+    "İcarəyə vermək yeriniz var?",
+    "Xəbərlər",
+    "Karyera",
+    "Müştəri xidmətləri",
   ],
-  Digər: [["Onlayn market", "Marketlərimiz"]],
-  Hüquq: [["İstifadə şərtləri", "İmtina"]],
+  Digər: ["Onlayın market", "Marketlərimiz", "Korporativ satış"],
+  Hüquq: ["İstifadə şərtləri", "İmtina"],
 };
 
 const Footer = () => {
   return (
     <footer className="w-full bg-white border-t border-gray-100 mt-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-10">
         <div className="flex flex-col lg:flex-row lg:justify-between gap-10">
           <div className="flex flex-col sm:flex-row gap-16">
-            {Object.entries(footerLinks).map(([title, columns]) => (
-              <div key={title} className="flex gap-10">
-                <div>
-                  <h4 className="font-semibold text-dark mb-3">{title}</h4>
+            {Object.entries(footerLinks).map(([title, links]) => {
+              const chunkSize = 4;
+              const columns: string[][] = [];
+              for (let i = 0; i < links.length; i += chunkSize) {
+                columns.push(links.slice(i, i + chunkSize));
+              }
+
+              return (
+                <div key={title}>
+                  <h4 className="text-lg font-semibold text-[#195233] mb-3">
+                    {title}
+                  </h4>
                   <div className="flex gap-10">
-                    {columns.map((links, i) => (
+                    {columns.map((columnLinks, i) => (
                       <ul key={i} className="space-y-2">
-                        {links.map((link) => (
+                        {columnLinks.map((link) => (
                           <li key={link}>
                             <Link
                               href="#"
-                              className="text-sm text-gray-500 hover:text-dark"
+                              className="text-sm text-[#195233] hover:opacity-80"
                             >
                               {link}
                             </Link>
@@ -91,28 +98,32 @@ const Footer = () => {
                     ))}
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
-          <div className="min-w-[280px]">
-            <h4 className="font-semibold text-dark mb-3">
+          <div className="min-w-[420px]">
+            <h4 className="text-lg font-semibold text-[#195233] mb-3">
               Yeniliklərə abunə olun
             </h4>
-            <div className="flex gap-2">
-              <Input
-                type="email"
-                placeholder="E-mail daxil edin"
-                containerClassName="flex-1"
-              />
-              <Button variant="success" size="md">
-                Göndər
-              </Button>
-            </div>
+            <Input
+              type="email"
+              placeholder="E-mail daxil edin"
+              size="lg"
+              rightElement={
+                <Button
+                  variant="success"
+                  size="md"
+                  className="rounded-[10px] px-8"
+                >
+                  Göndər
+                </Button>
+              }
+            />
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-400">
+        <div className="mt-10 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[#195233]">
           <span>
             © {new Date().getFullYear()} Azerbaijan Supermarket. Bütün hüquqlar
             qorunur
