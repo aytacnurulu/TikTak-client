@@ -1,18 +1,18 @@
 import { ReactNode } from 'react';
 
-interface InfoGridProps {
+interface CategoryGridProps {
   children: ReactNode;
   columns?: number;
   className?: string;
   ariaLabel?: string;
 }
 
-export default function InfoGrid({
+export default function CategoryGrid({
   children,
   columns = 6,
   className = '',
   ariaLabel,
-}: InfoGridProps) {
+}: CategoryGridProps) {
   return (
     <div
       role="list"
