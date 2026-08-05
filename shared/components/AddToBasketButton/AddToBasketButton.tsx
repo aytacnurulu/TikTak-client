@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import QuantitySelector from '@/shared/components/QuantitySelector';
 import { AuthState, useAuthStore } from '@/shared/store/useAuthStore';
+import { useRequireAuth } from '@/shared/hooks/useRequireAuth';
 import Button from '../Button';
 
 interface AddToBasketButtonProps {
@@ -60,6 +61,7 @@ async function removeOneFromBasket(token: string, productId: number): Promise<vo
 
 export default function AddToBasketButton({ productId }: AddToBasketButtonProps) {
   const token = useAuthStore((state: AuthState) => state.accessToken);
+  const { requireAuth } = useRequireAuth();
   const queryClient = useQueryClient();
 
   const { data: basketItems } = useQuery({
@@ -133,6 +135,7 @@ export default function AddToBasketButton({ productId }: AddToBasketButtonProps)
   };
 
   const scheduleChange = (diff: 1 | -1) => {
+    if (!requireAuth()) return;
     pendingDelta.current += diff;
     if (debounceTimer.current) clearTimeout(debounceTimer.current);
     debounceTimer.current = setTimeout(flushDelta, 500);

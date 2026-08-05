@@ -1,0 +1,79 @@
+import Link from "next/link";
+import Card from "@/shared/components/Card";
+import FavoriteButton from "@/shared/components/FavoriteButton";
+import ProductImage from "./ProductImage";
+import type { ProductCardProps, ProductCardSize } from "./ProductCard.types";
+
+const sizeMap: Record<
+  ProductCardSize,
+  { card: string; padding: string; title: string; price: string; gap: string }
+> = {
+  sm: {
+    card: "max-w-[140px]",
+    padding: "p-2",
+    title: "text-xs",
+    price: "text-xs",
+    gap: "mt-2",
+  },
+  md: {
+    card: "max-w-[190px]",
+    padding: "p-2.5",
+    title: "text-sm",
+    price: "text-sm",
+    gap: "mt-3",
+  },
+  lg: {
+    card: "w-full",
+    padding: "p-3",
+    title: "text-sm",
+    price: "text-sm",
+    gap: "mt-4",
+  },
+};
+
+export default function ProductCard({
+  id,
+  image,
+  title,
+  price,
+  currency = "AZN",
+  actionSlot,
+  className = "",
+  size = "lg",
+}: ProductCardProps) {
+  const {
+    card,
+    padding,
+    title: titleClass,
+    price: priceClass,
+    gap,
+  } = sizeMap[size];
+
+  return (
+    <Card
+      className={`flex flex-col items-center w-full mx-auto ${card} ${padding} transition-shadow hover:shadow-md ${className}`}
+    >
+      <Link
+        href={`/product/${id}`}
+        className="flex flex-col items-center w-full"
+      >
+        <div className="relative w-full aspect-square shrink-0">
+          <ProductImage image={image} title={title} />
+          <FavoriteButton
+            productId={Number(id)}
+            className="absolute top-2 right-2 z-10"
+          />
+        </div>
+        <span
+          className={`${gap} ${titleClass} font-medium text-gray-800 text-center leading-snug line-clamp-2 min-h-[2.5em]`}
+        >
+          {title}
+        </span>
+        <span className={`mt-0.5 ${priceClass} text-gray-500`}>
+          {Number(price).toFixed(2)} {currency}
+        </span>
+      </Link>
+      <div className="w-full mt-3">{actionSlot}</div>
+    </Card>
+  );
+}

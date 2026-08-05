@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 interface GridProps {
   children: ReactNode;
   columns?: number;
+  gap?: number;
   className?: string;
   ariaLabel?: string;
 }
@@ -10,6 +11,7 @@ interface GridProps {
 export default function Grid({
   children,
   columns = 6,
+  gap = 4,
   className = '',
   ariaLabel,
 }: GridProps) {
@@ -17,8 +19,11 @@ export default function Grid({
     <div
       role="list"
       aria-label={ariaLabel}
-      className={`grid gap-4 ${className}`}
-      style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+      className={`grid ${className}`}
+      style={{
+        gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+        gap: `${gap * 0.25}rem`,
+      }}
     >
       {children}
     </div>

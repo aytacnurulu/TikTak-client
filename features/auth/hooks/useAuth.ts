@@ -1,12 +1,13 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { authService } from "../api/auth.service";
 import { useAuthStore } from "@/shared/store/useAuthStore";
 
 export const useLoginMutation = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const setAuth = useAuthStore((s) => s.setAuth);
 
   return useMutation({
@@ -17,7 +18,8 @@ export const useLoginMutation = () => {
         refreshToken: data.tokens.refresh_token,
         role: data.profile.role,
       });
-      router.replace("/category");
+      const redirect = searchParams.get("redirect");
+      router.replace(redirect || "/category");
     },
   });
 };
