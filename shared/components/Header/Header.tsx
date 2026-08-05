@@ -27,7 +27,7 @@ const Header = ({
       icon: <Image src="/icons/user.svg" alt="" width={20} height={20} />,
     },
     {
-      href: "/wishlist",
+      href: "/favorites",
       label: "Siyahılarım",
       icon: <Image src="/icons/favorites.svg" alt="" width={20} height={20} />,
     },

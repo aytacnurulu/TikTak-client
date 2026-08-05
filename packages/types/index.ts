@@ -96,3 +96,7 @@ export interface CheckoutPayload {
   address: string;
   phone: string;
 }
+
+export interface FavoriteToggleResult {
+  favorited: boolean;
+}

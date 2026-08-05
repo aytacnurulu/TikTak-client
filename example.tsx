@@ -1,33 +1,42 @@
-import Button from '@/shared/components/Button';
-import Input from '@/shared/components/Input';
-import Card from '@/shared/components/Card';
-import QuantitySelector from '@/shared/components/QuantitySelector';
-import Container from '@/shared/components/Container';
-import ProductCard from '@/features/products/components/ProductCard';
-import type { Product } from '@/features/products/components/ProductCard/ProductCard.types';
+import Button from "@/shared/components/Button";
+import Input from "@/shared/components/Input";
+import Card from "@/shared/components/Card";
+import QuantitySelector from "@/shared/components/QuantitySelector";
+import Container from "@/shared/components/Container";
+import ProductCard from "@/shared/components/ProductCard";
+import type { Product } from "@/shared/components/ProductCard/ProductCard.types";
 
 const mockProduct: Product = {
-  id: '1',
-  name: 'Qizil əhmədi alması 1 kq',
+  id: "1",
+  name: "Qizil əhmədi alması 1 kq",
   price: 3.3,
-  image: '/images/apple.png',
-  badge: 'S',
+  image: "/images/apple.png",
+  badge: "S",
 };
 
 export default function ExamplesPage() {
   return (
     <Container className="py-10 space-y-12">
-
       {/* ---------- BUTTON ---------- */}
       {/* variant = rəng, size = ölçü (h/padding/font birlikdə gəlir) */}
       <section className="space-y-3">
         <h2 className="font-bold">Button</h2>
         <div className="flex gap-3 flex-wrap">
-          <Button variant="primary" size="md">Adi düymə</Button>
-          <Button variant="danger" size="sm">Kiçik, qırmızı</Button>
-          <Button variant="primary" size="lg" fullWidth>Tam en (parent-dən asılı)</Button>
-          <Button variant="primary" size="md" loading>Yüklənir...</Button>
-          <Button variant="primary" size="md" disabled>Deaktiv</Button>
+          <Button variant="primary" size="md">
+            Adi düymə
+          </Button>
+          <Button variant="danger" size="sm">
+            Kiçik, qırmızı
+          </Button>
+          <Button variant="primary" size="lg" fullWidth>
+            Tam en (parent-dən asılı)
+          </Button>
+          <Button variant="primary" size="md" loading>
+            Yüklənir...
+          </Button>
+          <Button variant="primary" size="md" disabled>
+            Deaktiv
+          </Button>
         </div>
       </section>
 
@@ -39,7 +48,11 @@ export default function ExamplesPage() {
         <Input label="Email" error="Email düzgün formatda deyil" />
         <Input
           placeholder="E-mail daxil edin"
-          rightElement={<Button variant="primary" size="sm" className="!h-9">Göndər</Button>}
+          rightElement={
+            <Button variant="primary" size="sm" className="!h-9">
+              Göndər
+            </Button>
+          }
         />
       </section>
 
@@ -58,7 +71,7 @@ export default function ExamplesPage() {
           initialValue={1}
           min={0}
           max={10}
-          onChange={(val) => console.log('yeni say:', val)}
+          onChange={(val) => console.log("yeni say:", val)}
         />
       </section>
 
@@ -73,7 +86,6 @@ export default function ExamplesPage() {
           />
         </div>
       </section>
-
     </Container>
   );
 }
