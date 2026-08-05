@@ -38,8 +38,9 @@ export const useIsFavorite = (productId: number): boolean => {
   return data?.some((p) => Number(p.id) === productId) ?? false;
 };
 
-export const useToggleFavoriteMutation = (productId: number) => {
+export const useToggleFavoriteMutation = (product: Product) => {
   const queryClient = useQueryClient();
+  const productId = Number(product.id);
 
   return useMutation({
     mutationFn: () => toggleFavorite(productId),
@@ -48,17 +49,13 @@ export const useToggleFavoriteMutation = (productId: number) => {
       const previous = queryClient.getQueryData<Product[]>(FAVORITES_QUERY_KEY);
       const wasFavorite = previous?.some((p) => Number(p.id) === productId) ?? false;
 
-      // Safe optimistic case: removing only needs the id.
-      if (wasFavorite) {
-        queryClient.setQueryData<Product[]>(FAVORITES_QUERY_KEY, (old = []) =>
-          old.filter((p) => Number(p.id) !== productId),
-        );
-      }
-      // Adding a brand-new favorite needs a full Product object we don't have
-      // here (same limitation AddToBasketButton's addMutation already has for
-      // items not yet in its cached list) — left for onSettled's invalidate.
-      // Instant visual feedback for this case is handled locally in
-      // FavoriteButton's own state, not the query cache.
+      // Both directions are safe to patch now: removing only needs the id,
+      // and adding uses the full `product` the caller already has on hand.
+      queryClient.setQueryData<Product[]>(FAVORITES_QUERY_KEY, (old = []) =>
+        wasFavorite
+          ? old.filter((p) => Number(p.id) !== productId)
+          : [...old, product],
+      );
 
       return { previous };
     },
