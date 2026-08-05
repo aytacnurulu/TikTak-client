@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Product } from "@tiktak/types";
 import Card from "@/shared/components/Card";
 import FavoriteButton from "@/shared/components/FavoriteButton";
 import ProductImage from "./ProductImage";
@@ -49,6 +50,20 @@ export default function ProductCard({
     gap,
   } = sizeMap[size];
 
+  // Best-effort shape for the favorites cache's optimistic-add — fields the
+  // card doesn't carry (description/type/category) are filled by the
+  // background refetch that follows the toggle.
+  const favoriteProduct: Product = {
+    id: Number(id),
+    title,
+    img_url: typeof image === "string" ? image : image.src,
+    price,
+    description: "",
+    type: "",
+    created_at: "",
+    category: { id: 0, name: "" },
+  };
+
   return (
     <Card
       className={`flex flex-col items-center w-full mx-auto ${card} ${padding} transition-shadow hover:shadow-md ${className}`}
@@ -60,7 +75,7 @@ export default function ProductCard({
         <div className="relative w-full aspect-square shrink-0">
           <ProductImage image={image} title={title} />
           <FavoriteButton
-            productId={Number(id)}
+            product={favoriteProduct}
             className="absolute top-2 right-2 z-10"
           />
         </div>

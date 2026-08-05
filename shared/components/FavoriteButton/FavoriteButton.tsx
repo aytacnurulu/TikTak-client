@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type { Product } from "@tiktak/types";
 import {
   useIsFavorite,
   useToggleFavoriteMutation,
@@ -9,14 +10,15 @@ import { useRequireAuth } from "@/shared/hooks/useRequireAuth";
 import HeartIcon from "./HeartIcon";
 
 interface FavoriteButtonProps {
-  productId: number;
+  product: Product;
   className?: string;
 }
 
-export default function FavoriteButton({ productId, className = "" }: FavoriteButtonProps) {
+export default function FavoriteButton({ product, className = "" }: FavoriteButtonProps) {
   const { requireAuth } = useRequireAuth();
+  const productId = Number(product.id);
   const isFavorite = useIsFavorite(productId);
-  const toggleMutation = useToggleFavoriteMutation(productId);
+  const toggleMutation = useToggleFavoriteMutation(product);
 
   const [optimisticOverride, setOptimisticOverride] = useState<boolean | null>(null);
   const displayedAsFavorite = optimisticOverride ?? isFavorite;
