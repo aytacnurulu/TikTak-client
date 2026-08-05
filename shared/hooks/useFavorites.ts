@@ -35,7 +35,7 @@ export const useFavoritesQuery = () => {
 // already-cached favorites list, no extra fetch.
 export const useIsFavorite = (productId: number): boolean => {
   const { data } = useFavoritesQuery();
-  return data?.some((p) => p.id === productId) ?? false;
+  return data?.some((p) => Number(p.id) === productId) ?? false;
 };
 
 export const useToggleFavoriteMutation = (productId: number) => {
@@ -46,12 +46,12 @@ export const useToggleFavoriteMutation = (productId: number) => {
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: FAVORITES_QUERY_KEY });
       const previous = queryClient.getQueryData<Product[]>(FAVORITES_QUERY_KEY);
-      const wasFavorite = previous?.some((p) => p.id === productId) ?? false;
+      const wasFavorite = previous?.some((p) => Number(p.id) === productId) ?? false;
 
       // Safe optimistic case: removing only needs the id.
       if (wasFavorite) {
         queryClient.setQueryData<Product[]>(FAVORITES_QUERY_KEY, (old = []) =>
-          old.filter((p) => p.id !== productId),
+          old.filter((p) => Number(p.id) !== productId),
         );
       }
       // Adding a brand-new favorite needs a full Product object we don't have

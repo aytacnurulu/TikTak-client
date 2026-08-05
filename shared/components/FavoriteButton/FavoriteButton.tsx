@@ -45,3 +45,4 @@ export default function FavoriteButton({ productId, className = "" }: FavoriteBu
     </button>
   );
 }
+
