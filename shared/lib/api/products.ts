@@ -1,66 +1,25 @@
+import { cache } from "react";
+import { API, CACHE_TTL_SECONDS } from "@tiktak/constants";
 import { Product, ProductsResponse } from "@/packages/types/product";
-import { getServiceAccessToken } from "../serviceAuth";
+import { serviceFetch } from "./serviceFetch";
 
-export async function getProductsByCategory(
-  categoryId: number,
-): Promise<Product[]> {
-  const token = await getServiceAccessToken();
-
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tiktak/products?category_id=${categoryId}`,
-    {
-      headers: { Authorization: `Bearer ${token}` },
-      next: { revalidate: 3600 },
-    },
-  );
-
-  if (!res.ok) {
-    throw new Error("Products fetch failed: " + res.status);
-  }
-
-  const json: ProductsResponse = await res.json();
-  return json.data;
-}
-
-export async function getProductById(productId: number): Promise<Product> {
-  const token = await getServiceAccessToken();
-
-  const detailRes = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tiktak/products/${productId}`,
-    {
-      headers: { Authorization: `Bearer ${token}` },
-      next: { revalidate: 3600 },
-    },
-  );
-
-  if (detailRes.ok) {
-    const json: { message: string; data: Product; result: boolean } =
-      await detailRes.json();
+export const getProductsByCategory = cache(
+  async (categoryId: number): Promise<Product[]> => {
+    const json = await serviceFetch<ProductsResponse>(
+      `${API.CLIENT.PRODUCT.LIST}?category_id=${categoryId}`,
+      CACHE_TTL_SECONDS.PRODUCTS,
+    );
     return json.data;
-  }
+  },
+);
 
-  const fallbackUrls = [
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tiktak/products?product_id=${productId}`,
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tiktak/products?id=${productId}`,
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tiktak/products`,
-  ];
-
-  for (const url of fallbackUrls) {
-    const fallbackRes = await fetch(url, {
-      headers: { Authorization: `Bearer ${token}` },
-      next: { revalidate: 3600 },
-    });
-
-    if (!fallbackRes.ok) {
-      continue;
-    }
-
-    const fallbackJson: ProductsResponse = await fallbackRes.json();
-    const product = fallbackJson.data.find((item) => item.id === productId);
-    if (product) {
-      return product;
-    }
-  }
-
-  throw new Error(`Product fetch failed: ${detailRes.status}`);
-}
+export const getProductById = cache(
+  async (productId: number): Promise<Product> => {
+    const json = await serviceFetch<{
+      message: string;
+      data: Product;
+      result: boolean;
+    }>(API.CLIENT.PRODUCT.DETAIL(productId), CACHE_TTL_SECONDS.PRODUCTS);
+    return json.data;
+  },
+);

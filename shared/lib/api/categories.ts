@@ -1,22 +1,12 @@
+import { cache } from "react";
+import { API, CACHE_TTL_SECONDS } from "@tiktak/constants";
 import { CategoriesResponse, Category } from "@/packages/types/category";
-import { getServiceAccessToken } from "../serviceAuth";
+import { serviceFetch } from "./serviceFetch";
 
-export async function getCategories(): Promise<Category[]> {
-  const token = await getServiceAccessToken();
-
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tiktak/categories`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    next: {
-      revalidate: 3600, 
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error("Categories fetch failed: " + res.status);
-  }
-
-  const json: CategoriesResponse = await res.json();
+export const getCategories = cache(async (): Promise<Category[]> => {
+  const json = await serviceFetch<CategoriesResponse>(
+    API.CLIENT.CATEGORY.LIST,
+    CACHE_TTL_SECONDS.CATEGORIES,
+  );
   return json.data;
-}
+});

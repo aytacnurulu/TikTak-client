@@ -72,3 +72,8 @@ export const API = {
 
   UPLOAD: "/api/tiktak/upload",
 };
+
+export const CACHE_TTL_SECONDS = {
+  CATEGORIES: 3600,
+  PRODUCTS: 3600,
+} as const;
