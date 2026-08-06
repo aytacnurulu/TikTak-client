@@ -6,7 +6,7 @@ export interface Product {
   name: string;
   price: number;
   image: string;
-  badge?: string; 
+  badge?: string;
 }
 
 export type ProductCardSize = "sm" | "md" | "lg";
@@ -16,10 +16,10 @@ export interface ProductCardProps {
   image: string | StaticImageData;
   title: string;
   price: string;
+  href?: string;
   currency?: string;
   actionSlot: ReactNode;
   className?: string;
   size?: ProductCardSize;
   onAddToCart?: (product: Product, quantity: number) => void;
-
 }

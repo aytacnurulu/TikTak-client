@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import Card from '@/shared/components/Card';
 import Button from '@/shared/components/Button';
 import { useBasketQuery, useBasketMutations } from '@/shared/hooks/useBasket';
 import BasketItemCard from '../BasketItemCard';
@@ -13,13 +12,13 @@ export default function BasketPanel() {
     const total = data?.reduce((sum, item) => sum + Number(item.total_price), 0) ?? 0;
 
     return (
-        <div>
+        <div className="h-[420px] overflow-y-auto">
             <h2 className="text-2xl font-bold mb-4">Səbətim</h2>
 
             {isLoading ? (
                 <p className="text-sm text-gray-500">Yüklənir...</p>
             ) : !data || data.length === 0 ? (
-                <Card className="flex flex-col items-center text-center px-6 py-10">
+                <div className="rounded-[10px] border border-gray-100 bg-white flex flex-col items-center text-center px-6 py-10">
                     <div className="relative w-40 h-40">
                         <Image src="/image/emptybasket.svg" alt="" fill className="object-contain" />
                     </div>
@@ -27,7 +26,7 @@ export default function BasketPanel() {
                     <p className="mt-2 text-sm text-gray-500">
                         Sifariş vermək üçün səbətinizə məhsul əlavə edin
                     </p>
-                </Card>
+                </div>
             ) : (
                 <>
                     <div className="space-y-3">
@@ -43,7 +42,7 @@ export default function BasketPanel() {
                         ))}
                     </div>
 
-                    <Card className="mt-4 p-4">
+                    <div className="mt-4 rounded-[10px] border border-gray-100 bg-white p-4">
                         <div className="space-y-1 text-sm">
                             <div className="flex justify-between">
                                 <span className="text-gray-500">Ümumi:</span>
@@ -63,7 +62,7 @@ export default function BasketPanel() {
                         <Button variant="dark" size="lg" fullWidth className="mt-4">
                             Sifarişi tamamla
                         </Button>
-                    </Card>
+                    </div>
                 </>
             )}
         </div>
