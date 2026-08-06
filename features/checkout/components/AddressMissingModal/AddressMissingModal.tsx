@@ -17,10 +17,10 @@ const AddressMissingModal = ({ open, onClose }: AddressMissingModalProps) => {
         <p className="text-sm text-gray-500 mb-6">
           Sifarişi tamamlamaq üçün profilinizə ünvan əlavə etməlisiniz.
         </p>
-        <div className="flex gap-3 w-full">
-          <Link href="/profile" className="flex-1">
+        <div className="flex flex-col gap-3 w-full">
+          <Link href="/account" className="w-full">
             <Button variant="primary" size="lg" fullWidth>
-              Profilə keç
+              Hesaba keçid et
             </Button>
           </Link>
           <Button variant="dark" size="lg" fullWidth onClick={onClose}>
