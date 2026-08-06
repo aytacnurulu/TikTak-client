@@ -11,7 +11,6 @@ function makeQueryClient() {
     },
   });
 }
-
 export function getQueryClient() {
   if (typeof window === "undefined") {
     return makeQueryClient();
