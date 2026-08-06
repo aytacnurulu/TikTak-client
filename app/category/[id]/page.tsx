@@ -77,6 +77,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <ProductCard
                 key={product.id}
                 id={product.id}
+                href={`/category/${categoryId}/product/${product.id}`}
                 image={product.img_url || "/image/apple.svg"}
                 title={product.title}
                 price={product.price}

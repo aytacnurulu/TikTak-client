@@ -37,6 +37,7 @@ export default function ProductCard({
   image,
   title,
   price,
+  href,
   currency = "AZN",
   actionSlot,
   className = "",
@@ -49,6 +50,8 @@ export default function ProductCard({
     price: priceClass,
     gap,
   } = sizeMap[size];
+
+  const productHref = href ?? `/products/${id}`;
 
   // Best-effort shape for the favorites cache's optimistic-add — fields the
   // card doesn't carry (description/type/category) are filled by the
@@ -68,10 +71,7 @@ export default function ProductCard({
     <Card
       className={`flex flex-col items-center w-full mx-auto ${card} ${padding} transition-shadow hover:shadow-md ${className}`}
     >
-      <Link
-        href={`/product/${id}`}
-        className="flex flex-col items-center w-full"
-      >
+      <Link href={productHref} className="flex flex-col items-center w-full">
         <div className="relative w-full aspect-square shrink-0">
           <ProductImage image={image} title={title} />
           <FavoriteButton
