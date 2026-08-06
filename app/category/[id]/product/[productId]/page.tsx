@@ -4,7 +4,7 @@ import { getCategories } from "@/shared/lib/api/categories";
 import { getProductById } from "@/shared/lib/api/products";
 import CategorySidebar from "@/features/category/components/CategorySidebar";
 import Header from "@/shared/components/Header";
-import BasketPanel from "@/features/basket/components/BasketPanel";
+import BasketPanel from "@/shared/components/BasketPanel";
 import Card from "@/shared/components/Card";
 import ProductImage from "@/shared/components/ProductCard/ProductImage";
 import ProductDetailActions from "@/shared/components/ProductDetailActions/ProductDetailActions";

@@ -2,12 +2,12 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { checkoutService } from "../api/checkout.service";
+import { BASKET_QUERY_KEY } from "@/shared/hooks/useBasket";
+
+export { useBasketQuery } from "@/shared/hooks/useBasket";
 
 export const useProfileQuery = () =>
   useQuery({ queryKey: ["profile"], queryFn: checkoutService.getProfile });
-
-export const useBasketQuery = () =>
-  useQuery({ queryKey: ["basket"], queryFn: checkoutService.getBasket });
 
 export const useCheckoutMutation = () => {
   const queryClient = useQueryClient();
@@ -15,7 +15,7 @@ export const useCheckoutMutation = () => {
   return useMutation({
     mutationFn: checkoutService.createOrder,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["basket"] });
+      queryClient.invalidateQueries({ queryKey: BASKET_QUERY_KEY });
     },
   });
 };
