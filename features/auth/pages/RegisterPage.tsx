@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Input from "@/shared/components/Input";
+import PhoneInput from "@/shared/components/PhoneInput";
 import Button from "@/shared/components/Button";
 import AuthTabs from "../components/AuthTabs/AuthTabs";
 import { useRegisterForm } from "../hooks/useRegisterForm";
@@ -31,13 +32,10 @@ const RegisterPage = () => {
           onChange={(e) => setFullName(e.target.value)}
           required
         />
-        <Input
+        <PhoneInput
           label="Telefon nömrəsi"
-          type="tel"
-          size="lg"
-          placeholder="+994 XX XXX XX XX"
           value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          onChange={setPhone}
           required
         />
         <Input

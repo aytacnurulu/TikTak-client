@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Input from "@/shared/components/Input";
+import PhoneInput from "@/shared/components/PhoneInput";
 import Button from "@/shared/components/Button";
 import AuthTabs from "../components/AuthTabs/AuthTabs";
 import { useLoginForm } from "../hooks/useLoginForm";
@@ -21,13 +22,10 @@ const LoginPage = () => {
     <div>
       <AuthTabs />
       <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
+        <PhoneInput
           label="Telefon nömrəsi"
-          type="tel"
-          size="lg"
-          placeholder="+994 XX XXX XX XX"
           value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          onChange={setPhone}
           required
         />
         <Input
