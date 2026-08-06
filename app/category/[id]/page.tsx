@@ -8,7 +8,7 @@ import CategorySidebar from "@/features/category/components/CategorySidebar";
 import ProductCard from "@/shared/components/ProductCard";
 import AddToBasketButton from "@/shared/components/AddToBasketButton";
 import Header from "@/shared/components/Header";
-import BasketPanel from "@/features/basket/components/BasketPanel";
+import BasketPanel from "@/shared/components/BasketPanel";
 
 interface CategoryPageProps {
   params: Promise<{ id: string }>;

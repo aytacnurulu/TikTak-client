@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import SearchBar from "./SearchBar";
+import { AccountIcon, FavoritesIcon, BasketIcon } from "./NavIcons";
 import { useProfileQuery } from "@/features/profile/hooks/useProfile";
 import { useAuthStore } from "@/shared/store/useAuthStore";
 
@@ -21,6 +22,7 @@ interface HeaderProps {
 const Header = ({ showAddress = true, showSearch = true }: HeaderProps) => {
   const isAuthenticated = useAuthStore((s) => !!s.accessToken);
   const { data: profile } = useProfileQuery({ enabled: isAuthenticated });
+  const pathname = usePathname();
 
   const userAddress = profile?.address || "Ünvan seçilməyib";
 
@@ -28,17 +30,17 @@ const Header = ({ showAddress = true, showSearch = true }: HeaderProps) => {
     {
       href: "/account",
       label: "Hesabım",
-      icon: <Image src="/icons/user.svg" alt="" width={20} height={20} />,
+      icon: <AccountIcon />,
     },
     {
-      href: "/wishlist",
+      href: "/favorites",
       label: "Siyahılarım",
-      icon: <Image src="/icons/favorites.svg" alt="" width={20} height={20} />,
+      icon: <FavoritesIcon />,
     },
     {
       href: "/basket",
       label: "Səbətim",
-      icon: <Image src="/icons/basket.svg" alt="" width={20} height={20} />,
+      icon: <BasketIcon />,
     },
   ];
 
@@ -70,24 +72,37 @@ const Header = ({ showAddress = true, showSearch = true }: HeaderProps) => {
         )}
 
         <nav className="hidden md:flex items-center gap-5 shrink-0">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-dark transition-colors"
-            >
-              {item.icon}
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isActive = pathname?.startsWith(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center gap-1.5 text-sm transition-colors ${
+                  isActive ? "text-primary" : "text-gray-600 hover:text-dark"
+                }`}
+              >
+                {item.icon}
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex md:hidden items-center gap-3 shrink-0">
-          {navItems.map((item) => (
-            <Link key={item.href} href={item.href} aria-label={item.label}>
-              {item.icon}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isActive = pathname?.startsWith(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-label={item.label}
+                className={isActive ? "text-primary" : "text-gray-600"}
+              >
+                {item.icon}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </header>

@@ -1,143 +1,164 @@
 'use client';
 
+import { useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { apiClient } from '@tiktak/api-client';
+import { API } from '@tiktak/constants';
+import type { ApiResponse, Basket, BasketItem } from '@tiktak/types';
 import { useAuthStore } from '@/shared/store/useAuthStore';
+import { useRequireAuth } from '@/shared/hooks/useRequireAuth';
 
-interface BasketProduct {
-  id: number;
-  title: string;
-  img_url: string;
-  price: string;
+export type { BasketItem };
+
+export const BASKET_QUERY_KEY = ['basket'] as const;
+
+async function fetchBasket(): Promise<Basket> {
+  const { data } = await apiClient.get<ApiResponse<Basket>>(API.CLIENT.BASKET.LIST);
+  return data.data;
 }
 
-export interface BasketItem {
-  id: number;
-  quantity: number;
-  total_price: string;
-  product: BasketProduct;
+async function addOne(productId: number): Promise<void> {
+  await apiClient.post(API.CLIENT.BASKET.ADD(productId));
 }
 
-const BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
-const QUERY_KEY = ['basket'];
-
-async function fetchBasket(token: string): Promise<BasketItem[]> {
-  const res = await fetch(`${BASE}/api/tiktak/basket/list`, {
-    headers: { Authorization: `Bearer ${token}` },
-    cache: 'no-store',
-  });
-  if (!res.ok) throw new Error('Basket fetch failed');
-  return (await res.json()).data;
+async function removeOne(productId: number): Promise<void> {
+  await apiClient.post(API.CLIENT.BASKET.REMOVE(productId));
 }
 
-async function addOne(token: string, productId: number) {
-  const res = await fetch(`${BASE}/api/tiktak/basket/${productId}/add`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${token}` },
-    cache: 'no-store',
-  });
-  if (!res.ok) throw new Error('Add failed');
+async function removeAll(productId: number): Promise<void> {
+  await apiClient.delete(API.CLIENT.BASKET.REMOVE_ALL(productId));
 }
 
-async function removeOne(token: string, productId: number) {
-  const res = await fetch(`${BASE}/api/tiktak/basket/${productId}/remove`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${token}` },
-    cache: 'no-store',
-  });
-  if (!res.ok) throw new Error('Remove failed');
+async function clearBasket(): Promise<void> {
+  await apiClient.delete(API.CLIENT.BASKET.CLEAR);
 }
 
-async function removeAll(token: string, productId: number) {
-  const res = await fetch(`${BASE}/api/tiktak/basket/${productId}/remove-all`, {
-    method: 'DELETE',
-    headers: { Authorization: `Bearer ${token}` },
-    cache: 'no-store',
-  });
-  if (!res.ok) throw new Error('Remove all failed');
+function priceForQuantity(price: string, quantity: number): string {
+  return (Number(price) * quantity).toFixed(2);
 }
 
 export function useBasketQuery() {
   const token = useAuthStore((s) => s.accessToken);
   return useQuery({
-    queryKey: QUERY_KEY,
-    queryFn: () => fetchBasket(token!),
+    queryKey: BASKET_QUERY_KEY,
+    queryFn: fetchBasket,
     enabled: !!token,
   });
 }
 
 export function useBasketMutations() {
-  const token = useAuthStore((s) => s.accessToken);
   const qc = useQueryClient();
-  const invalidate = () => qc.invalidateQueries({ queryKey: QUERY_KEY });
+  const invalidate = () => qc.invalidateQueries({ queryKey: BASKET_QUERY_KEY });
 
   // Bütün mutasiyalar üçün ortaq: refetch başlamazdan əvvəl davam edən sorğunu ləğv et,
   // köhnə vəziyyəti saxla (xəta olsa geri qaytarmaq üçün)
-  const snapshot = async () => {
-    await qc.cancelQueries({ queryKey: QUERY_KEY });
-    return qc.getQueryData<BasketItem[]>(QUERY_KEY);
+  const useOptimisticMutation = (
+    mutationFn: (productId: number) => Promise<void>,
+    updateItems: (items: BasketItem[], productId: number) => BasketItem[],
+  ) =>
+    useMutation({
+      mutationFn,
+      onMutate: async (productId: number) => {
+        await qc.cancelQueries({ queryKey: BASKET_QUERY_KEY });
+        const previous = qc.getQueryData<Basket>(BASKET_QUERY_KEY);
+        if (previous) {
+          qc.setQueryData<Basket>(BASKET_QUERY_KEY, {
+            ...previous,
+            items: updateItems(previous.items, productId),
+          });
+        }
+        return { previous };
+      },
+      onError: (_err, _productId, ctx) => {
+        if (ctx?.previous) qc.setQueryData(BASKET_QUERY_KEY, ctx.previous);
+      },
+      onSettled: invalidate,
+    });
+
+  const add = useOptimisticMutation(addOne, (items, productId) =>
+    items.map((item) =>
+      item.product.id === productId
+        ? {
+            ...item,
+            quantity: item.quantity + 1,
+            total_price: priceForQuantity(item.product.price, item.quantity + 1),
+          }
+        : item,
+    ),
+  );
+
+  const remove = useOptimisticMutation(removeOne, (items, productId) =>
+    items
+      .map((item) =>
+        item.product.id === productId
+          ? {
+              ...item,
+              quantity: item.quantity - 1,
+              total_price: priceForQuantity(item.product.price, item.quantity - 1),
+            }
+          : item,
+      )
+      .filter((item) => item.quantity > 0),
+  );
+
+  const deleteItem = useOptimisticMutation(removeAll, (items, productId) =>
+    items.filter((item) => item.product.id !== productId),
+  );
+
+  const clear = useMutation({
+    mutationFn: clearBasket,
+    onMutate: async () => {
+      await qc.cancelQueries({ queryKey: BASKET_QUERY_KEY });
+      const previous = qc.getQueryData<Basket>(BASKET_QUERY_KEY);
+      if (previous) {
+        qc.setQueryData<Basket>(BASKET_QUERY_KEY, { ...previous, items: [], total: '0.00', count: 0 });
+      }
+      return { previous };
+    },
+    onError: (_err, _vars, ctx) => {
+      if (ctx?.previous) qc.setQueryData(BASKET_QUERY_KEY, ctx.previous);
+    },
+    onSettled: invalidate,
+  });
+
+  return { add, remove, deleteItem, clear };
+}
+
+// Alıcı-üzü sadə API: verilmiş məhsulun səbətdəki sayı + artır/azalt.
+// Ardıcıl klikləri 500ms ərzində tək delta-da birləşdirir ki, hər klik
+// ayrıca sorğu yaratmasın.
+export function useBasketQuantity(productId: number) {
+  const { data } = useBasketQuery();
+  const { add, remove } = useBasketMutations();
+  const { requireAuth } = useRequireAuth();
+
+  const currentItem = data?.items.find((item) => item.product.id === productId);
+  const quantity = currentItem?.quantity ?? 0;
+
+  const pendingDelta = useRef(0);
+  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const flushDelta = () => {
+    const delta = pendingDelta.current;
+    pendingDelta.current = 0;
+    if (delta > 0) {
+      for (let i = 0; i < delta; i++) add.mutate(productId);
+    } else if (delta < 0) {
+      for (let i = 0; i < -delta; i++) remove.mutate(productId);
+    }
   };
 
-  const add = useMutation({
-    mutationFn: (productId: number) => addOne(token!, productId),
-    onMutate: async (productId: number) => {
-      const previous = await snapshot();
-      qc.setQueryData<BasketItem[]>(QUERY_KEY, (old) =>
-        old?.map((item) =>
-          item.product.id === productId
-            ? {
-                ...item,
-                quantity: item.quantity + 1,
-                total_price: (Number(item.product.price) * (item.quantity + 1)).toFixed(2),
-              }
-            : item,
-        ),
-      );
-      return { previous };
-    },
-    onError: (_err, _productId, ctx) => {
-      if (ctx?.previous) qc.setQueryData(QUERY_KEY, ctx.previous);
-    },
-    onSettled: invalidate,
-  });
+  const scheduleChange = (diff: 1 | -1) => {
+    if (!requireAuth()) return;
+    pendingDelta.current += diff;
+    if (debounceTimer.current) clearTimeout(debounceTimer.current);
+    debounceTimer.current = setTimeout(flushDelta, 500);
+  };
 
-  const remove = useMutation({
-    mutationFn: (productId: number) => removeOne(token!, productId),
-    onMutate: async (productId: number) => {
-      const previous = await snapshot();
-      qc.setQueryData<BasketItem[]>(QUERY_KEY, (old) =>
-        old
-          ?.map((item) =>
-            item.product.id === productId && item.quantity > 1
-              ? {
-                  ...item,
-                  quantity: item.quantity - 1,
-                  total_price: (Number(item.product.price) * (item.quantity - 1)).toFixed(2),
-                }
-              : item,
-          ),
-      );
-      return { previous };
-    },
-    onError: (_err, _productId, ctx) => {
-      if (ctx?.previous) qc.setQueryData(QUERY_KEY, ctx.previous);
-    },
-    onSettled: invalidate,
-  });
-
-  const deleteItem = useMutation({
-    mutationFn: (productId: number) => removeAll(token!, productId),
-    onMutate: async (productId: number) => {
-      const previous = await snapshot();
-      qc.setQueryData<BasketItem[]>(QUERY_KEY, (old) =>
-        old?.filter((item) => item.product.id !== productId),
-      );
-      return { previous };
-    },
-    onError: (_err, _productId, ctx) => {
-      if (ctx?.previous) qc.setQueryData(QUERY_KEY, ctx.previous);
-    },
-    onSettled: invalidate,
-  });
-
-  return { add, remove, deleteItem };
+  return {
+    quantity,
+    increase: () => scheduleChange(1),
+    decrease: () => scheduleChange(-1),
+    isPending: add.isPending || remove.isPending,
+  };
 }

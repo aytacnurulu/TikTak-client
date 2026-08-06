@@ -1,5 +1,6 @@
-'use client';
+"use client";
 
+import type { ReactNode } from "react";
 import Button from "../Button";
 
 interface QuantitySelectorProps {
@@ -10,16 +11,20 @@ interface QuantitySelectorProps {
   onIncrease: () => void;
   onDecrease: () => void;
   disabled?: boolean;
+  decreaseIcon?: ReactNode;
+  increaseIcon?: ReactNode;
 }
 
 const QuantitySelector = ({
   value,
   min = 0,
   max,
-  unit = 'əd',
+  unit = "əd",
   onIncrease,
   onDecrease,
   disabled = false,
+  decreaseIcon,
+  increaseIcon,
 }: QuantitySelectorProps) => {
   const isDecreaseDisabled = disabled || value <= min;
   const isIncreaseDisabled = disabled || (max !== undefined && value >= max);
@@ -35,10 +40,11 @@ const QuantitySelector = ({
         aria-label="Sayı azalt"
         className="rounded-full w-9 px-0 text-lg"
       >
-        −
+        {decreaseIcon ?? "−"}
       </Button>
       <span className="flex-1 h-9 flex items-center justify-center rounded-xl bg-gray-50 border border-gray-200 text-sm font-medium">
-        {value} {unit}
+        {value}
+        {unit && ` ${unit}`}
       </span>
 
       <Button
@@ -50,7 +56,7 @@ const QuantitySelector = ({
         aria-label="Sayı artır"
         className="rounded-full w-9 px-0 text-lg"
       >
-        +
+        {increaseIcon ?? "+"}
       </Button>
     </div>
   );

@@ -5,12 +5,14 @@ export interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
   role: string | null;
+  hasHydrated: boolean;
   setAuth: (params: {
     accessToken: string;
     refreshToken: string;
     role: string;
   }) => void;
   clearAuth: () => void;
+  setHasHydrated: (hasHydrated: boolean) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -19,13 +21,23 @@ export const useAuthStore = create<AuthState>()(
       accessToken: null,
       refreshToken: null,
       role: null,
+      hasHydrated: false,
       setAuth: ({ accessToken, refreshToken, role }) =>
         set({ accessToken, refreshToken, role }),
       clearAuth: () =>
         set({ accessToken: null, refreshToken: null, role: null }),
+      setHasHydrated: (hasHydrated) => set({ hasHydrated }),
     }),
     {
       name: "tiktak-client-auth",
+      partialize: ({ accessToken, refreshToken, role }) => ({
+        accessToken,
+        refreshToken,
+        role,
+      }),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
+      },
     },
   ),
 );
