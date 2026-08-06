@@ -10,16 +10,23 @@ import { useFavoritesQuery } from "@/shared/hooks/useFavorites";
 import FavoriteEmptyState from "../components/FavoriteEmptyState";
 
 export default function FavoritesPage() {
-  const { requireAuth, isAuthenticated } = useRequireAuth();
+  const { requireAuth, isAuthenticated, hasHydrated } = useRequireAuth();
 
   useEffect(() => {
+    if (!hasHydrated) return;
     requireAuth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [hasHydrated]);
 
   const { data: favorites, isLoading, isError } = useFavoritesQuery();
 
-  if (!isAuthenticated) return null;
+  if (!hasHydrated || !isAuthenticated) {
+    return (
+      <div className="flex justify-center py-20">
+        <Spinner size="lg" color="primary" />
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (

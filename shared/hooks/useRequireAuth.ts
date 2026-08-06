@@ -7,6 +7,7 @@ export const useRequireAuth = () => {
   const router = useRouter();
   const pathname = usePathname();
   const token = useAuthStore((s) => s.accessToken);
+  const hasHydrated = useAuthStore((s) => s.hasHydrated);
 
   const requireAuth = (): boolean => {
     if (token) return true;
@@ -14,5 +15,5 @@ export const useRequireAuth = () => {
     return false;
   };
 
-  return { requireAuth, isAuthenticated: !!token };
+  return { requireAuth, isAuthenticated: !!token, hasHydrated };
 };
