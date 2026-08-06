@@ -5,6 +5,7 @@ import OrderForm from "../components/OrderForm/OrderForm";
 import OrderSummary from "../components/OrderSummary/OrderSummary";
 import ConfirmOrderModal from "../components/ConfirmOrderModal/ConfirmOrderModal";
 import AddressMissingModal from "../components/AddressMissingModal/AddressMissingModal";
+import OrderSuccessModal from "../components/OrderSuccessModal/OrderSuccessModal";
 import {
   useProfileQuery,
   useBasketQuery,
@@ -22,6 +23,7 @@ const CheckoutPage = () => {
     note: string;
   } | null>(null);
   const [showAddressMissing, setShowAddressMissing] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleFormSubmit = (payload: {
     paymentMethod: PaymentMethod;
@@ -36,12 +38,20 @@ const CheckoutPage = () => {
 
   const handleConfirm = () => {
     if (!pendingPayload || !profile?.address || !profile?.phone) return;
-    mutate({
-      paymentMethod: pendingPayload.paymentMethod,
-      note: pendingPayload.note,
-      address: profile.address,
-      phone: profile.phone,
-    });
+    mutate(
+      {
+        paymentMethod: pendingPayload.paymentMethod,
+        note: pendingPayload.note,
+        address: profile.address,
+        phone: profile.phone,
+      },
+      {
+        onSuccess: () => {
+          setPendingPayload(null);
+          setShowSuccess(true);
+        },
+      },
+    );
   };
 
   return (
@@ -71,6 +81,11 @@ const CheckoutPage = () => {
       <AddressMissingModal
         open={showAddressMissing}
         onClose={() => setShowAddressMissing(false)}
+      />
+
+      <OrderSuccessModal
+        open={showSuccess}
+        onClose={() => setShowSuccess(false)}
       />
     </div>
   );
