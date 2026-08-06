@@ -1,7 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import SearchBar from "./SearchBar";
+import { useProfileQuery } from "@/features/profile/hooks/useProfile";
+import { useAuthStore } from "@/shared/store/useAuthStore";
 
 interface NavItem {
   href: string;
@@ -10,16 +14,16 @@ interface NavItem {
 }
 
 interface HeaderProps {
-  userAddress?: string;
   showAddress?: boolean;
   showSearch?: boolean;
 }
 
-const Header = ({
-  userAddress = "Ünvan seçilməyib",
-  showAddress = true,
-  showSearch = true,
-}: HeaderProps) => {
+const Header = ({ showAddress = true, showSearch = true }: HeaderProps) => {
+  const isAuthenticated = useAuthStore((s) => !!s.accessToken);
+  const { data: profile } = useProfileQuery({ enabled: isAuthenticated });
+
+  const userAddress = profile?.address || "Ünvan seçilməyib";
+
   const navItems: NavItem[] = [
     {
       href: "/account",
@@ -27,7 +31,7 @@ const Header = ({
       icon: <Image src="/icons/user.svg" alt="" width={20} height={20} />,
     },
     {
-      href: "/favorites",
+      href: "/wishlist",
       label: "Siyahılarım",
       icon: <Image src="/icons/favorites.svg" alt="" width={20} height={20} />,
     },
