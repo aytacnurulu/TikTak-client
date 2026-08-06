@@ -100,3 +100,11 @@ export interface CheckoutPayload {
 export interface FavoriteToggleResult {
   favorited: boolean;
 }
+
+export interface ProfileUpdatePayload {
+  full_name: string;
+  img_url?: string;
+  address: string;
+  password?: string;
+  password_repeat?: string;
+}

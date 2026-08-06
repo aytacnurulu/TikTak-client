@@ -40,6 +40,10 @@ export const API = {
       SIGNUP: "/api/tiktak/auth/signup",
       VERIFY_OTP: "/api/tiktak/auth/refresh",
     },
+    PROFILE: {
+      GET: "/api/tiktak/profile",
+      UPDATE: "/api/tiktak/profile",
+    },
     PRODUCT: {
       LIST: "/api/tiktak/products",
       DETAIL: (id: number) => `/api/tiktak/products/${id}`,
