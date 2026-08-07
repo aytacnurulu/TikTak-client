@@ -1,11 +1,16 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Button from "@/shared/components/Button";
 import { useBasketQuery, useBasketMutations } from "@/shared/hooks/useBasket";
+import { useRequireAuth } from "@/shared/hooks/useRequireAuth";
 import BasketItemCard from "../BasketItemCard";
 
 export default function BasketPanel() {
+  const { isAuthenticated, hasHydrated } = useRequireAuth();
+  const pathname = usePathname();
   const { data, isLoading } = useBasketQuery();
   const { add, remove, deleteItem } = useBasketMutations();
 
@@ -16,8 +21,22 @@ export default function BasketPanel() {
     <div className="h-[420px] overflow-y-auto">
       <h2 className="text-2xl font-bold mb-4">Səbətim</h2>
 
-      {isLoading ? (
+      {!hasHydrated || (isAuthenticated && isLoading) ? (
         <p className="text-sm text-gray-500">Yüklənir...</p>
+      ) : !isAuthenticated ? (
+        <div className="rounded-[10px] border border-gray-100 bg-white flex flex-col items-center text-center px-6 py-10">
+          <p className="text-sm text-gray-500">
+            Səbətinizi görmək üçün daxil olun
+          </p>
+          <Link
+            href={`/login?redirect=${encodeURIComponent(pathname ?? "/")}`}
+            className="mt-4"
+          >
+            <Button variant="dark" size="sm">
+              Daxil ol
+            </Button>
+          </Link>
+        </div>
       ) : items.length === 0 ? (
         <div className="rounded-[10px] border border-gray-100 bg-white flex flex-col items-center text-center px-6 py-10">
           <div className="relative w-40 h-40">

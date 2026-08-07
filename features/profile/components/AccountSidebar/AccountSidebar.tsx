@@ -1,10 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuthStore } from "@/shared/store/useAuthStore";
 
 const AccountSidebar = () => {
   const pathname = usePathname();
+  const router = useRouter();
+  const clearAuth = useAuthStore((s) => s.clearAuth);
+
+  const handleLogout = () => {
+    clearAuth();
+    router.push("/");
+  };
 
   const items = [
     { href: "/account", label: "Hesab məlumatlarım", icon: "user" },
@@ -55,6 +63,25 @@ const AccountSidebar = () => {
           );
         })}
       </nav>
+      <button
+        type="button"
+        onClick={handleLogout}
+        className="flex items-center gap-2 text-sm text-red-500 mt-4 pt-4 border-t border-gray-100 w-full"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width={18}
+          height={18}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1.5}
+        >
+          <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3" />
+          <path d="M10 8l-4 4 4 4" />
+          <path d="M6 12h12" />
+        </svg>
+        Çıxış et
+      </button>
     </div>
   );
 };
