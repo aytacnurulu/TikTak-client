@@ -14,6 +14,7 @@ export default function BasketPanel() {
   const { data, isLoading } = useBasketQuery();
   const { add, remove, deleteItem } = useBasketMutations();
 
+  
   const items = data?.items ?? [];
   const total = Number(data?.total ?? 0);
 
