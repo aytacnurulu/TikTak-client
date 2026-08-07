@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Spinner from "@/shared/components/Spinner";
+import { useRequireAuth } from "@/shared/hooks/useRequireAuth";
 import OrderForm from "../components/OrderForm/OrderForm";
 import OrderSummary from "../components/OrderSummary/OrderSummary";
 import ConfirmOrderModal from "../components/ConfirmOrderModal/ConfirmOrderModal";
@@ -14,6 +16,14 @@ import {
 import type { PaymentMethod } from "@tiktak/types";
 
 const CheckoutPage = () => {
+  const { requireAuth, isAuthenticated, hasHydrated } = useRequireAuth();
+
+  useEffect(() => {
+    if (!hasHydrated) return;
+    requireAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasHydrated]);
+
   const { data: profile } = useProfileQuery();
   const { data: basket, isLoading: isBasketLoading } = useBasketQuery();
   const { mutate, isPending } = useCheckoutMutation();
@@ -53,6 +63,14 @@ const CheckoutPage = () => {
       },
     );
   };
+
+  if (!hasHydrated || !isAuthenticated) {
+    return (
+      <div className="flex justify-center py-20">
+        <Spinner size="lg" color="primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="py-8">

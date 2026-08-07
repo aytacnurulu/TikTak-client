@@ -130,7 +130,7 @@ export function useBasketMutations() {
 export function useBasketQuantity(productId: number) {
   const { data } = useBasketQuery();
   const { add, remove } = useBasketMutations();
-  const { requireAuth } = useRequireAuth();
+  const { requireAuth, hasHydrated } = useRequireAuth();
 
   const currentItem = data?.items.find((item) => item.product.id === productId);
   const quantity = currentItem?.quantity ?? 0;
@@ -159,6 +159,6 @@ export function useBasketQuantity(productId: number) {
     quantity,
     increase: () => scheduleChange(1),
     decrease: () => scheduleChange(-1),
-    isPending: add.isPending || remove.isPending,
+    isPending: add.isPending || remove.isPending || !hasHydrated,
   };
 }

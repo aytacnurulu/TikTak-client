@@ -1,12 +1,12 @@
-import Header from "@/shared/components/Header";
 import Container from "@/shared/components/Container";
 import LandingPage from "@/features/landing/pages/LandingPage";
 import Footer from "@/shared/components/Footer";
+import LandingHeader from "@/shared/components/LandingHeader/LandingHeader";
 
 export default function RootPage() {
   return (
     <>
-      <Header showAddress={false} showSearch={false} />
+      <LandingHeader />
       <main>
         <Container>
           <LandingPage />

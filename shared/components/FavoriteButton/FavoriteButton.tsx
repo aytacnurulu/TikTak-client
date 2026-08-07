@@ -15,7 +15,7 @@ interface FavoriteButtonProps {
 }
 
 export default function FavoriteButton({ product, className = "" }: FavoriteButtonProps) {
-  const { requireAuth } = useRequireAuth();
+  const { requireAuth, hasHydrated } = useRequireAuth();
   const productId = Number(product.id);
   const isFavorite = useIsFavorite(productId);
   const toggleMutation = useToggleFavoriteMutation(product);
@@ -40,7 +40,7 @@ export default function FavoriteButton({ product, className = "" }: FavoriteButt
       onClick={handleClick}
       aria-pressed={displayedAsFavorite}
       aria-label={displayedAsFavorite ? "Seçilmişlərdən çıxar" : "Seçilmişlərə əlavə et"}
-      disabled={toggleMutation.isPending}
+      disabled={toggleMutation.isPending || !hasHydrated}
       className={`flex items-center justify-center h-8 w-8 rounded-full bg-white/90 shadow-sm disabled:opacity-70 ${className}`}
     >
       <HeartIcon filled={displayedAsFavorite} />
