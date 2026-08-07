@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Button from "@/shared/components/Button";
 import type { Campaign } from "@tiktak/types";
-
+import Link from "next/link";
 interface HeroCarouselProps {
   campaigns: Campaign[];
 }
@@ -56,9 +56,11 @@ const HeroCarousel = ({ campaigns }: HeroCarouselProps) => {
                     <p className="text-sm opacity-90">{campaign.description}</p>
                   )}
                 </div>
-                <Button variant="success" size="sm" className="w-fit relative">
-                  Ətraflı
-                </Button>
+                <Link href={`/category`}>
+                  <Button variant="success" size="sm" className="w-fit relative">
+                    Ətraflı
+                  </Button>
+                </Link>
               </div>
             </div>
           ))}

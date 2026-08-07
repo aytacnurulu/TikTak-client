@@ -1,4 +1,6 @@
 import { LoginResponse, RefreshResponse, TokenPair } from "@/packages/types/auth";
+import { API } from "@tiktak/constants";
+import { postJson } from "@tiktak/api-client";
 
 type TokenCache = {
   accessToken: string;
@@ -10,17 +12,10 @@ let cachedToken: TokenCache | null = null;
 const ACCESS_TOKEN_TTL_MS = 10 * 60 * 1000;
 
 async function refreshAccessToken(refreshToken: string): Promise<TokenPair> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tiktak/auth/refresh`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ refresh_token: refreshToken }),
-  });
-
-  if (!res.ok) {
-    throw new Error("Refresh token failed: " + res.status);
-  }
-
-  const json: RefreshResponse = await res.json();
+  const json = await postJson<RefreshResponse>(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}${API.CLIENT.AUTH.REFRESH}`,
+    { refresh_token: refreshToken },
+  );
   return {
     access_token: json.data.access_token,
     refresh_token: json.data.refresh_token,
@@ -28,20 +23,10 @@ async function refreshAccessToken(refreshToken: string): Promise<TokenPair> {
 }
 
 async function loginWithCredentials(): Promise<TokenPair> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tiktak/auth/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      phone: process.env.SSR_SERVICE_PHONE,
-      password: process.env.SSR_SERVICE_PASSWORD,
-    }),
-  });
-
-  if (!res.ok) {
-    throw new Error("Service login failed: " + res.status);
-  }
-
-  const json: LoginResponse = await res.json();
+  const json = await postJson<LoginResponse>(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}${API.CLIENT.AUTH.LOGIN}`,
+    { phone: process.env.SSR_SERVICE_PHONE, password: process.env.SSR_SERVICE_PASSWORD },
+  );
   return json.data.tokens;
 }
 

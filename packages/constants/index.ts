@@ -38,7 +38,7 @@ export const API = {
     AUTH: {
       LOGIN: "/api/tiktak/auth/login",
       SIGNUP: "/api/tiktak/auth/signup",
-      VERIFY_OTP: "/api/tiktak/auth/refresh",
+      REFRESH: "/api/tiktak/auth/refresh",
     },
     PROFILE: {
       GET: "/api/tiktak/profile",
