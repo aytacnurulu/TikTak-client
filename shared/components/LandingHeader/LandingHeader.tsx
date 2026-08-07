@@ -18,7 +18,7 @@ const LandingHeader = () => {
         </Link>
 
         <Button
-          variant="primary"
+          variant="success"
           size="sm"
           onClick={() => router.push("/login")}
           className="px-5 sm:px-6 font-semibold shadow-sm hover:shadow-md transition-shadow"

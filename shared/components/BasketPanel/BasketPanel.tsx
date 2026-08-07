@@ -18,7 +18,7 @@ export default function BasketPanel() {
   const total = Number(data?.total ?? 0);
 
   return (
-    <div className="h-[420px] overflow-y-auto">
+    <div className="h-full max-h-[calc(100vh-140px)] overflow-y-auto sticky top-4 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-thumb]:rounded-full">
       <h2 className="text-2xl font-bold mb-4">Səbətim</h2>
 
       {!hasHydrated || (isAuthenticated && isLoading) ? (

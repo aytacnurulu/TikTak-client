@@ -25,7 +25,7 @@ export default function BasketItemCard({
     <Card className="p-2 flex items-center gap-3 bg-gray-50 min-h-[72px]">
       <div className="relative w-14 h-14 shrink-0 rounded-xl overflow-hidden bg-white">
         <Image
-          src={item.product.img_url || "/placeholder-product.png"}
+          src={item.product.img_url || "/image/apple.svg"}
           alt={item.product.title}
           fill
           sizes="56px"

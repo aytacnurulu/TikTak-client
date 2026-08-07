@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useBasketQuantity } from '@/shared/hooks/useBasket';
 import QuantitySelector from '@/shared/components/QuantitySelector';
 import Button from '../Button';
@@ -9,15 +10,23 @@ interface AddToBasketButtonProps {
 }
 
 export default function AddToBasketButton({ productId }: AddToBasketButtonProps) {
-  const { quantity, increase, decrease, isPending } = useBasketQuantity(productId);
+  const { quantity, increase, setQuantity, isPending } = useBasketQuantity(productId);
 
-  if (quantity > 0) {
+  const [localQty, setLocalQty] = useState(quantity);
+  const [prevQuantity, setPrevQuantity] = useState(quantity);
+
+  if (quantity !== prevQuantity) {
+    setPrevQuantity(quantity);
+    setLocalQty(quantity);
+  }
+
+  if (localQty > 0) {
     return (
       <QuantitySelector
-        value={quantity}
+        value={localQty}
         min={0}
-        onIncrease={increase}
-        onDecrease={decrease}
+        onChange={setLocalQty}
+        onCommit={setQuantity}
         disabled={isPending}
       />
     );
