@@ -2,15 +2,14 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useAuthStore } from "@/shared/store/useAuthStore";
+import { logout } from "@/shared/lib/logout";
 
 const AccountSidebar = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const clearAuth = useAuthStore((s) => s.clearAuth);
 
   const handleLogout = () => {
-    clearAuth();
+    logout();
     router.push("/");
   };
 

@@ -1,6 +1,7 @@
 import { configureApiClient, postJson } from "@tiktak/api-client";
 import type { RefreshResponse } from "@/packages/types/auth";
 import { useAuthStore } from "@/shared/store/useAuthStore";
+import { logout } from "@/shared/lib/logout";
 import { API } from "@tiktak/constants";
 console.log("NEXT_PUBLIC_API_BASE_URL:", process.env.NEXT_PUBLIC_API_BASE_URL);
 
@@ -26,7 +27,7 @@ configureApiClient({
   getRefreshToken: () => useAuthStore.getState().refreshToken,
   refreshTokens,
   onAuthFailure: () => {
-    useAuthStore.getState().clearAuth();
+    logout();
     if (typeof window !== "undefined") {
       const redirect = encodeURIComponent(
         window.location.pathname + window.location.search,
