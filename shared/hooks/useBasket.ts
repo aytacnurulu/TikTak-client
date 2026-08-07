@@ -124,9 +124,6 @@ export function useBasketMutations() {
   return { add, remove, deleteItem, clear };
 }
 
-// Alıcı-üzü sadə API: verilmiş məhsulun səbətdəki sayı + artır/azalt.
-// Ardıcıl klikləri 500ms ərzində tək delta-da birləşdirir ki, hər klik
-// ayrıca sorğu yaratmasın.
 export function useBasketQuantity(productId: number) {
   const { data } = useBasketQuery();
   const { add, remove } = useBasketMutations();
@@ -135,30 +132,21 @@ export function useBasketQuantity(productId: number) {
   const currentItem = data?.items.find((item) => item.product.id === productId);
   const quantity = currentItem?.quantity ?? 0;
 
-  const pendingDelta = useRef(0);
-  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const flushDelta = () => {
-    const delta = pendingDelta.current;
-    pendingDelta.current = 0;
-    if (delta > 0) {
-      for (let i = 0; i < delta; i++) add.mutate(productId);
-    } else if (delta < 0) {
-      for (let i = 0; i < -delta; i++) remove.mutate(productId);
-    }
-  };
-
-  const scheduleChange = (diff: 1 | -1) => {
+  const setQuantity = (target: number) => {
     if (!requireAuth()) return;
-    pendingDelta.current += diff;
-    if (debounceTimer.current) clearTimeout(debounceTimer.current);
-    debounceTimer.current = setTimeout(flushDelta, 500);
+    const diff = target - quantity;
+    if (diff > 0) {
+      for (let i = 0; i < diff; i++) add.mutate(productId);
+    } else if (diff < 0) {
+      for (let i = 0; i < -diff; i++) remove.mutate(productId);
+    }
   };
 
   return {
     quantity,
-    increase: () => scheduleChange(1),
-    decrease: () => scheduleChange(-1),
+    increase: () => setQuantity(quantity + 1),
+    decrease: () => setQuantity(quantity - 1),
+    setQuantity,
     isPending: add.isPending || remove.isPending || !hasHydrated,
   };
 }
