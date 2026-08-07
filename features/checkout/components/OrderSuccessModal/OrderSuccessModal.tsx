@@ -14,7 +14,7 @@ const OrderSuccessModal = ({ open, onClose }: OrderSuccessModalProps) => {
 
   const handleClose = () => {
     onClose();
-    router.push("/home");
+    router.push("/category");
   };
 
   return (
