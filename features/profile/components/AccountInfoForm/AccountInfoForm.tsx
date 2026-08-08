@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { startTransition, useEffect, useState, type FormEvent } from "react";
 import Input from "@/shared/components/Input";
 import Button from "@/shared/components/Button";
 import Toast from "@/shared/components/Toast";
@@ -23,8 +23,10 @@ const AccountInfoForm = ({ profile }: AccountInfoFormProps) => {
 
   useEffect(() => {
     if (profile) {
-      setFullName(profile.full_name ?? "");
-      setAddress(profile.address ?? "");
+      startTransition(() => {
+        setFullName(profile.full_name ?? "");
+        setAddress(profile.address ?? "");
+      });
     }
   }, [profile]);
 

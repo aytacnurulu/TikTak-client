@@ -23,7 +23,10 @@ const AccountSidebar = () => {
       <h2 className="text-lg font-bold text-[#2B3043] mb-4">Hesabım</h2>
       <nav className="space-y-3">
         {items.map((item) => {
-          const isActive = pathname === item.href;
+          const isActive =
+            item.href === "/account/orders"
+              ? pathname.startsWith(item.href)
+              : pathname === item.href;
           return (
             <Link
               key={item.href}

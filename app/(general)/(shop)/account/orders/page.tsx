@@ -1,5 +1,5 @@
 import OrdersPage from "@/features/profile/pages/OrdersPage";
 
-export default function ProfileOrdersPage() {
+export default function AccountOrdersPage() {
   return <OrdersPage />;
 }

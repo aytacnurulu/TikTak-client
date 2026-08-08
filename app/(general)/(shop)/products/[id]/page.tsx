@@ -4,19 +4,19 @@ import { getCategories } from "@/shared/lib/api/categories";
 import { getProductById } from "@/shared/lib/api/products";
 import CategorySidebar from "@/features/category/components/CategorySidebar";
 import AddToBasketButton from "@/shared/components/AddToBasketButton";
-import Header from "@/shared/components/Header";
 import BasketPanel from "@/shared/components/BasketPanel";
 import Card from "@/shared/components/Card";
 import ProductImage from "@/shared/components/ProductCard/ProductImage";
 
 interface ProductPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
-  const productId = Number(params.id);
+  const { id } = await params;
+  const productId = Number(id);
   const product = await getProductById(productId);
 
   return {
@@ -31,7 +31,8 @@ export async function generateMetadata({
 }
 
 export default async function ProductDetailPage({ params }: ProductPageProps) {
-  const productId = Number(params.id);
+  const { id } = await params;
+  const productId = Number(id);
   const [product, categories] = await Promise.all([
     getProductById(productId),
     getCategories(),
@@ -41,7 +42,6 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
   return (
     <main className="bg-[rgb(246,245,251)] min-h-screen">
-      <Header />
       <div className="max-w-7xl mx-auto py-6 grid grid-cols-[240px_1fr_320px] gap-6">
         <div className="flex flex-col gap-4">
           <CategorySidebar

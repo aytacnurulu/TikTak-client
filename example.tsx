@@ -81,8 +81,20 @@ export default function ExamplesPage() {
         <h2 className="font-bold">ProductCard</h2>
         <div className="w-[187px]">
           <ProductCard
-            product={mockProduct}
-            onAddToCart={(product, qty) => console.log(product.name, qty)}
+            id={mockProduct.id}
+            image={mockProduct.image}
+            title={mockProduct.name}
+            price={String(mockProduct.price)}
+            actionSlot={
+              <Button
+                variant="primary"
+                size="sm"
+                fullWidth
+                onClick={() => console.log("səbətə əlavə edildi")}
+              >
+                Səbətə əlavə et
+              </Button>
+            }
           />
         </div>
       </section>

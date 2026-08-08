@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import Modal from "@/shared/components/Modal";
 import Button from "@/shared/components/Button";
 
@@ -28,7 +28,9 @@ const ConfirmOrderModal = ({
   const [secondsLeft, setSecondsLeft] = useState(durationSeconds);
 
   useEffect(() => {
-    if (open) setSecondsLeft(durationSeconds);
+    if (open) {
+      startTransition(() => setSecondsLeft(durationSeconds));
+    }
   }, [open, durationSeconds]);
 
   useEffect(() => {
