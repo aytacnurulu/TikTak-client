@@ -2,6 +2,7 @@ import { apiClient } from "@tiktak/api-client";
 import { API } from "@tiktak/constants";
 import type {
   ApiResponse,
+  Order,
   ProfileUpdatePayload,
   UserProfile,
 } from "@tiktak/types";
@@ -10,6 +11,12 @@ export const profileService = {
   getProfile: async () => {
     const { data } = await apiClient.get<ApiResponse<UserProfile>>(
       API.CLIENT.PROFILE.GET,
+    );
+    return data.data;
+  },
+  getOrders: async () => {
+    const { data } = await apiClient.get<ApiResponse<Order[]>>(
+      API.CLIENT.ORDERS.LIST,
     );
     return data.data;
   },
