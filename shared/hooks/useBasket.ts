@@ -1,19 +1,20 @@
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiClient } from '@tiktak/api-client';
-import { API } from '@tiktak/constants';
-import type { ApiResponse, Basket, BasketItem } from '@tiktak/types';
-import { useAuthStore } from '@/shared/store/useAuthStore';
-import { useRequireAuth } from '@/shared/hooks/useRequireAuth';
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiClient } from "@tiktak/api-client";
+import { API } from "@tiktak/constants";
+import type { ApiResponse, Basket, BasketItem } from "@tiktak/types";
+import { useAuthStore } from "@/shared/store/useAuthStore";
+import { useRequireAuth } from "@/shared/hooks/useRequireAuth";
 
 export type { BasketItem };
 
-export const BASKET_QUERY_KEY = ['basket'] as const;
+export const BASKET_QUERY_KEY = ["basket"] as const;
 
 async function fetchBasket(): Promise<Basket> {
-  const { data } = await apiClient.get<ApiResponse<Basket>>(API.CLIENT.BASKET.LIST);
+  const { data } = await apiClient.get<ApiResponse<Basket>>(
+    API.CLIENT.BASKET.LIST,
+  );
   return data.data;
 }
 
@@ -81,7 +82,10 @@ export function useBasketMutations() {
         ? {
             ...item,
             quantity: item.quantity + 1,
-            total_price: priceForQuantity(item.product.price, item.quantity + 1),
+            total_price: priceForQuantity(
+              item.product.price,
+              item.quantity + 1,
+            ),
           }
         : item,
     ),
@@ -94,7 +98,10 @@ export function useBasketMutations() {
           ? {
               ...item,
               quantity: item.quantity - 1,
-              total_price: priceForQuantity(item.product.price, item.quantity - 1),
+              total_price: priceForQuantity(
+                item.product.price,
+                item.quantity - 1,
+              ),
             }
           : item,
       )
@@ -111,7 +118,12 @@ export function useBasketMutations() {
       await qc.cancelQueries({ queryKey: BASKET_QUERY_KEY });
       const previous = qc.getQueryData<Basket>(BASKET_QUERY_KEY);
       if (previous) {
-        qc.setQueryData<Basket>(BASKET_QUERY_KEY, { ...previous, items: [], total: '0.00', count: 0 });
+        qc.setQueryData<Basket>(BASKET_QUERY_KEY, {
+          ...previous,
+          items: [],
+          total: "0.00",
+          count: 0,
+        });
       }
       return { previous };
     },

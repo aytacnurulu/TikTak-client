@@ -1,0 +1,112 @@
+import Link from "next/link";
+import type { Order } from "@tiktak/types";
+
+const formatDate = (value?: string | null) => {
+  if (!value) return "-";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "-";
+
+  return new Intl.DateTimeFormat("az-AZ").format(date);
+};
+
+const getOrderNumber = (id: number, orderNumber?: string | number) =>
+  `#${orderNumber ?? id}`;
+
+const getItemCount = (order: Order) =>
+  order.item_count ??
+  order.items?.reduce((total, item) => total + item.quantity, 0) ??
+  0;
+
+const getOrderTotal = (order: Order) => {
+  if (order.total !== undefined) return `${order.total} ₼`;
+
+  const subtotal = Number(order.subtotal ?? 0);
+  const deliveryFee = Number(order.delivery_fee ?? 0);
+  return `${(subtotal + deliveryFee).toFixed(2)} ₼`;
+};
+
+const TruncatedCell = ({ value }: { value: string | number }) => {
+  const text = String(value);
+
+  return (
+    <span className="block truncate" title={text}>
+      {text}
+    </span>
+  );
+};
+
+interface AccountOrderTableProps {
+  orders: Order[];
+}
+
+const AccountOrderTable = ({ orders }: AccountOrderTableProps) => (
+  <div className="w-full overflow-hidden">
+    <table className="w-full table-fixed text-left text-xs text-[#687080]">
+      <colgroup>
+        <col className="w-[12%]" />
+        <col className="w-[13%]" />
+        <col className="w-[22%]" />
+        <col className="w-[12%]" />
+        <col className="w-[18%]" />
+        <col className="w-[13%]" />
+        <col className="w-[10%]" />
+      </colgroup>
+      <thead className="bg-[#F6F5FB] text-[#2B3043]">
+        <tr>
+          <th className="rounded-l-md px-2 py-3 font-medium sm:px-3">No</th>
+          <th className="px-2 py-3 font-medium sm:px-3">Tarix</th>
+          <th className="px-2 py-3 font-medium sm:px-3">Çatdırılma ünvanı</th>
+          <th className="px-2 py-3 font-medium sm:px-3">Məhsul sayı</th>
+          <th className="px-2 py-3 font-medium sm:px-3">Subtotal/Çatdırılma</th>
+          <th className="px-2 py-3 font-medium sm:px-3">Status</th>
+          <th className="rounded-r-md px-2 py-3 font-medium sm:px-3" />
+        </tr>
+      </thead>
+      <tbody>
+        {orders.map((order) => {
+          const address = order.delivery_address ?? order.address ?? "-";
+
+          return (
+            <tr
+              key={order.id}
+              className="border-b border-gray-100 last:border-0"
+            >
+              <td className="max-w-0 px-2 py-3 sm:px-3">
+                <TruncatedCell
+                  value={getOrderNumber(order.id, order.order_number)}
+                />
+              </td>
+              <td className="max-w-0 px-2 py-3 whitespace-nowrap sm:px-3">
+                <TruncatedCell value={formatDate(order.created_at)} />
+              </td>
+              <td className="max-w-0 px-2 py-3 sm:px-3">
+                <TruncatedCell value={address} />
+              </td>
+              <td className="max-w-0 px-2 py-3 sm:px-3">
+                <TruncatedCell value={getItemCount(order)} />
+              </td>
+              <td className="max-w-0 px-2 py-3 whitespace-nowrap sm:px-3">
+                <TruncatedCell value={getOrderTotal(order)} />
+              </td>
+              <td className="max-w-0 px-2 py-3 sm:px-3">
+                <TruncatedCell value={order.status} />
+              </td>
+              <td className="max-w-0 px-2 py-3 text-right whitespace-nowrap sm:px-3">
+                <Link
+                  href={`/account/orders/${order.id}`}
+                  className="text-[11px] hover:text-primary"
+                  title="Sifariş detallarına bax"
+                >
+                  detallar &gt;
+                </Link>
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+);
+
+export default AccountOrderTable;

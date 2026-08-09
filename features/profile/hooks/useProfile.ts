@@ -10,6 +10,13 @@ export const useProfileQuery = (options?: { enabled?: boolean }) =>
     enabled: options?.enabled ?? true,
   });
 
+export const useOrdersQuery = (options?: { enabled?: boolean }) =>
+  useQuery({
+    queryKey: ["orders"],
+    queryFn: profileService.getOrders,
+    enabled: options?.enabled ?? true,
+  });
+
 export const useUpdateProfileMutation = () => {
   const queryClient = useQueryClient();
 
