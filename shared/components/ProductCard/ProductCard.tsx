@@ -38,6 +38,7 @@ export default function ProductCard({
   title,
   price,
   href,
+  categoryId,
   currency = "AZN",
   actionSlot,
   className = "",
@@ -51,9 +52,8 @@ export default function ProductCard({
     gap,
   } = sizeMap[size];
 
-  const productHref = href ?? `/products/${id}`;
-
-  // Best-effort shape for the favorites cache's optimistic-add — fields the
+const productHref =
+  href ?? (categoryId ? `/category/${categoryId}/product/${id}` : `/product/${id}`);  // Best-effort shape for the favorites cache's optimistic-add — fields the
   // card doesn't carry (description/type/category) are filled by the
   // background refetch that follows the toggle.
   const favoriteProduct: Product = {
