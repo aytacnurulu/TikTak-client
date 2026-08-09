@@ -1,11 +1,10 @@
 "use client";
 
 import Spinner from "@/shared/components/Spinner";
-import AccountSidebar from "../components/AccountSidebar/AccountSidebar";
 import AccountInfoForm from "../components/AccountInfoForm/AccountInfoForm";
 import { useProfileQuery } from "../hooks/useProfile";
 
-const AccountPage = () => {
+export default function AccountPage() {
   const { data: profile, isLoading } = useProfileQuery();
 
   if (isLoading) {
@@ -16,12 +15,5 @@ const AccountPage = () => {
     );
   }
 
-  return (
-    <div className="py-8 flex flex-col sm:flex-row gap-6 items-start">
-      <AccountSidebar />
-      <AccountInfoForm profile={profile} />
-    </div>
-  );
-};
-
-export default AccountPage;
+  return <AccountInfoForm profile={profile} />;
+}
