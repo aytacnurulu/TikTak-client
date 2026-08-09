@@ -5,7 +5,7 @@ import AccountSidebar from "../components/AccountSidebar/AccountSidebar";
 import AccountInfoForm from "../components/AccountInfoForm/AccountInfoForm";
 import { useProfileQuery } from "../hooks/useProfile";
 
-const ProfilePage = () => {
+const AccountPage = () => {
   const { data: profile, isLoading } = useProfileQuery();
 
   if (isLoading) {
@@ -24,4 +24,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default AccountPage;

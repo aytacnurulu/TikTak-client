@@ -1,4 +1,4 @@
-import AccountOrderDetail from "@/features/profile/components/AccountOrderDetail/AccountOrderDetail";
+import AccountOrderDetail from "@/features/account/components/AccountOrderDetail/AccountOrderDetail";
 import { notFound } from "next/navigation";
 
 export default async function AccountOrderDetailPage({
