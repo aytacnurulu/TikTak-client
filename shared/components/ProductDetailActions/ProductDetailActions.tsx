@@ -10,14 +10,14 @@ interface ProductDetailActionsProps {
   product: Product;
 }
 
-export default function ProductDetailActions({ productId }: ProductDetailActionsProps) {
-  const { quantity, increase, decrease, isPending } = useBasketQuantity(productId);
+export default function ProductDetailActions({ productId, product, }: ProductDetailActionsProps) {
+ const { quantity, increase, decrease, isPending } = useBasketQuantity(productId);
 
   if (quantity > 0) {
     return (
       <QuantitySelector
         value={quantity}
-        unit="1 kg"
+        unit={product.type}
         min={0}
         onIncrease={increase}
         onDecrease={decrease}
