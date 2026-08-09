@@ -15,10 +15,14 @@ export default function BasketPanel() {
   const { data, isLoading } = useBasketQuery();
   const { add, remove, deleteItem } = useBasketMutations();
 
+  const isItemMutating = (productId: number) =>
+    (add.isPending && add.variables === productId) ||
+    (remove.isPending && remove.variables === productId) ||
+    (deleteItem.isPending && deleteItem.variables === productId)
+
 
   const items = data?.items ?? [];
   const total = Number(data?.total ?? 0);
-  const isMutating = add.isPending || remove.isPending || deleteItem.isPending;
 
   return (
     <div className="sticky top-4">
@@ -67,7 +71,7 @@ export default function BasketPanel() {
                 onIncrease={() => add.mutate(item.product.id)}
                 onDecrease={() => remove.mutate(item.product.id)}
                 onDelete={() => deleteItem.mutate(item.product.id)}
-                disabled={isMutating}
+                disabled={isItemMutating(item.product.id)}
               />
             ))}
           </div>
