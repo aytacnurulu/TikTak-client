@@ -24,6 +24,7 @@ export default function BasketPage() {
 
   const items = data?.items ?? [];
   const isMutating = add.isPending || remove.isPending || deleteItem.isPending;
+  const isEmpty = items.length === 0;
 
   if (!hasHydrated || !isAuthenticated || isLoading) {
     return (
@@ -33,19 +34,20 @@ export default function BasketPage() {
     );
   }
 
-  return (
-    <div className="py-8">
-      <nav className="mb-4 text-sm text-gray-500">
-        <Link href="/category" className="hover:text-gray-700">
-          Ana səhifə
-        </Link>
-        <span className="mx-2">/</span>
-        <span className="text-gray-700">Səbətim</span>
-      </nav>
+ return (
+  <>
+    <nav className="lg:col-span-2 text-sm text-gray-500 mb-2">
+      <Link href="/category" className="hover:text-gray-700">
+        Ana səhifə
+      </Link>
+      <span className="mx-2">/</span>
+      <span className="text-gray-700">Səbətim</span>
+    </nav>
 
+    <div>
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-bold text-dark">Səbətim</h1>
-        {items.length > 0 && (
+        {!isEmpty && (
           <button
             type="button"
             onClick={() => clear.mutate()}
@@ -57,33 +59,39 @@ export default function BasketPage() {
         )}
       </div>
 
-      {items.length === 0 ? (
+      {isEmpty ? (
         <Card className="flex flex-col items-center text-center px-6 py-10">
           <div className="relative w-40 h-40">
-            <Image src="/image/emptybasket.svg" alt="" fill className="object-contain" />
+            <Image
+              src="/image/emptybasket.svg"
+              alt=""
+              fill
+              className="object-contain"
+            />
           </div>
-          <p className="mt-4 text-lg font-semibold text-primary">Səbətiniz boşdur</p>
+          <p className="mt-4 text-lg font-semibold text-primary">
+            Səbətiniz boşdur
+          </p>
           <p className="mt-2 text-sm text-gray-500">
             Sifariş vermək üçün səbətinizə məhsul əlavə edin
           </p>
         </Card>
       ) : (
-        <div className="grid lg:grid-cols-[1fr_360px] gap-6 items-start">
-          <Card className="px-6 divide-y divide-gray-100">
-            {items.map((item) => (
-              <BasketCard
-                key={item.id}
-                item={item}
-                onIncrease={() => add.mutate(item.product.id)}
-                onDelete={() => deleteItem.mutate(item.product.id)}
-                disabled={isMutating}
-              />
-            ))}
-          </Card>
-
-          <BasketTotalCountPanel total={data?.total ?? '0.00'} disabled={items.length === 0} />
-        </div>
+        <Card className="px-6 divide-y divide-gray-100">
+          {items.map((item) => (
+            <BasketCard
+              key={item.id}
+              item={item}
+              onIncrease={() => add.mutate(item.product.id)}
+              onDelete={() => deleteItem.mutate(item.product.id)}
+              disabled={isMutating}
+            />
+          ))}
+        </Card>
       )}
     </div>
-  );
+
+    <BasketTotalCountPanel total={data?.total ?? "0.00"} disabled={isEmpty} />
+  </>
+);
 }

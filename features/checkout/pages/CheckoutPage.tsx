@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Spinner from "@/shared/components/Spinner";
 import { useRequireAuth } from "@/shared/hooks/useRequireAuth";
 import OrderForm from "../components/OrderForm/OrderForm";
-import OrderSummary from "../components/OrderSummary/OrderSummary";
+import OrderSummary from "../components/OrderSummary";
+import Link from 'next/link';
 import ConfirmOrderModal from "../components/ConfirmOrderModal/ConfirmOrderModal";
 import AddressMissingModal from "../components/AddressMissingModal/AddressMissingModal";
 import OrderSuccessModal from "../components/OrderSuccessModal/OrderSuccessModal";
@@ -73,21 +74,27 @@ const CheckoutPage = () => {
   }
 
   return (
-    <div className="py-8">
-      <p className="text-sm text-gray-400 mb-4">Ana səhifə / Meyvələr</p>
-      <div className="grid lg:grid-cols-[1fr_360px] gap-6 items-start">
-        <div className="max-w-[750px]">
-          <h1 className="text-xl font-bold text-[#2B3043] mb-4">
-            Sifarişin tamamlanması
-          </h1>
-          <OrderForm
-            profile={profile}
-            isSubmitting={isPending}
-            onSubmit={handleFormSubmit}
-          />
-        </div>
-        <OrderSummary basket={basket} isLoading={isBasketLoading} />
+    <>
+      <nav className="lg:col-span-2 text-sm text-gray-500 mb-2">
+        <Link href="/category" className="hover:text-gray-700">
+          Ana səhifə
+        </Link>
+        <span className="mx-2">/</span>
+        <span className="text-gray-700">Sifarişim</span>
+      </nav>
+
+      <div className="">
+        <h1 className="text-lg font-bold text-[#2B3043] mb-4">
+          Sifarişin tamamlanması
+        </h1>
+        <OrderForm
+          profile={profile}
+          isSubmitting={isPending}
+          onSubmit={handleFormSubmit}
+        />
       </div>
+
+      <OrderSummary basket={basket} isLoading={isBasketLoading} />
 
       <ConfirmOrderModal
         open={pendingPayload !== null}
@@ -101,11 +108,8 @@ const CheckoutPage = () => {
         onClose={() => setShowAddressMissing(false)}
       />
 
-      <OrderSuccessModal
-        open={showSuccess}
-        onClose={() => setShowSuccess(false)}
-      />
-    </div>
+      <OrderSuccessModal open={showSuccess} onClose={() => setShowSuccess(false)} />
+    </>
   );
 };
 

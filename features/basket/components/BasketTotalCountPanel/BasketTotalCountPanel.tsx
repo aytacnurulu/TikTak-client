@@ -5,12 +5,12 @@ import Card from '@/shared/components/Card';
 import Button from '@/shared/components/Button';
 import type { BasketTotalCountPanelProps } from './types';
 
-export default function BasketTotalCountPanel({ total, disabled }: BasketTotalCountPanelProps) {
+export default function BasketTotalCountPanel({ total, disabled, title = 'Yekun məbləğ', }: BasketTotalCountPanelProps) {
   const router = useRouter();
 
   return (
     <div>
-      <h2 className="text-lg font-bold text-dark mb-4">Yekun məbləğ</h2>
+      <h2 className="text-lg font-bold text-dark mb-4">{title}</h2>
 
       <Card className="p-6">
         <div className="space-y-4 text-sm">
