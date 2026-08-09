@@ -8,6 +8,7 @@ import AddToBasketButton from "@/shared/components/AddToBasketButton";
 import { useRequireAuth } from "@/shared/hooks/useRequireAuth";
 import { useFavoritesQuery } from "@/shared/hooks/useFavorites";
 import FavoriteEmptyState from "../components/FavoriteEmptyState";
+import BasketPanel from "@/shared/components/BasketPanel";
 
 export default function FavoritesPage() {
   const { requireAuth, isAuthenticated, hasHydrated } = useRequireAuth();
@@ -20,15 +21,7 @@ export default function FavoritesPage() {
 
   const { data: favorites, isLoading, isError } = useFavoritesQuery();
 
-  if (!hasHydrated || !isAuthenticated) {
-    return (
-      <div className="flex justify-center py-20">
-        <Spinner size="lg" color="primary" />
-      </div>
-    );
-  }
-
-  if (isLoading) {
+  if (!hasHydrated || !isAuthenticated || isLoading) {
     return (
       <div className="flex justify-center py-20">
         <Spinner size="lg" color="primary" />
@@ -49,21 +42,27 @@ export default function FavoritesPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
-      <h1 className="text-2xl font-semibold text-gray-900 mb-4">Seçilmişlər</h1>
-      <Grid columns={6} gap={3} ariaLabel="Seçilmiş məhsullar">
-        {favorites.map((product) => (
-          <ProductCard
-            key={product.id}
-            id={product.id}
-            image={product.img_url}
-            title={product.title}
-            price={product.price}
-            size="md"
-            actionSlot={<AddToBasketButton productId={product.id} />}
-          />
-        ))}
-      </Grid>
+   <div className="grid grid-cols-[1fr_320px] gap-6 py-6">
+      <section aria-label="Seçilmiş məhsullar">
+        <h1 className="text-2xl font-semibold text-gray-900 mb-4">
+          Siyahılarım
+        </h1>
+        <Grid columns={6} gap={3} ariaLabel="Seçilmiş məhsullar">
+          {favorites.map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              image={product.img_url}
+              title={product.title}
+              price={product.price}
+              size="md"
+              actionSlot={<AddToBasketButton productId={product.id} />}
+            />
+          ))}
+        </Grid>
+      </section>
+
+      <BasketPanel />
     </div>
   );
 }

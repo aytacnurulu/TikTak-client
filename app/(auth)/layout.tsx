@@ -1,14 +1,17 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen flex">
       <div className="hidden md:block w-1/2 shrink-0 relative">
-        <img
+        <Image
           src="/image/auth-banner.svg"
           alt="TIK TAK"
-          className="absolute inset-0 w-full h-full object-contain"
+          fill
+          className="object-contain"
+          priority
         />
         <Link href="/category" className="absolute inset-0" aria-label="Ana səhifə" />
       </div>

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import SearchBar from "./SearchBar";
 import { AccountIcon, FavoritesIcon, BasketIcon } from "./NavIcons";
-import { useProfileQuery } from "@/features/profile/hooks/useProfile";
+import { useProfileQuery } from "@/features/account/hooks/useProfile";
 import { useAuthStore } from "@/shared/store/useAuthStore";
 
 interface NavItem {
