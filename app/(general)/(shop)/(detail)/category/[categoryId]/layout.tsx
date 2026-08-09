@@ -33,7 +33,7 @@ export default async function CategoryDetailLayout({
         </span>
       </nav>
 
-      <div className="grid grid-cols-[240px_1fr_320px] gap-6 py-2">
+      <div className="grid grid-cols-[240px_1fr_320px] gap-6 ">
         <div className="flex flex-col gap-4">
           <CategorySidebar
             categories={categories}
