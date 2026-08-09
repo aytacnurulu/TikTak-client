@@ -18,6 +18,7 @@ export interface ProductCardProps {
   price: string;
   href?: string;
   currency?: string;
+  categoryId?: number | string;
   actionSlot: ReactNode;
   className?: string;
   size?: ProductCardSize;
