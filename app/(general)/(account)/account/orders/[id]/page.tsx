@@ -1,4 +1,5 @@
 import AccountOrderDetail from "@/features/profile/components/AccountOrderDetail/AccountOrderDetail";
+import { notFound } from "next/navigation";
 
 export default async function AccountOrderDetailPage({
   params,
@@ -6,5 +7,10 @@ export default async function AccountOrderDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+
+  if (!id) {
+    notFound()
+  }
+  
   return <AccountOrderDetail orderId={id} />;
 }

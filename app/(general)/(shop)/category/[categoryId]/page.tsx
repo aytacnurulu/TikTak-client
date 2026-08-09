@@ -11,21 +11,28 @@ import Header from "@/shared/components/Header";
 import BasketPanel from "@/shared/components/BasketPanel";
 import Container from "@/shared/components/Container";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 interface CategoryPageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ categoryId: string }>;
 }
 
 export async function generateMetadata({
   params,
 }: CategoryPageProps): Promise<Metadata> {
-  const { id } = await params;
+  const { categoryId } = await params;
+
+  if (!categoryId) {
+    notFound()
+  }
+
   const categories = await getCategories();
-  const current = categories.find((c) => c.id === Number(id));
+  const current = categories.find((c) => c.id === Number(categoryId));
 
   if (!current) {
     return { title: "Kateqoriya tapılmadı — Tik Tak" };
   }
+
 
   return {
     title: `${current.name} — Tik Tak`,
@@ -39,15 +46,19 @@ export async function generateMetadata({
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const { id } = await params;
-  const categoryId = Number(id);
+  const { categoryId } = await params;
+  const categoryIdNum = Number(categoryId);
 
   const [categories, products] = await Promise.all([
     getCategories(),
-    getProductsByCategory(categoryId),
+    getProductsByCategory(categoryIdNum),
   ]);
 
-  const currentCategory = categories.find((c) => c.id === categoryId);
+  const currentCategory = categories.find((c) => c.id === categoryIdNum);
+
+  if (!currentCategory) {
+    notFound();
+  }
 
   return (
     <main className="bg-[rgb(246,245,251)]">
@@ -64,7 +75,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <div className="flex flex-col gap-4">
             <CategorySidebar
               categories={categories}
-              currentCategoryId={categoryId}
+              currentCategoryId={categoryIdNum}
             />
 
             <Card className="relative w-full aspect-[3/4] overflow-hidden p-0">

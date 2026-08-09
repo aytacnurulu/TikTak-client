@@ -9,16 +9,24 @@ import Card from "@/shared/components/Card";
 import ProductImage from "@/shared/components/ProductCard/ProductImage";
 import ProductDetailActions from "@/shared/components/ProductDetailActions/ProductDetailActions";
 import FavoriteButton from "@/shared/components/FavoriteButton";
+import { notFound } from "next/navigation";
+import { cache } from "react";
 
 interface ProductDetailPageProps {
-  params: Promise<{ id: string; productId: string }>;
+  params: Promise<{ categoryId: string; id: string }>;
 }
+
+export const getProductByIdCached = cache(getProductById);
 
 export async function generateMetadata({
   params,
 }: ProductDetailPageProps): Promise<Metadata> {
-  const { productId } = await params;
-  const product = await getProductById(Number(productId));
+  const { id } = await params;
+  const product = await getProductByIdCached(Number(id));
+
+  if (!product) {
+    notFound()
+  }
 
   return {
     title: `${product.title} — Tik Tak`,
@@ -34,19 +42,30 @@ export async function generateMetadata({
 export default async function ProductDetailPage({
   params,
 }: ProductDetailPageProps) {
-  const { id, productId: productIdParam } = await params;
-  const categoryId = Number(id);
-  const productId = Number(productIdParam);
-  const [product, categories] = await Promise.all([
-    getProductById(productId),
-    getCategories(),
-  ]);
+  const { categoryId, id } = await params;
+  const categoryIdNum = Number(categoryId);
+  const productId = Number(id);
+
+  let product;
+  let categories;
+
+  try {
+    [product, categories] = await Promise.all([
+      getProductByIdCached(productId),
+      getCategories(),
+    ]);
+  } catch {
+    notFound();
+  }
+
+  if (!product) {
+    notFound();
+  }
 
   return (
     <main className="bg-[rgb(246,245,251)] min-h-screen">
       <Header />
       <div className="max-w-7xl mx-auto py-6 px-4">
-        {/* Breadcrumb */}
         <nav className="mb-4 text-sm text-gray-500">
           <Link href="/" className="hover:text-gray-700">
             Ana səhifə
@@ -56,18 +75,16 @@ export default async function ProductDetailPage({
         </nav>
 
         <div className="grid grid-cols-[280px_1fr_320px] gap-6 items-start">
-          {/* Sol sütun */}
           <div className="flex flex-col gap-4">
             <h2 className="text-xl font-bold text-gray-900">
               {product.category.name}
             </h2>
             <CategorySidebar
               categories={categories}
-              currentCategoryId={categoryId}
+              currentCategoryId={categoryIdNum}
             />
           </div>
 
-          {/* Mərkəzi kart */}
           <Card className="rounded-[10px] p-6 overflow-hidden h-105">
             <div className="flex items-center justify-between mb-5">
               <Link
@@ -131,7 +148,6 @@ export default async function ProductDetailPage({
             </div>
           </Card>
 
-          {/* Sağ sütun — kartla eyni hündürlük */}
           <div>
             <BasketPanel />
           </div>
