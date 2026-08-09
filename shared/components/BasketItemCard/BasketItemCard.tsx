@@ -40,6 +40,7 @@ export default function BasketItemCard({
         <div className="mt-1 w-28">
           <QuantitySelector
             value={item.quantity}
+            unit={item.product.type}
             min={0}
             onIncrease={onIncrease}
             onDecrease={onDecrease}
