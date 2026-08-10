@@ -15,7 +15,10 @@ async function fetchBasket(): Promise<Basket> {
   const { data } = await apiClient.get<ApiResponse<Basket>>(
     API.CLIENT.BASKET.LIST,
   );
-  return data.data;
+  return {
+    ...data.data,
+    items: [...data.data.items].sort((a, b) => b.id - a.id),
+  };
 }
 
 async function addOne(productId: number): Promise<void> {

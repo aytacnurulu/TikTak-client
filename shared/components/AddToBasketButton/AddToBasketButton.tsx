@@ -21,7 +21,7 @@ export default function AddToBasketButton({ productId,productType }: AddToBasket
     setLocalQty(quantity);
   }
 
-  if (localQty > 0) {
+  if (localQty > 0 || quantity > 0) {
     return (
       <QuantitySelector
         value={localQty}
