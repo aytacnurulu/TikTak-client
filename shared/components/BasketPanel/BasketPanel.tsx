@@ -2,24 +2,30 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import Button from "@/shared/components/Button";
 import { useBasketQuery, useBasketMutations } from "@/shared/hooks/useBasket";
 import { useRequireAuth } from "@/shared/hooks/useRequireAuth";
 import BasketItemCard from "../BasketItemCard";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function BasketPanel() {
   const { isAuthenticated, hasHydrated } = useRequireAuth();
   const pathname = usePathname();
+  const router = useRouter();
   const { data, isLoading } = useBasketQuery();
   const { add, remove, deleteItem } = useBasketMutations();
 
-  
+  const isItemMutating = (productId: number) =>
+    (add.isPending && add.variables === productId) ||
+    (remove.isPending && remove.variables === productId) ||
+    (deleteItem.isPending && deleteItem.variables === productId)
+
+
   const items = data?.items ?? [];
   const total = Number(data?.total ?? 0);
 
   return (
-    <div className="h-full max-h-[calc(100vh-140px)] overflow-y-auto sticky top-4 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-thumb]:rounded-full">
+    <div className="sticky top-4">
       <h2 className="text-2xl font-bold mb-4">Səbətim</h2>
 
       {!hasHydrated || (isAuthenticated && isLoading) ? (
@@ -56,8 +62,8 @@ export default function BasketPanel() {
           </p>
         </div>
       ) : (
-        <>
-          <div className="space-y-3">
+        <div className="h-[480px] flex flex-col rounded-[10px] border border-gray-100 bg-white p-4">
+          <div className="flex-1 min-h-0 overflow-y-auto space-y-3 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-thumb]:rounded-full">
             {items.map((item) => (
               <BasketItemCard
                 key={item.id}
@@ -65,14 +71,12 @@ export default function BasketPanel() {
                 onIncrease={() => add.mutate(item.product.id)}
                 onDecrease={() => remove.mutate(item.product.id)}
                 onDelete={() => deleteItem.mutate(item.product.id)}
-                disabled={
-                  add.isPending || remove.isPending || deleteItem.isPending
-                }
+                disabled={isItemMutating(item.product.id)}
               />
             ))}
           </div>
 
-          <div className="mt-4 rounded-[10px] border border-gray-100 bg-white p-4">
+          <div className="mt-4 pt-4 rounded-[10px] border-gray-100">
             <div className="space-y-1 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-500">Ümumi:</span>
@@ -89,11 +93,19 @@ export default function BasketPanel() {
               <span>{Number(total).toFixed(2)} AZN</span>
             </div>
 
-            <Button variant="dark" size="lg" fullWidth className="mt-4">
+            <Button
+              variant="dark"
+              size="lg"
+              fullWidth
+              disabled={items.length === 0}
+              className="mt-4"
+              onClick={() => router.push("/checkout")}
+            >
               Sifarişi tamamla
             </Button>
+
           </div>
-        </>
+        </div>
       )}
     </div>
   );

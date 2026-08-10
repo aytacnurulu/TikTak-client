@@ -108,7 +108,7 @@ const QuantitySelector = ({
         onPointerCancel={stop}
         disabled={isDecreaseDisabled}
         aria-label="Sayı azalt"
-        className="rounded-full w-9 px-0 text-lg"
+        className="rounded-full w-8 px-0 text-lg"
       >
         {decreaseIcon ?? "−"}
       </Button>
@@ -128,7 +128,7 @@ const QuantitySelector = ({
         onPointerCancel={stop}
         disabled={isIncreaseDisabled}
         aria-label="Sayı artır"
-        className="rounded-full w-9 px-0 text-lg"
+        className="rounded-full w-8 px-0 text-lg"
       >
         {increaseIcon ?? "+"}
       </Button>
