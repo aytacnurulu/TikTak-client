@@ -5,6 +5,7 @@ import { getProductsByCategory } from "@/shared/lib/api/products";
 import ProductCard from "@/shared/components/ProductCard";
 import AddToBasketButton from "@/shared/components/AddToBasketButton";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 
 interface CategoryPageProps {
   params: Promise<{ categoryId: string }>;
@@ -46,24 +47,35 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   }
 
   return (
-   <section aria-label={currentCategory.name}>
+    <section aria-label={currentCategory.name}>
       <h1 className="text-2xl font-semibold text-gray-900 mb-4">
         {currentCategory.name}
       </h1>
 
-      <Grid columns={4} ariaLabel="Məhsullar">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            id={product.id}
-            href={`/category/${categoryIdNum}/product/${product.id}`}
-            image={product.img_url || "/image/apple.svg"}
-            title={product.title}
-            price={product.price}
-            actionSlot={<AddToBasketButton productId={product.id} />}
+      {products.length === 0 ? (
+        <div className="h-[333px] flex flex-col items-center justify-center py-16 text-center bg-white rounded-lg">
+          <Image
+            src="/image/empty-state-category.svg"
+            alt="Məhsul tapılmadı"
+            width={300}
+            height={300}
           />
-        ))}
-      </Grid>
+        </div>
+      ) : (
+        <Grid columns={4} ariaLabel="Məhsullar">
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              href={`/category/${categoryIdNum}/product/${product.id}`}
+              image={product.img_url || "/image/apple.svg"}
+              title={product.title}
+              price={product.price}
+              actionSlot={<AddToBasketButton productId={product.id} />}
+            />
+          ))}
+        </Grid>
+      )}
     </section>
   );
 }
