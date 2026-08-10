@@ -21,6 +21,9 @@ export default function BasketItemCard({
   onDelete,
   disabled,
 }: Props) {
+
+  const unitLabel = item.product.type === "piece" ? "pc" : item.product.type;
+
   return (
     <Card className="p-2 flex items-center gap-3 bg-gray-50 min-h-[72px]">
       <div className="relative w-14 h-14 shrink-0 rounded-xl overflow-hidden bg-white">
@@ -40,7 +43,7 @@ export default function BasketItemCard({
         <div className="mt-1 w-28">
           <QuantitySelector
             value={item.quantity}
-            unit={item.product.type}
+            unit={unitLabel}
             min={0}
             onIncrease={onIncrease}
             onDecrease={onDecrease}

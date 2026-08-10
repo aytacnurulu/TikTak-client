@@ -65,7 +65,7 @@ export default function FavoritesPage() {
               price={product.price}
               size="md"
               categoryId={product.category.id}
-              actionSlot={<AddToBasketButton productId={product.id} />}
+              actionSlot={<AddToBasketButton productId={product.id}  productType={product.type} />}
             />
           ))}
         </Grid>
