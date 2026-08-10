@@ -2,8 +2,8 @@
 
 import { useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import Card from '@/shared/components/Card';
+import Breadcrumb from '@/shared/components/Breadcrumb';
 import Spinner from '@/shared/components/Spinner';
 import { useRequireAuth } from '@/shared/hooks/useRequireAuth';
 import { useBasketQuery, useBasketMutations } from '@/shared/hooks/useBasket';
@@ -36,13 +36,13 @@ export default function BasketPage() {
 
  return (
   <>
-    <nav className="lg:col-span-2 text-sm text-gray-500 mb-2">
-      <Link href="/category" className="hover:text-gray-700">
-        Ana səhifə
-      </Link>
-      <span className="mx-2">/</span>
-      <span className="text-gray-700">Səbətim</span>
-    </nav>
+    <Breadcrumb
+      items={[
+        { label: 'Ana səhifə', href: '/category' },
+        { label: 'Səbətim' },
+      ]}
+      className=" lg:col-span-2"
+    />
 
     <div>
       <div className="flex items-center justify-between mb-4">

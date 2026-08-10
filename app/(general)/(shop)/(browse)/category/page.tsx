@@ -20,7 +20,7 @@ export default async function CategoryPage() {
     const categories = await getCategories();
     return  <section
       aria-label="Aksiyalar və kateqoriyalar"
-      className="py-6 flex gap-4 items-start"
+      className="py-6 flex flex-col lg:flex-row gap-4 items-start"
     >
       <PromoBanner
         bgColor="#76CB4F"
@@ -29,7 +29,7 @@ export default async function CategoryPage() {
         badgeText="DƏQİQƏYƏ QAPINDA"
         image="/image/homebanner.svg"
         imageAlt="Çiyələk və süd"
-        className="w-[330px]"
+        className="w-full lg:w-[330px] shrink-0"
       />
 
       <Grid ariaLabel="Kateqoriyalar" columns={6}>

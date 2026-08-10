@@ -52,7 +52,7 @@ const AccountInfoForm = ({ profile }: AccountInfoFormProps) => {
   };
 
   return (
-    <div className="bg-white rounded-[10px] border border-gray-100 p-6 flex-1">
+    <div className="bg-white rounded-[10px] border border-gray-100 p-4 sm:p-6 flex-1">
       <h2 className="text-lg font-bold text-[#2B3043] mb-6">
         Əlaqə məlumatlarınız
       </h2>
@@ -123,7 +123,7 @@ const AccountInfoForm = ({ profile }: AccountInfoFormProps) => {
             variant="primary"
             size="lg"
             loading={isPending}
-            className="w-[484px]"
+            className="w-full sm:w-[484px]"
           >
             Məlumatları yenilə
           </Button>

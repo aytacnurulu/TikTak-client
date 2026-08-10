@@ -48,7 +48,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <section aria-label={currentCategory.name}>
-      <h1 className="text-2xl font-semibold text-gray-900 mb-4">
+      <h1 className="text-lg font-semibold text-gray-900 mb-4">
         {currentCategory.name}
       </h1>
 

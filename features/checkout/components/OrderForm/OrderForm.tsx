@@ -58,7 +58,7 @@ const OrderForm = ({ profile, isSubmitting, onSubmit }: OrderFormProps) => {
   };
 
   return (
-    <Card className="p-6">
+    <Card className="p-4 sm:p-6">
       <form onSubmit={handleSubmit} className="space-y-6 text-[#2B3043]">
         <div className="grid sm:grid-cols-2 gap-6">
           <div className="space-y-4">
@@ -108,13 +108,13 @@ const OrderForm = ({ profile, isSubmitting, onSubmit }: OrderFormProps) => {
           </div>
         </div>
 
-        <div className="flex justify-center mt-[52px] mb-[28px]">
+        <div className="flex justify-center mt-8 sm:mt-[52px] mb-5 sm:mb-[28px]">
           <Button
             type="submit"
             variant="dark"
             size="lg"
             loading={isSubmitting}
-            className="w-[484px]"
+            className="w-full sm:w-[484px]"
           >
             Sifarişi tamamla
           </Button>

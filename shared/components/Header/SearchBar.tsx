@@ -55,7 +55,7 @@ export default function SearchBar() {
         <div className="relative">
             <Input
                 placeholder="Axtarış"
-                size="lg"
+                size="sm"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onFocus={() => setIsOpen(true)}

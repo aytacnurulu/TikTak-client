@@ -9,6 +9,7 @@ import { useRequireAuth } from "@/shared/hooks/useRequireAuth";
 import { useFavoritesQuery } from "@/shared/hooks/useFavorites";
 import FavoriteEmptyState from "../components/FavoriteEmptyState";
 import BasketPanel from "@/shared/components/BasketPanel";
+import Breadcrumb from "@/shared/components/Breadcrumb/Breadcrumb";
 
 export default function FavoritesPage() {
   const { requireAuth, isAuthenticated, hasHydrated } = useRequireAuth();
@@ -42,7 +43,14 @@ export default function FavoritesPage() {
   }
 
   return (
-    <div className="grid grid-cols-[1fr_320px] gap-6 py-6">
+    <div className="flex flex-col gap-6 py-6 lg:grid lg:grid-cols-[1fr_320px] lg:items-start">
+      <Breadcrumb
+        items={[
+          { label: "Ana səhifə", href: "/category" },
+          { label: "Seçilmişlərim" },
+        ]}
+        className=" lg:col-span-2"
+      />
       <section aria-label="Seçilmiş məhsullar">
         <h1 className="text-2xl font-semibold text-gray-900 mb-4">
           Siyahılarım

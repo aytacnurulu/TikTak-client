@@ -41,8 +41,8 @@ interface AccountOrderTableProps {
 }
 
 const AccountOrderTable = ({ orders }: AccountOrderTableProps) => (
-  <div className="w-full overflow-hidden">
-    <table className="w-full table-fixed text-left text-xs text-[#687080]">
+  <div className="w-full overflow-x-auto">
+    <table className="w-full min-w-[640px] table-fixed text-left text-xs text-[#687080]">
       <colgroup>
         <col className="w-[12%]" />
         <col className="w-[13%]" />

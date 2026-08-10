@@ -26,7 +26,7 @@ const Toast = ({
   if (!open) return null;
 
   return (
-    <div className="fixed top-6 right-6 z-50 bg-white rounded-[10px] shadow-lg border border-gray-100 p-5 w-[340px] animate-in slide-in-from-right">
+    <div className="fixed top-4 right-4 left-4 sm:left-auto sm:top-6 sm:right-6 z-50 bg-white rounded-[10px] shadow-lg border border-gray-100 p-4 sm:p-5 w-auto sm:w-[340px] animate-in slide-in-from-right">
       <div className="flex items-start gap-3">
         <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
           <svg

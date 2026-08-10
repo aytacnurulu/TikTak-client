@@ -47,8 +47,8 @@ export default async function ProductDetailPage({
   }
 
   return (
-    <Card className="rounded-[10px] p-6 overflow-hidden h-105">
-      <div className="flex items-center justify-between mb-5">
+    <Card className="rounded-[10px] p-6 space-y-6">
+      <div className="flex items-center justify-between">
         <Link
           href={`/category/${categoryId}`}
           className="inline-flex items-center gap-2 rounded-full bg-gray-50 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
@@ -79,30 +79,26 @@ export default async function ProductDetailPage({
         />
       </div>
 
-      <div className="h-full overflow-y-auto pr-2">
-        <div className="flex flex-col sm:flex-row gap-6">
-          <div className="relative w-full sm:w-45 aspect-square shrink-0">
-            <ProductImage
-              image={product.img_url || "/image/apple.svg"}
-              title={product.title}
-            />
-          </div>
+      <div className="flex flex-col sm:flex-row gap-6">
+        <div className="relative w-full sm:w-45 aspect-square shrink-0">
+          <ProductImage
+            image={product.img_url || "/image/apple.svg"}
+            title={product.title}
+          />
+        </div>
 
-          <div className="flex flex-col gap-2.5 flex-1">
-            <h1 className="text-xl font-bold text-gray-900">
-              {product.title}
-            </h1>
-            <p className="text-sm text-gray-500 leading-relaxed line-clamp-3">
-              {product.description}
-            </p>
-            <p className="text-lg font-bold text-gray-900">
-              {Number(product.price).toFixed(2)} AZN
-            </p>
+        <div className="flex flex-col gap-4 flex-1">
+          <h1 className="text-xl font-bold text-gray-900">
+            {product.title}
+          </h1>
+          <p className="text-sm text-gray-500 leading-relaxed line-clamp-3">
+            {product.description}
+          </p>
+          <p className="text-lg font-bold text-gray-900">
+            {Number(product.price).toFixed(2)} AZN
+          </p>
 
-            <div className="mt-1">
-              <ProductDetailActions productId={product.id} product={product} />
-            </div>
-          </div>
+          <ProductDetailActions productId={product.id} product={product} />
         </div>
       </div>
     </Card>

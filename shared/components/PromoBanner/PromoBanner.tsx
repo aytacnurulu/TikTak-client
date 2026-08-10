@@ -25,12 +25,12 @@ export default function PromoBanner({
   return (
     <Card
       onClick={onClick}
-      className={`relative border-0 flex flex-col items-center justify-between aspect-[350/560] pt-16 pb-8 overflow-visible ${
+      className={`relative border-0 flex flex-col items-center justify-between aspect-[350/560] pt-10 sm:pt-16 pb-6 sm:pb-8 overflow-visible ${
         onClick ? 'cursor-pointer' : ''
       } ${className}`}
       style={{ backgroundColor: bgColor }}
     >
-      <div className="relative w-[110%] h-[260px] flex justify-center items-center top-20 left-4">
+      <div className="relative w-[110%] h-[180px] sm:h-[260px] flex justify-center items-center top-12 sm:top-20 left-2 sm:left-4">
         <Image
           src={image}
           alt={imageAlt}
@@ -41,17 +41,17 @@ export default function PromoBanner({
         />
       </div>
 
-      <div className="w-full px-6 flex flex-col items-center text-center text-white z-10 [text-shadow:_3px_0px_7px_rgba(0,0,0,0.25)]">
-        <p className="text-xl sm:text-3xl font-black uppercase tracking-tight leading-tight mb-2">
+      <div className="w-full px-4 sm:px-6 flex flex-col items-center text-center text-white z-10 [text-shadow:_3px_0px_7px_rgba(0,0,0,0.25)]">
+        <p className="text-lg sm:text-xl lg:text-3xl font-black uppercase tracking-tight leading-tight mb-2">
           {eyebrow}
         </p>
 
         <div className="flex items-center justify-center gap-2">
-          <span className="text-7xl sm:text-[80px] font-black leading-none tracking-tighter">
+          <span className="text-4xl sm:text-6xl lg:text-[80px] font-black leading-none tracking-tighter">
             {number}
           </span>
 
-          <span className="font-codec-pro font-extrabold uppercase text-sm sm:text-3xl leading-[110%] text-left">
+          <span className="font-codec-pro font-extrabold uppercase text-xs sm:text-lg lg:text-3xl leading-[110%] text-left">
             {badgeText.split(' ').map((word, i) => (
               <span key={i} className="block">
                 {word}
