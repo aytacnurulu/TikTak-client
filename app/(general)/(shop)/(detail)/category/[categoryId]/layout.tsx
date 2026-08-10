@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import Card from "@/shared/components/Card";
+import Breadcrumb from "@/shared/components/Breadcrumb";
 import CategorySidebar from "@/features/category/components/CategorySidebar";
+import CategoryFilterAccordion from "@/features/category/components/CategoryFilterAccordion";
 import BasketPanel from "@/shared/components/BasketPanel";
 import { getCategories } from "@/shared/lib/api/categories";
 
@@ -23,21 +24,25 @@ export default async function CategoryDetailLayout({
 
   return (
     <>
-      <nav className="mb-4 pt-2 text-sm text-gray-500">
-        <Link href="/category" className="hover:text-gray-700">
-          Ana səhifə
-        </Link>
-        <span className="mx-2">/</span>
-        <span className="text-gray-700">
-          {currentCategory?.name ?? "Kateqoriya"}
-        </span>
-      </nav>
+      <Breadcrumb
+        items={[
+          { label: "Ana səhifə", href: "/category" },
+          { label: currentCategory?.name ?? "Kateqoriya" },
+        ]}
+        className="mb-4 pt-2"
+      />
 
-      <div className="grid grid-cols-[240px_1fr_320px] gap-6 ">
-        <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[240px_1fr_320px] lg:gap-6 lg:items-start">
+        <CategoryFilterAccordion
+          categories={categories}
+          currentCategoryId={categoryIdNum}
+        />
+
+        <div className="hidden lg:flex lg:flex-col gap-4">
           <CategorySidebar
             categories={categories}
             currentCategoryId={categoryIdNum}
+            variant="card"
           />
 
           <Card className="relative w-full aspect-[3/4] overflow-hidden p-0">

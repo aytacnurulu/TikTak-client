@@ -66,9 +66,9 @@ const footerLinks: Record<string, string[]> = {
 const Footer = () => {
   return (
     <footer className="w-full bg-white border-t border-gray-100 mt-12">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-10">
-        <div className="flex flex-col lg:flex-row lg:justify-between gap-10">
-          <div className="flex flex-col sm:flex-row gap-16">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-8 sm:py-10">
+        <div className="flex flex-col lg:flex-row lg:justify-between gap-8 sm:gap-10">
+          <div className="flex flex-wrap gap-8 sm:gap-16">
             {Object.entries(footerLinks).map(([title, links]) => {
               const chunkSize = 4;
               const columns: string[][] = [];
@@ -81,7 +81,7 @@ const Footer = () => {
                   <h4 className="text-lg font-semibold text-[#195233] mb-3">
                     {title}
                   </h4>
-                  <div className="flex gap-10">
+                  <div className="flex flex-wrap gap-6 sm:gap-10">
                     {columns.map((columnLinks, i) => (
                       <ul key={i} className="space-y-2">
                         {columnLinks.map((link) => (
@@ -102,7 +102,7 @@ const Footer = () => {
             })}
           </div>
 
-          <div className="min-w-[420px]">
+          <div className="w-full lg:max-w-[420px]">
             <h4 className="text-lg font-semibold text-[#195233] mb-3">
               Yeniliklərə abunə olun
             </h4>
@@ -114,7 +114,7 @@ const Footer = () => {
                 <Button
                   variant="success"
                   size="md"
-                  className="rounded-[10px] px-8"
+                  className="rounded-[10px] px-4 sm:px-8"
                 >
                   Göndər
                 </Button>
@@ -123,7 +123,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[#195233]">
+        <div className="mt-10 pt-6 border-t border-gray-100 flex flex-col sm:flex-row flex-wrap items-center justify-center sm:justify-between gap-4 text-sm text-[#195233] text-center">
           <span>
             © {new Date().getFullYear()} Azerbaijan Supermarket. Bütün hüquqlar
             qorunur
@@ -139,7 +139,7 @@ const Footer = () => {
                 key={social.name}
                 href={social.href}
                 aria-label={social.name}
-                className="h-8 w-8 rounded-full bg-success/10 text-success flex items-center justify-center hover:bg-success/20"
+                className="h-8 w-8 rounded-full bg-success/10 text-success flex items-center justify-center hover:bg-success/20 shrink-0"
               >
                 <svg
                   viewBox="0 0 24 24"

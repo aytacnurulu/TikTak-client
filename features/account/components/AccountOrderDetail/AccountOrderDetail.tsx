@@ -53,7 +53,7 @@ const AccountOrderDetail = ({ orderId }: AccountOrderDetailProps) => {
   }
 
   return (
-      <section className="bg-white rounded-[10px] border border-gray-100 p-6 w-full">
+      <section className="bg-white rounded-[10px] border border-gray-100 p-4 sm:p-6 w-full">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
         <div>
           <Link

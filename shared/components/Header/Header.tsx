@@ -89,7 +89,7 @@ const Header = ({ showAddress = true, showSearch = true }: HeaderProps) => {
           })}
         </nav>
 
-        <div className="flex md:hidden items-center gap-3 shrink-0">
+        <div className="flex md:hidden items-center gap-1 shrink-0">
           {navItems.map((item) => {
             const isActive = pathname?.startsWith(item.href);
             return (
@@ -97,7 +97,9 @@ const Header = ({ showAddress = true, showSearch = true }: HeaderProps) => {
                 key={item.href}
                 href={item.href}
                 aria-label={item.label}
-                className={isActive ? "text-primary" : "text-gray-600"}
+                className={`flex items-center justify-center h-10 w-10 rounded-full ${
+                  isActive ? "text-primary" : "text-gray-600"
+                }`}
               >
                 {item.icon}
               </Link>

@@ -8,7 +8,7 @@ export default function FavoriteEmptyState() {
   const router = useRouter();
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-20 flex flex-col items-center text-center">
+    <div className="max-w-7xl mx-auto px-4 py-12 sm:py-20 flex flex-col items-center text-center">
       <div className="flex items-center justify-center w-20 h-20 rounded-full bg-primary/10">
         <HeartIcon filled={false} className="w-8 h-8" />
       </div>

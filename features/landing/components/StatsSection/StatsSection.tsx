@@ -65,25 +65,25 @@ const stats: Stat[] = [
 const StatsSection = () => {
   return (
     <section>
-      <h2 className="text-xl font-bold text-[#195233] mb-1">
+      <h2 className="text-lg sm:text-xl font-bold text-[#195233] mb-1">
         Bizim göstəricilər
       </h2>
-      <p className="text-[#195233] mb-6">
+      <p className="text-sm sm:text-base text-[#195233] mb-6">
         Biz yeni imkanları axtarırıq və digərlərinin bilmədikləri yerlərə
         getməyə hazırıq.
       </p>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         {stats.map((stat) => (
           <Card
             key={stat.label}
-            className="p-6 flex flex-col justify-between min-h-[250px]"
+            className="p-4 sm:p-6 flex flex-col justify-between min-h-[160px] sm:min-h-[250px]"
           >
-            <div className="text-5xl font-bold text-[#195233]">
+            <div className="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#195233]">
               {stat.value}
             </div>
-            <div className="flex items-end justify-between mt-4">
-              <span className="text-lg text-gray-500">{stat.label}</span>
-              <span className="text-primary [&_svg]:w-9 [&_svg]:h-9">
+            <div className="flex items-end justify-between mt-4 gap-2">
+              <span className="text-sm sm:text-lg text-gray-500">{stat.label}</span>
+              <span className="text-primary shrink-0 [&_svg]:w-6 [&_svg]:h-6 sm:[&_svg]:w-9 sm:[&_svg]:h-9">
                 {stat.icon}
               </span>
             </div>

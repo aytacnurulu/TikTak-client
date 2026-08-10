@@ -8,7 +8,7 @@ const OrdersPage = () => {
   const { data: orders = [], isLoading, isError } = useOrdersQuery();
 
   return (
-    <section className="bg-white rounded-[10px] border border-gray-100 p-6 w-full">
+    <section className="bg-white rounded-[10px] border border-gray-100 p-4 sm:p-6 w-full">
       <h1 className="text-lg font-bold text-[#2B3043] mb-5">
         Sifariş tarixçəsi
       </h1>

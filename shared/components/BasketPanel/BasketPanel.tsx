@@ -25,13 +25,13 @@ export default function BasketPanel() {
   const total = Number(data?.total ?? 0);
 
   return (
-    <div className="sticky top-4">
-      <h2 className="text-2xl font-bold mb-4">Səbətim</h2>
+    <div className="lg:sticky lg:top-4 bg-white rounded-[10px] border border-gray-100 shadow-sm p-6">
+      <h2 className="text-lg font-semibold text-gray-900 mb-4">Səbətim</h2>
 
       {!hasHydrated || (isAuthenticated && isLoading) ? (
         <p className="text-sm text-gray-500">Yüklənir...</p>
       ) : !isAuthenticated ? (
-        <div className="rounded-[10px] border border-gray-100 bg-white flex flex-col items-center text-center px-6 py-10">
+        <div className="flex flex-col items-center text-center py-6">
           <p className="text-sm text-gray-500">
             Səbətinizi görmək üçün daxil olun
           </p>
@@ -45,7 +45,7 @@ export default function BasketPanel() {
           </Link>
         </div>
       ) : items.length === 0 ? (
-        <div className="rounded-[10px] border border-gray-100 bg-white flex flex-col items-center text-center px-6 py-10">
+        <div className="flex flex-col items-center text-center py-6">
           <div className="relative w-40 h-40">
             <Image
               src="/image/emptybasket.svg"
@@ -62,7 +62,7 @@ export default function BasketPanel() {
           </p>
         </div>
       ) : (
-        <div className="h-[480px] flex flex-col rounded-[10px] border border-gray-100 bg-white p-4">
+        <div className="h-[360px] sm:h-[480px] flex flex-col">
           <div className="flex-1 min-h-0 overflow-y-auto space-y-3 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-thumb]:rounded-full">
             {items.map((item) => (
               <BasketItemCard

@@ -5,7 +5,7 @@ import Spinner from "@/shared/components/Spinner";
 import { useRequireAuth } from "@/shared/hooks/useRequireAuth";
 import OrderForm from "../components/OrderForm/OrderForm";
 import OrderSummary from "../components/OrderSummary";
-import Link from 'next/link';
+import Breadcrumb from "@/shared/components/Breadcrumb";
 import ConfirmOrderModal from "../components/ConfirmOrderModal/ConfirmOrderModal";
 import AddressMissingModal from "../components/AddressMissingModal/AddressMissingModal";
 import OrderSuccessModal from "../components/OrderSuccessModal/OrderSuccessModal";
@@ -75,13 +75,13 @@ const CheckoutPage = () => {
 
   return (
     <>
-      <nav className="lg:col-span-2 text-sm text-gray-500 mb-2">
-        <Link href="/category" className="hover:text-gray-700">
-          Ana səhifə
-        </Link>
-        <span className="mx-2">/</span>
-        <span className="text-gray-700">Sifarişim</span>
-      </nav>
+      <Breadcrumb
+        items={[
+          { label: "Ana səhifə", href: "/category" },
+          { label: "Sifarişim" },
+        ]}
+        className="mb-4 pt-2 lg:col-span-2"
+      />
 
       <div className="">
         <h1 className="text-lg font-bold text-[#2B3043] mb-4">
