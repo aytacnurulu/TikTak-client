@@ -9,7 +9,6 @@ const variantClasses: Record<ButtonVariant, string> = {
   accent: "bg-accent text-dark hover:opacity-90",
   dark: "bg-dark text-white hover:opacity-90",
   light: "bg-white text-dark border border-gray-200 hover:opacity-90",
-
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -39,7 +38,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const isIconOnly = !children;
 
     const classes = [
-      "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-colors",
+      "inline-flex items-center justify-center gap-2 rounded-[10px] font-medium transition-colors",
       "disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer",
       variantClasses[variant],
       sizeClasses[size],
@@ -52,7 +51,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       .join(" ");
 
     const spinnerColor =
-      variant === "primary" || variant === "danger" ? "white" : "primary";;
+      variant === "primary" || variant === "danger" ? "white" : "primary";
 
     return (
       <button

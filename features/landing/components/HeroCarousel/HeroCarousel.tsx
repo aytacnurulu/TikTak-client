@@ -47,8 +47,19 @@ const HeroCarousel = ({ campaigns }: HeroCarouselProps) => {
           {campaigns.map((campaign, i) => (
             <div key={campaign.id} className="w-1/2 shrink-0 px-2">
               <div
-                className={`relative overflow-hidden rounded-[10px] bg-gradient-to-br ${gradients[i % gradients.length]} text-white p-8 min-h-[320px] flex flex-col justify-between`}
+                className={`relative overflow-hidden rounded-[10px] text-white p-8 min-h-[320px] flex flex-col justify-between ${
+                  campaign.img_url
+                    ? ""
+                    : `bg-gradient-to-br ${gradients[i % gradients.length]}`
+                }`}
               >
+                {campaign.img_url && (
+                  <img
+                    src={campaign.img_url}
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-transparent" />
                 <div className="relative">
                   <h3 className="text-2xl font-bold mb-1">{campaign.title}</h3>
@@ -57,7 +68,11 @@ const HeroCarousel = ({ campaigns }: HeroCarouselProps) => {
                   )}
                 </div>
                 <Link href={`/category`}>
-                  <Button variant="success" size="sm" className="w-fit relative">
+                  <Button
+                    variant="success"
+                    size="sm"
+                    className="w-fit relative px-8"
+                  >
                     Ətraflı
                   </Button>
                 </Link>
