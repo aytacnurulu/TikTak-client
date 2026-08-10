@@ -7,9 +7,10 @@ import Button from '../Button';
 
 interface AddToBasketButtonProps {
   productId: number;
+  productType: string;
 }
 
-export default function AddToBasketButton({ productId }: AddToBasketButtonProps) {
+export default function AddToBasketButton({ productId,productType }: AddToBasketButtonProps) {
   const { quantity, increase, setQuantity, isPending } = useBasketQuantity(productId);
 
   const [localQty, setLocalQty] = useState(quantity);
@@ -25,6 +26,7 @@ export default function AddToBasketButton({ productId }: AddToBasketButtonProps)
       <QuantitySelector
         value={localQty}
         min={0}
+        unit={productType}
         onChange={setLocalQty}
         onCommit={setQuantity}
         disabled={isPending}

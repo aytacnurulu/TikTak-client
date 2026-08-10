@@ -43,7 +43,7 @@ export default function FavoriteButton({ product, className = "" }: FavoriteButt
       disabled={toggleMutation.isPending || !hasHydrated}
       className={`flex items-center justify-center h-8 w-8 rounded-full bg-white/90 shadow-sm disabled:opacity-70 ${className}`}
     >
-      <HeartIcon filled={displayedAsFavorite} />
+      <HeartIcon filled={displayedAsFavorite}/>
     </button>
   );
 }

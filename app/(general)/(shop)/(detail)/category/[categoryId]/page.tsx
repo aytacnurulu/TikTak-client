@@ -71,7 +71,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               image={product.img_url || "/image/apple.svg"}
               title={product.title}
               price={product.price}
-              actionSlot={<AddToBasketButton productId={product.id} />}
+              actionSlot={<AddToBasketButton productId={product.id}   productType={product.type} />}
             />
           ))}
         </Grid>

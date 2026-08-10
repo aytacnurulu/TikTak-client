@@ -108,12 +108,12 @@ const QuantitySelector = ({
         onPointerCancel={stop}
         disabled={isDecreaseDisabled}
         aria-label="Sayı azalt"
-        className="rounded-full w-8 px-0 text-lg"
+        className="rounded-lg w-8 px-0 text-lg"
       >
         {decreaseIcon ?? "−"}
       </Button>
 
-      <span className="flex-1 h-9 flex items-center justify-center rounded-xl bg-gray-50 border border-gray-200 text-sm font-medium">
+      <span className="flex-1 h-9 flex items-center justify-center rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium">
         {currentValue}
         {unit && ` ${unit}`}
       </span>
@@ -128,7 +128,7 @@ const QuantitySelector = ({
         onPointerCancel={stop}
         disabled={isIncreaseDisabled}
         aria-label="Sayı artır"
-        className="rounded-full w-8 px-0 text-lg"
+        className="rounded-lg w-8 px-0 text-lg"
       >
         {increaseIcon ?? "+"}
       </Button>
