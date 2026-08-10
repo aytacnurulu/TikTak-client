@@ -129,30 +129,30 @@ const Footer = () => {
             qorunur
           </span>
 
-          <div className="flex items-center gap-6">
-            <span className="flex items-center gap-1">Site by 🔶 JIS</span>
-            <span className="flex items-center gap-1">🌐 Azərbaycan</span>
-            <div className="flex items-center gap-2">
-              {socialLinks.map((social) => (
-                <Link
-                  key={social.name}
-                  href={social.href}
-                  aria-label={social.name}
-                  className="h-8 w-8 rounded-full bg-success/10 text-success flex items-center justify-center hover:bg-success/20"
+          <span className="flex items-center gap-1">Site by 🔶 AMNBS</span>
+
+          <span className="flex items-center gap-1">🌐 Azərbaycan</span>
+
+          <div className="flex items-center gap-3">
+            {socialLinks.map((social) => (
+              <Link
+                key={social.name}
+                href={social.href}
+                aria-label={social.name}
+                className="h-8 w-8 rounded-full bg-success/10 text-success flex items-center justify-center hover:bg-success/20"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width={16}
+                  height={16}
+                  fill="currentColor"
+                  stroke="currentColor"
+                  strokeWidth={1}
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    width={16}
-                    height={16}
-                    fill="currentColor"
-                    stroke="currentColor"
-                    strokeWidth={1}
-                  >
-                    {socialIcons[social.name]}
-                  </svg>
-                </Link>
-              ))}
-            </div>
+                  {socialIcons[social.name]}
+                </svg>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
