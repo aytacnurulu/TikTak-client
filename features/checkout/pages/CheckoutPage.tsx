@@ -80,7 +80,7 @@ const CheckoutPage = () => {
           { label: "Ana səhifə", href: "/category" },
           { label: "Sifarişim" },
         ]}
-        className="mb-4 pt-2 lg:col-span-2"
+        className=" lg:col-span-2"
       />
 
       <div className="">

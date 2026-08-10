@@ -29,7 +29,6 @@ export default async function CategoryDetailLayout({
           { label: "Ana səhifə", href: "/category" },
           { label: currentCategory?.name ?? "Kateqoriya" },
         ]}
-        className="mb-4 pt-2"
       />
 
       <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[240px_1fr_320px] lg:gap-6 lg:items-start">
@@ -57,7 +56,10 @@ export default async function CategoryDetailLayout({
 
         {children}
 
-        <BasketPanel />
+        <BasketPanel
+          headingAs="h2"
+          headingClassName="text-lg font-semibold text-gray-900 mb-4"
+        />
       </div>
     </>
   );

@@ -8,7 +8,15 @@ import { useRequireAuth } from "@/shared/hooks/useRequireAuth";
 import BasketItemCard from "../BasketItemCard";
 import { usePathname, useRouter } from "next/navigation";
 
-export default function BasketPanel() {
+interface BasketPanelProps {
+  headingAs?: "h1" | "h2";
+  headingClassName?: string;
+}
+
+export default function BasketPanel({
+  headingAs = "h1",
+  headingClassName = "text-2xl font-semibold text-gray-900 mb-4",
+}: BasketPanelProps) {
   const { isAuthenticated, hasHydrated } = useRequireAuth();
   const pathname = usePathname();
   const router = useRouter();
@@ -23,90 +31,93 @@ export default function BasketPanel() {
 
   const items = data?.items ?? [];
   const total = Number(data?.total ?? 0);
+  const HeadingTag = headingAs;
 
   return (
-    <div className="lg:sticky lg:top-4 bg-white rounded-[10px] border border-gray-100 shadow-sm p-6">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Səbətim</h2>
+    <div className="lg:sticky lg:top-4">
+      <HeadingTag className={headingClassName}>Səbətim</HeadingTag>
 
-      {!hasHydrated || (isAuthenticated && isLoading) ? (
-        <p className="text-sm text-gray-500">Yüklənir...</p>
-      ) : !isAuthenticated ? (
-        <div className="flex flex-col items-center text-center py-6">
-          <p className="text-sm text-gray-500">
-            Səbətinizi görmək üçün daxil olun
-          </p>
-          <Link
-            href={`/login?redirect=${encodeURIComponent(pathname ?? "/")}`}
-            className="mt-4"
-          >
-            <Button variant="dark" size="sm">
-              Daxil ol
-            </Button>
-          </Link>
-        </div>
-      ) : items.length === 0 ? (
-        <div className="flex flex-col items-center text-center py-6">
-          <div className="relative w-40 h-40">
-            <Image
-              src="/image/emptybasket.svg"
-              alt=""
-              fill
-              className="object-contain"
-            />
+      <div className="bg-white rounded-[10px] border border-gray-100 shadow-sm p-6">
+        {!hasHydrated || (isAuthenticated && isLoading) ? (
+          <p className="text-sm text-gray-500">Yüklənir...</p>
+        ) : !isAuthenticated ? (
+          <div className="flex flex-col items-center text-center py-6">
+            <p className="text-sm text-gray-500">
+              Səbətinizi görmək üçün daxil olun
+            </p>
+            <Link
+              href={`/login?redirect=${encodeURIComponent(pathname ?? "/")}`}
+              className="mt-4"
+            >
+              <Button variant="dark" size="sm">
+                Daxil ol
+              </Button>
+            </Link>
           </div>
-          <p className="mt-4 text-lg font-semibold text-primary">
-            Səbətiniz boşdur
-          </p>
-          <p className="mt-2 text-sm text-gray-500">
-            Sifariş vermək üçün səbətinizə məhsul əlavə edin
-          </p>
-        </div>
-      ) : (
-        <div className="h-[360px] sm:h-[480px] flex flex-col">
-          <div className="flex-1 min-h-0 overflow-y-auto space-y-3 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-thumb]:rounded-full">
-            {items.map((item) => (
-              <BasketItemCard
-                key={item.id}
-                item={item}
-                onIncrease={() => add.mutate(item.product.id)}
-                onDecrease={() => remove.mutate(item.product.id)}
-                onDelete={() => deleteItem.mutate(item.product.id)}
-                disabled={isItemMutating(item.product.id)}
+        ) : items.length === 0 ? (
+          <div className="flex flex-col items-center text-center py-6">
+            <div className="relative w-40 h-40">
+              <Image
+                src="/image/emptybasket.svg"
+                alt=""
+                fill
+                className="object-contain"
               />
-            ))}
+            </div>
+            <p className="mt-4 text-lg font-semibold text-primary">
+              Səbətiniz boşdur
+            </p>
+            <p className="mt-2 text-sm text-gray-500">
+              Sifariş vermək üçün səbətinizə məhsul əlavə edin
+            </p>
           </div>
+        ) : (
+          <div className="h-[360px] sm:h-[480px] flex flex-col">
+            <div className="flex-1 min-h-0 overflow-y-auto space-y-3 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-thumb]:rounded-full">
+              {items.map((item) => (
+                <BasketItemCard
+                  key={item.id}
+                  item={item}
+                  onIncrease={() => add.mutate(item.product.id)}
+                  onDecrease={() => remove.mutate(item.product.id)}
+                  onDelete={() => deleteItem.mutate(item.product.id)}
+                  disabled={isItemMutating(item.product.id)}
+                />
+              ))}
+            </div>
 
-          <div className="mt-4 pt-4 rounded-[10px] border-gray-100">
-            <div className="space-y-1 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-500">Ümumi:</span>
+            <div className="mt-4 pt-4 rounded-[10px] border-gray-100">
+              <div className="space-y-1 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Ümumi:</span>
+                  <span>{Number(total).toFixed(2)} AZN</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Çatdırılma:</span>
+                  <span>Pulsuz</span>
+                </div>
+              </div>
+
+              <div className="mt-2 flex justify-between font-semibold text-lg">
+                <span>Yekun məbləğ:</span>
                 <span>{Number(total).toFixed(2)} AZN</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500">Çatdırılma:</span>
-                <span>Pulsuz</span>
-              </div>
+
+              <Button
+                variant="dark"
+                size="lg"
+                fullWidth
+                disabled={items.length === 0}
+                className="mt-4"
+                onClick={() => router.push("/checkout")}
+              >
+                Sifarişi tamamla
+              </Button>
+
             </div>
-
-            <div className="mt-2 flex justify-between font-semibold text-lg">
-              <span>Yekun məbləğ:</span>
-              <span>{Number(total).toFixed(2)} AZN</span>
-            </div>
-
-            <Button
-              variant="dark"
-              size="lg"
-              fullWidth
-              disabled={items.length === 0}
-              className="mt-4"
-              onClick={() => router.push("/checkout")}
-            >
-              Sifarişi tamamla
-            </Button>
-
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
