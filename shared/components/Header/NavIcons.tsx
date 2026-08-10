@@ -1,12 +1,13 @@
 interface NavIconProps {
   className?: string;
+  size?: number;
 }
 
-export function AccountIcon({ className = "" }: NavIconProps) {
+export function AccountIcon({ className = "", size = 18 }: NavIconProps) {
   return (
     <svg
-      width="20"
-      height="20"
+      width={size}
+      height={size}
       viewBox="0 0 15 15"
       className={className}
       aria-hidden="true"
@@ -19,11 +20,11 @@ export function AccountIcon({ className = "" }: NavIconProps) {
   );
 }
 
-export function FavoritesIcon({ className = "" }: NavIconProps) {
+export function FavoritesIcon({ className = "", size = 18 }: NavIconProps) {
   return (
     <svg
-      width="20"
-      height="20"
+      width={size}
+      height={size}
       viewBox="0 0 17 17"
       className={className}
       aria-hidden="true"
@@ -36,11 +37,11 @@ export function FavoritesIcon({ className = "" }: NavIconProps) {
   );
 }
 
-export function BasketIcon({ className = "" }: NavIconProps) {
+export function BasketIcon({ className = "", size = 18 }: NavIconProps) {
   return (
     <svg
-      width="20"
-      height="20"
+      width={size}
+      height={size}
       viewBox="0 0 19 17"
       className={className}
       aria-hidden="true"

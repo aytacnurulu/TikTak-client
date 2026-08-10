@@ -45,19 +45,19 @@ const Header = ({ showAddress = true, showSearch = true }: HeaderProps) => {
   ];
 
   return (
-    <header className="w-full bg-white border-b border-gray-100">
-      <div className="max-w-[1440px] mx-auto flex items-center gap-3 sm:gap-6 px-4 sm:px-6 lg:px-10 py-3 sm:py-4">
+    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100">
+      <div className="max-w-[1440px] mx-auto flex items-center gap-3 sm:gap-4 lg:gap-6 px-4 sm:px-6 lg:px-10 py-2.5 sm:py-3">
         <Link
           href="/"
-          className="text-xl sm:text-4xl font-extrabold text-dark shrink-0"
+          className="text-xl sm:text-3xl font-extrabold tracking-tight text-dark shrink-0 transition-opacity hover:opacity-80"
         >
-          TIK TAK
+          TIK<span className="text-primary">TAK</span>
         </Link>
 
         {showAddress && (
-          <div className="hidden sm:flex flex-col bg-gray-50 border border-gray-200 rounded-[10px] px-3 py-1.5 shrink-0 max-w-[180px]">
-            <span className="text-base font-semibold text-dark">Ünvan</span>
-            <span className="text-base text-gray-500 truncate">
+          <div className="hidden md:flex flex-col bg-gray-50 border border-gray-200 rounded-[8px] px-2.5 py-1 shrink-0 max-w-[150px]">
+            <span className="text-xs font-semibold text-dark">Ünvan</span>
+            <span className="text-xs text-gray-500 truncate">
               {userAddress}
             </span>
           </div>
@@ -71,14 +71,14 @@ const Header = ({ showAddress = true, showSearch = true }: HeaderProps) => {
           <div className="flex-1" />
         )}
 
-        <nav className="hidden md:flex items-center gap-5 shrink-0">
+        <nav className="hidden md:flex items-center gap-4 shrink-0">
           {navItems.map((item) => {
             const isActive = pathname?.startsWith(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-1.5 text-sm transition-colors ${
+                className={`flex items-center gap-1 text-sm transition-colors ${
                   isActive ? "text-primary" : "text-gray-600 hover:text-dark"
                 }`}
               >

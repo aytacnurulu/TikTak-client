@@ -1,7 +1,7 @@
 import Container from "@/shared/components/Container";
 import LandingPage from "@/features/landing/pages/LandingPage";
 import Footer from "@/shared/components/Footer";
-import LandingHeader from "@/shared/components/LandingHeader/LandingHeader";
+import LandingHeader from "@/shared/components/LandingHeader";
 
 export default function RootPage() {
   return (
