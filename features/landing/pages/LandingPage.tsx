@@ -8,7 +8,7 @@ import { useCampaignsQuery } from "../hooks/useLanding";
 
 const LandingPage = () => {
   const { data: campaigns, isLoading } = useCampaignsQuery();
-  console.log("campaigns:", campaigns);
+
   if (isLoading) {
     return (
       <div className="flex justify-center py-20">
@@ -20,7 +20,7 @@ const LandingPage = () => {
   return (
     <div className="py-8 space-y-10">
       <HeroCarousel campaigns={campaigns ?? []} />
-      <SpecialOffers />
+      <SpecialOffers campaigns={(campaigns ?? []).slice(2, 4)} />
       <StatsSection />
     </div>
   );
