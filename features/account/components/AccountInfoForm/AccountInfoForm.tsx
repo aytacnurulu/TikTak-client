@@ -3,9 +3,9 @@
 import { startTransition, useEffect, useState, type FormEvent } from "react";
 import Input from "@/shared/components/Input";
 import Button from "@/shared/components/Button";
-import Toast from "@/shared/components/Toast";
 import type { UserProfile } from "@tiktak/types";
 import { useUpdateProfileMutation } from "../../hooks/useProfile";
+import { useToast } from "@/shared/hooks/useToast";
 
 interface AccountInfoFormProps {
   profile: UserProfile | undefined;
@@ -17,7 +17,7 @@ const AccountInfoForm = ({ profile }: AccountInfoFormProps) => {
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [showToast, setShowToast] = useState(false);
+  const { showToast } = useToast();
 
   const { mutate, isPending } = useUpdateProfileMutation();
 
@@ -46,7 +46,16 @@ const AccountInfoForm = ({ profile }: AccountInfoFormProps) => {
         ...(password ? { password, password_repeat: passwordRepeat } : {}),
       },
       {
-        onSuccess: () => setShowToast(true),
+        onSuccess: () => {
+          showToast("Uğurla yeniləndi!", "Məlumatlarınız uğurla yeniləndi.");
+        },
+        onError: () => {
+          showToast(
+            "Xəta baş verdi.",
+            "Məlumatlarınız yenilənərkən problem yarandı",
+            "error",
+          );
+        },
       },
     );
   };
@@ -129,13 +138,6 @@ const AccountInfoForm = ({ profile }: AccountInfoFormProps) => {
           </Button>
         </div>
       </form>
-
-      <Toast
-        open={showToast}
-        title="Uğurla yeniləndi!"
-        description="Məlumatlarınız uğurla yeniləndi."
-        onClose={() => setShowToast(false)}
-      />
     </div>
   );
 };

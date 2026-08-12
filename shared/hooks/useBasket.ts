@@ -6,6 +6,7 @@ import { API } from "@tiktak/constants";
 import type { ApiResponse, Basket, BasketItem } from "@tiktak/types";
 import { useAuthStore } from "@/shared/store/useAuthStore";
 import { useRequireAuth } from "@/shared/hooks/useRequireAuth";
+import { useToast } from "@/shared/hooks/useToast";
 
 export type { BasketItem };
 
@@ -52,6 +53,7 @@ export function useBasketQuery() {
 
 export function useBasketMutations() {
   const qc = useQueryClient();
+  const { showToast } = useToast();
   const invalidate = () => qc.invalidateQueries({ queryKey: BASKET_QUERY_KEY });
 
   // Bütün mutasiyalar üçün ortaq: refetch başlamazdan əvvəl davam edən sorğunu ləğv et,
@@ -59,6 +61,8 @@ export function useBasketMutations() {
   const useOptimisticMutation = (
     mutationFn: (productId: number) => Promise<void>,
     updateItems: (items: BasketItem[], productId: number) => BasketItem[],
+    successMessage: string,
+    errorMessage: string,
   ) =>
     useMutation({
       mutationFn,
@@ -73,46 +77,61 @@ export function useBasketMutations() {
         }
         return { previous };
       },
+      onSuccess: () => {
+        showToast(successMessage);
+      },
       onError: (_err, _productId, ctx) => {
         if (ctx?.previous) qc.setQueryData(BASKET_QUERY_KEY, ctx.previous);
+        showToast("Əməliyyat uğursuz oldu", errorMessage, "error");
       },
       onSettled: invalidate,
     });
 
-  const add = useOptimisticMutation(addOne, (items, productId) =>
-    items.map((item) =>
-      item.product.id === productId
-        ? {
-            ...item,
-            quantity: item.quantity + 1,
-            total_price: priceForQuantity(
-              item.product.price,
-              item.quantity + 1,
-            ),
-          }
-        : item,
-    ),
-  );
-
-  const remove = useOptimisticMutation(removeOne, (items, productId) =>
-    items
-      .map((item) =>
+  const add = useOptimisticMutation(
+    addOne,
+    (items, productId) =>
+      items.map((item) =>
         item.product.id === productId
           ? {
               ...item,
-              quantity: item.quantity - 1,
+              quantity: item.quantity + 1,
               total_price: priceForQuantity(
                 item.product.price,
-                item.quantity - 1,
+                item.quantity + 1,
               ),
             }
           : item,
-      )
-      .filter((item) => item.quantity > 0),
+      ),
+    "Məhsul səbətə əlavə edildi",
+    "Məhsul səbətə əlavə edilə bilmədi",
   );
 
-  const deleteItem = useOptimisticMutation(removeAll, (items, productId) =>
-    items.filter((item) => item.product.id !== productId),
+  const remove = useOptimisticMutation(
+    removeOne,
+    (items, productId) =>
+      items
+        .map((item) =>
+          item.product.id === productId
+            ? {
+                ...item,
+                quantity: item.quantity - 1,
+                total_price: priceForQuantity(
+                  item.product.price,
+                  item.quantity - 1,
+                ),
+              }
+            : item,
+        )
+        .filter((item) => item.quantity > 0),
+    "Məhsul sayı yeniləndi",
+    "Məhsul sayı yenilənə bilmədi",
+  );
+
+  const deleteItem = useOptimisticMutation(
+    removeAll,
+    (items, productId) => items.filter((item) => item.product.id !== productId),
+    "Məhsul səbətdən silindi",
+    "Məhsul səbətdən silinə bilmədi",
   );
 
   const clear = useMutation({
@@ -130,8 +149,16 @@ export function useBasketMutations() {
       }
       return { previous };
     },
+    onSuccess: () => {
+      showToast("Səbət təmizləndi", "Bütün məhsullar səbətdən silindi.");
+    },
     onError: (_err, _vars, ctx) => {
       if (ctx?.previous) qc.setQueryData(BASKET_QUERY_KEY, ctx.previous);
+      showToast(
+        "Səbət təmizlənmədi",
+        "Xahiş edirik yenidən cəhd edin.",
+        "error",
+      );
     },
     onSettled: invalidate,
   });
