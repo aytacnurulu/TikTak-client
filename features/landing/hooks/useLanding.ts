@@ -1,8 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "@tiktak/constants";
 import { landingService } from "../api/landing.service";
 
 export const useCampaignsQuery = () =>
-  useQuery({ queryKey: ["campaigns"], queryFn: landingService.getCampaigns });
+  useQuery({
+    queryKey: queryKeys.landing.campaigns,
+    queryFn: landingService.getCampaigns,
+  });
 
 export const useCategoriesQuery = () =>
-  useQuery({ queryKey: ["categories"], queryFn: landingService.getCategories });
+  useQuery({
+    queryKey: queryKeys.landing.categories,
+    queryFn: landingService.getCategories,
+  });

@@ -19,7 +19,7 @@ const Toast = ({
   description,
   type = "success",
   onClose,
-  duration = 4000,
+  duration = 2000,
 }: ToastProps) => {
   useEffect(() => {
     if (!open) return;
@@ -44,7 +44,7 @@ const Toast = ({
     );
 
   return (
-    <div className="fixed top-4 right-4 left-4 sm:left-auto sm:top-6 sm:right-6 z-50 bg-white rounded-[10px] shadow-lg border border-gray-100 p-4 sm:p-5 w-auto sm:w-[340px] animate-in slide-in-from-right">
+    <div className="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 bg-white rounded-[10px] shadow-lg border border-gray-100 p-4 sm:p-5 w-[90%] sm:w-[340px] animate-in zoom-in-50">
       <div className="flex items-start gap-3">
         <div
           className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${accentClass}`}

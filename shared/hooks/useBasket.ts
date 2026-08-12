@@ -2,7 +2,7 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@tiktak/api-client";
-import { API } from "@tiktak/constants";
+import { API, queryKeys, BASKET_QUERY_KEY } from "@tiktak/constants";
 import type { ApiResponse, Basket, BasketItem } from "@tiktak/types";
 import { useAuthStore } from "@/shared/store/useAuthStore";
 import { useRequireAuth } from "@/shared/hooks/useRequireAuth";
@@ -10,7 +10,8 @@ import { useToast } from "@/shared/hooks/useToast";
 
 export type { BasketItem };
 
-export const BASKET_QUERY_KEY = ["basket"] as const;
+// Export for backward compatibility - use queryKeys.basket.all instead
+export { BASKET_QUERY_KEY };
 
 async function fetchBasket(): Promise<Basket> {
   const { data } = await apiClient.get<ApiResponse<Basket>>(
@@ -45,7 +46,7 @@ function priceForQuantity(price: string, quantity: number): string {
 export function useBasketQuery() {
   const token = useAuthStore((s) => s.accessToken);
   return useQuery({
-    queryKey: BASKET_QUERY_KEY,
+    queryKey: queryKeys.basket.all,
     queryFn: fetchBasket,
     enabled: !!token,
   });
@@ -54,7 +55,8 @@ export function useBasketQuery() {
 export function useBasketMutations() {
   const qc = useQueryClient();
   const { showToast } = useToast();
-  const invalidate = () => qc.invalidateQueries({ queryKey: BASKET_QUERY_KEY });
+  const invalidate = () =>
+    qc.invalidateQueries({ queryKey: queryKeys.basket.all });
 
   // Bütün mutasiyalar üçün ortaq: refetch başlamazdan əvvəl davam edən sorğunu ləğv et,
   // köhnə vəziyyəti saxla (xəta olsa geri qaytarmaq üçün)
@@ -67,10 +69,10 @@ export function useBasketMutations() {
     useMutation({
       mutationFn,
       onMutate: async (productId: number) => {
-        await qc.cancelQueries({ queryKey: BASKET_QUERY_KEY });
-        const previous = qc.getQueryData<Basket>(BASKET_QUERY_KEY);
+        await qc.cancelQueries({ queryKey: queryKeys.basket.all });
+        const previous = qc.getQueryData<Basket>(queryKeys.basket.all);
         if (previous) {
-          qc.setQueryData<Basket>(BASKET_QUERY_KEY, {
+          qc.setQueryData<Basket>(queryKeys.basket.all, {
             ...previous,
             items: updateItems(previous.items, productId),
           });
@@ -81,7 +83,7 @@ export function useBasketMutations() {
         showToast(successMessage);
       },
       onError: (_err, _productId, ctx) => {
-        if (ctx?.previous) qc.setQueryData(BASKET_QUERY_KEY, ctx.previous);
+        if (ctx?.previous) qc.setQueryData(queryKeys.basket.all, ctx.previous);
         showToast("Əməliyyat uğursuz oldu", errorMessage, "error");
       },
       onSettled: invalidate,
@@ -137,10 +139,10 @@ export function useBasketMutations() {
   const clear = useMutation({
     mutationFn: clearBasket,
     onMutate: async () => {
-      await qc.cancelQueries({ queryKey: BASKET_QUERY_KEY });
-      const previous = qc.getQueryData<Basket>(BASKET_QUERY_KEY);
+      await qc.cancelQueries({ queryKey: queryKeys.basket.all });
+      const previous = qc.getQueryData<Basket>(queryKeys.basket.all);
       if (previous) {
-        qc.setQueryData<Basket>(BASKET_QUERY_KEY, {
+        qc.setQueryData<Basket>(queryKeys.basket.all, {
           ...previous,
           items: [],
           total: "0.00",
@@ -153,7 +155,7 @@ export function useBasketMutations() {
       showToast("Səbət təmizləndi", "Bütün məhsullar səbətdən silindi.");
     },
     onError: (_err, _vars, ctx) => {
-      if (ctx?.previous) qc.setQueryData(BASKET_QUERY_KEY, ctx.previous);
+      if (ctx?.previous) qc.setQueryData(queryKeys.basket.all, ctx.previous);
       showToast(
         "Səbət təmizlənmədi",
         "Xahiş edirik yenidən cəhd edin.",

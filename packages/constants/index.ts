@@ -72,3 +72,5 @@ export const API = {
 
   UPLOAD: "/api/tiktak/upload",
 };
+
+export { queryKeys, BASKET_QUERY_KEY, FAVORITES_QUERY_KEY } from "./queryKeys";
