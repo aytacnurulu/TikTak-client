@@ -2,11 +2,12 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@tiktak/api-client";
-import { API } from "@tiktak/constants";
+import { API, queryKeys, FAVORITES_QUERY_KEY } from "@tiktak/constants";
 import type { ApiResponse, Product } from "@tiktak/types";
 import { useAuthStore } from "@/shared/store/useAuthStore";
 
-export const FAVORITES_QUERY_KEY = ["favorites"] as const;
+// Export for backward compatibility - use queryKeys.favorites.all instead
+export { FAVORITES_QUERY_KEY };
 
 async function getFavorites(): Promise<Product[]> {
   const { data } = await apiClient.get<ApiResponse<Product[]>>(
@@ -25,7 +26,7 @@ async function toggleFavorite(productId: number): Promise<void> {
 export const useFavoritesQuery = () => {
   const token = useAuthStore((s) => s.accessToken);
   return useQuery({
-    queryKey: FAVORITES_QUERY_KEY,
+    queryKey: queryKeys.favorites.all,
     queryFn: getFavorites,
     enabled: !!token,
   });
@@ -45,27 +46,32 @@ export const useToggleFavoriteMutation = (product: Product) => {
   return useMutation({
     mutationFn: () => toggleFavorite(productId),
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: FAVORITES_QUERY_KEY });
-      const previous = queryClient.getQueryData<Product[]>(FAVORITES_QUERY_KEY);
-      const wasFavorite = previous?.some((p) => Number(p.id) === productId) ?? false;
+      await queryClient.cancelQueries({ queryKey: queryKeys.favorites.all });
+      const previous = queryClient.getQueryData<Product[]>(
+        queryKeys.favorites.all,
+      );
+      const wasFavorite =
+        previous?.some((p) => Number(p.id) === productId) ?? false;
 
       // Both directions are safe to patch now: removing only needs the id,
       // and adding uses the full `product` the caller already has on hand.
-      queryClient.setQueryData<Product[]>(FAVORITES_QUERY_KEY, (old = []) =>
-        wasFavorite
-          ? old.filter((p) => Number(p.id) !== productId)
-          : [...old, product],
+      queryClient.setQueryData<Product[]>(
+        queryKeys.favorites.all,
+        (old = []) =>
+          wasFavorite
+            ? old.filter((p) => Number(p.id) !== productId)
+            : [...old, product],
       );
 
       return { previous };
     },
     onError: (_err, _vars, context) => {
       if (context?.previous) {
-        queryClient.setQueryData(FAVORITES_QUERY_KEY, context.previous);
+        queryClient.setQueryData(queryKeys.favorites.all, context.previous);
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: FAVORITES_QUERY_KEY });
+      queryClient.invalidateQueries({ queryKey: queryKeys.favorites.all });
     },
   });
 };
