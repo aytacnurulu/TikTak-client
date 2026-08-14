@@ -25,7 +25,7 @@ const sizeMap: Record<
   },
   lg: {
     card: "w-full",
-    padding: "p-3",
+    padding: "p-2.5",
     title: "text-sm",
     price: "text-sm",
     gap: "mt-2",
@@ -38,6 +38,7 @@ export default function ProductCard({
   title,
   price,
   href,
+  categoryId,
   currency = "AZN",
   actionSlot,
   className = "",
@@ -51,7 +52,9 @@ export default function ProductCard({
     gap,
   } = sizeMap[size];
 
-  const productHref = href ?? `/products/${id}`;
+  const productHref =
+    href ??
+    (categoryId ? `/category/${categoryId}/product/${id}` : `/product/${id}`);
 
   // Best-effort shape for the favorites cache's optimistic-add — fields the
   // card doesn't carry (description/type/category) are filled by the
@@ -69,10 +72,10 @@ export default function ProductCard({
 
   return (
     <Card
-      className={`flex flex-col items-center w-full mx-auto ${card} ${padding} transition-shadow hover:shadow-md ${className}`}
+      className={`flex flex-col items-center w-full h-full mx-auto ${card} ${padding} transition-shadow hover:shadow-md ${className}`}
     >
       <Link href={productHref} className="flex flex-col items-center w-full">
-        <div className="relative w-full aspect-square shrink-0">
+        <div className="relative w-full aspect-square shrink-0 p-2">
           <ProductImage image={image} title={title} />
           <FavoriteButton
             product={favoriteProduct}
@@ -80,15 +83,15 @@ export default function ProductCard({
           />
         </div>
         <span
-          className={`${gap} ${titleClass} font-medium text-gray-800 text-center leading-snug line-clamp-2`}
+          className={`${gap} ${titleClass} font-medium text-gray-800 text-center leading-snug line-clamp-2 min-h-[2.75em]`}
         >
           {title}
         </span>
-        <span className={`${priceClass} text-gray-500`}>
+        <span className={`mt-1 ${priceClass} text-gray-500`}>
           {Number(price).toFixed(2)} {currency}
         </span>
       </Link>
-      <div className="w-full mt-1.5">{actionSlot}</div>
+      <div className="w-full mt-auto pt-2">{actionSlot}</div>
     </Card>
   );
 }

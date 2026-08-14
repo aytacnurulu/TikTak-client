@@ -1,11 +1,15 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import Card from '@/shared/components/Card';
-import Button from '@/shared/components/Button';
-import type { BasketTotalCountPanelProps } from './types';
+import { useRouter } from "next/navigation";
+import Card from "@/shared/components/Card";
+import Button from "@/shared/components/Button";
+import type { BasketTotalCountPanelProps } from "./types";
 
-export default function BasketTotalCountPanel({ total, disabled, title = 'Yekun məbləğ', }: BasketTotalCountPanelProps) {
+export default function BasketTotalCountPanel({
+  total,
+  disabled,
+  title = "Yekun məbləğ",
+}: BasketTotalCountPanelProps) {
   const router = useRouter();
 
   return (
@@ -30,12 +34,12 @@ export default function BasketTotalCountPanel({ total, disabled, title = 'Yekun 
         </div>
 
         <Button
-          variant="success"
+          variant="primary"
           size="lg"
           fullWidth
           disabled={disabled}
           className="mt-4"
-          onClick={() => router.push('/checkout')}
+          onClick={() => router.push("/checkout")}
         >
           Sifarişi tamamla
         </Button>
