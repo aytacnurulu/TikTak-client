@@ -41,7 +41,6 @@ export default async function CategoryDetailLayout({
           <CategorySidebar
             categories={categories}
             currentCategoryId={categoryIdNum}
-            variant="card"
           />
 
           <Card className="relative w-full aspect-[3/4] overflow-hidden p-0">

@@ -12,7 +12,9 @@ interface BreadcrumbProps {
 
 export default function Breadcrumb({ items, className = "" }: BreadcrumbProps) {
   return (
-    <nav className={`text-sm text-gray-500 ${className}`}>
+    <nav
+      className={`pt-[10px] pb-[10px] text-[20px] font-normal text-gray-500 ${className}`}
+    >
       {items.map((item, i) => (
         <span key={i}>
           {item.href ? (
