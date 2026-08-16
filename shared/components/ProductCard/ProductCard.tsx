@@ -75,7 +75,7 @@ export default function ProductCard({
       className={`flex flex-col items-center w-full h-full mx-auto ${card} ${padding} transition-shadow hover:shadow-md ${className}`}
     >
       <Link href={productHref} className="flex flex-col items-center w-full">
-        <div className="relative w-full aspect-square shrink-0 p-2">
+        <div className="relative w-full h-[140px] shrink-0 p-2">
           <ProductImage image={image} title={title} />
           <FavoriteButton
             product={favoriteProduct}
