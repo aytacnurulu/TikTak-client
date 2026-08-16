@@ -1,17 +1,21 @@
-'use client';
+"use client";
 
-import { useBasketQuantity } from '@/shared/hooks/useBasket';
-import QuantitySelector from '@/shared/components/QuantitySelector';
-import Button from '@/shared/components/Button';
-import type { Product } from '@/packages/types/product';
+import { useBasketQuantity } from "@/shared/hooks/useBasket";
+import QuantitySelector from "@/shared/components/QuantitySelector";
+import Button from "@/shared/components/Button";
+import type { Product } from "@/packages/types/product";
 
 interface ProductDetailActionsProps {
   productId: number;
   product: Product;
 }
 
-export default function ProductDetailActions({ productId, product, }: ProductDetailActionsProps) {
- const { quantity, increase, decrease, isPending } = useBasketQuantity(productId);
+export default function ProductDetailActions({
+  productId,
+  product,
+}: ProductDetailActionsProps) {
+  const { quantity, increase, decrease, isPending } =
+    useBasketQuantity(productId);
 
   if (quantity > 0) {
     return (
@@ -29,10 +33,10 @@ export default function ProductDetailActions({ productId, product, }: ProductDet
   return (
     <Button
       type="button"
-      variant="success"
+      variant="primary"
       size="lg"
-      fullWidth
       loading={isPending}
+      className="w-[243px]"
       onClick={(e) => {
         e.preventDefault();
         increase();
