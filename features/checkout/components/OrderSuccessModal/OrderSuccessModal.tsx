@@ -20,17 +20,26 @@ const OrderSuccessModal = ({ open, onClose }: OrderSuccessModalProps) => {
   return (
     <Modal open={open} onClose={handleClose}>
       <div className="flex flex-col items-center text-center">
-        <div className="w-24 h-24 flex items-center justify-center mb-6">
+        <div className="w-40 h-40 flex items-center justify-center mb-6">
           <img
             src="/icons/successfully.completed.svg"
             alt=""
             className="w-full h-full"
           />
         </div>
-        <h3 className="text-lg font-bold text-[#2B3043] mb-6">
+        <h3 className="text-[28px] font-medium text-[#1A1D28] mb-2">
           Sifariş uğurla tamamlandı
         </h3>
-        <Button variant="primary" size="lg" fullWidth onClick={handleClose}>
+        <p className="text-2xl font-light leading-[136%] text-[#1A1D28] mb-6">
+          Əməkdaşlarımız sizinlə əlaqə saxlayıb sifarişinizi göndərəcəklər.
+        </p>
+        <Button
+          variant="primary"
+          size="lg"
+          fullWidth
+          onClick={handleClose}
+          className="text-2xl font-bold"
+        >
           Bağla
         </Button>
       </div>

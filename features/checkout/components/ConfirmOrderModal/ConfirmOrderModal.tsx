@@ -46,7 +46,7 @@ const ConfirmOrderModal = ({
   return (
     <Modal open={open} onClose={onCancel}>
       <div className="flex flex-col items-center text-center">
-        <div className="w-24 h-24 flex items-center justify-center mb-6">
+        <div className="w-40 h-40 flex items-center justify-center mb-6">
           <img
             src="/icons/waiting.modal.svg"
             alt=""
@@ -66,6 +66,7 @@ const ConfirmOrderModal = ({
             fullWidth
             loading={isSubmitting}
             onClick={onConfirm}
+            className="text-2xl font-bold"
           >
             Təsdiqlə
           </Button>
@@ -73,7 +74,7 @@ const ConfirmOrderModal = ({
             variant="dark"
             size="lg"
             fullWidth
-            className="opacity-40"
+            className="opacity-40 text-2xl font-bold"
             onClick={onCancel}
           >
             İndi yox

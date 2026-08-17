@@ -14,7 +14,7 @@ export default function BasketTotalCountPanel({
 
   return (
     <div>
-      <h2 className="text-lg font-bold text-dark mb-4">{title}</h2>
+      <h2 className="text-[24px] font-bold text-dark mb-[10px]">{title}</h2>
 
       <Card className="p-6">
         <div className="space-y-4 text-sm">

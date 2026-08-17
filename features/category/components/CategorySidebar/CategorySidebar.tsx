@@ -18,7 +18,7 @@ export default function CategorySidebar({
 }: CategorySidebarProps) {
   return (
     <aside className={className}>
-      <h2 className="text-[24px] font-bold text-gray-900 mb-[10px]">
+      <h2 className="text-[24px] font-bold text-dark mb-[10px]">
         Kateqoriyalar
       </h2>
       <nav aria-label="Kateqoriyalar naviqasiyası">

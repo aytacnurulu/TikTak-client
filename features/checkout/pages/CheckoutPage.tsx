@@ -84,7 +84,7 @@ const CheckoutPage = () => {
       />
 
       <div className="">
-        <h1 className="text-lg font-bold text-[#2B3043] mb-4">
+        <h1 className="text-[24px] font-bold text-dark mb-[10px]">
           Sifarişin tamamlanması
         </h1>
         <OrderForm
@@ -108,7 +108,10 @@ const CheckoutPage = () => {
         onClose={() => setShowAddressMissing(false)}
       />
 
-      <OrderSuccessModal open={showSuccess} onClose={() => setShowSuccess(false)} />
+      <OrderSuccessModal
+        open={showSuccess}
+        onClose={() => setShowSuccess(false)}
+      />
     </>
   );
 };
