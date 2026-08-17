@@ -28,10 +28,23 @@ const PaymentOption = ({
     <label
       onClick={onSelect}
       className={`flex items-center gap-3 p-4 rounded-[10px] border cursor-pointer transition-colors ${
-        selected ? "border-[#00BE46] bg-[#00BE46]/5" : "border-gray-200"
+        selected ? "border-transparent bg-[#00BE46]/5" : "border-gray-200"
       }`}
     >
-      <img src={icon} alt="" className="w-6 h-6" />
+      <span
+        className="w-6 h-6 shrink-0"
+        style={{
+          maskImage: `url(${icon})`,
+          maskSize: "contain",
+          maskRepeat: "no-repeat",
+          maskPosition: "center",
+          WebkitMaskImage: `url(${icon})`,
+          WebkitMaskSize: "contain",
+          WebkitMaskRepeat: "no-repeat",
+          WebkitMaskPosition: "center",
+          backgroundColor: selected ? "#00BE46" : "#9CA3AF",
+        }}
+      />
       <span
         className={`text-sm flex-1 ${selected ? "text-[#00BE46] font-medium" : "text-[#2B3043]"}`}
       >

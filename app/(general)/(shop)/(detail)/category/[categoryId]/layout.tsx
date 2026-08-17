@@ -41,7 +41,6 @@ export default async function CategoryDetailLayout({
           <CategorySidebar
             categories={categories}
             currentCategoryId={categoryIdNum}
-            variant="card"
           />
 
           <Card className="relative w-full aspect-[3/4] overflow-hidden p-0">
@@ -56,10 +55,7 @@ export default async function CategoryDetailLayout({
 
         {children}
 
-        <BasketPanel
-          headingAs="h2"
-          headingClassName="text-lg font-semibold text-gray-900 mb-4"
-        />
+        <BasketPanel />
       </div>
     </>
   );

@@ -14,21 +14,21 @@ const sizeMap: Record<
     padding: "p-2",
     title: "text-xs",
     price: "text-xs",
-    gap: "mt-2",
+    gap: "mt-1.5",
   },
   md: {
     card: "max-w-[190px]",
     padding: "p-2.5",
     title: "text-sm",
     price: "text-sm",
-    gap: "mt-3",
+    gap: "mt-1.5",
   },
   lg: {
     card: "w-full",
-    padding: "p-3",
+    padding: "p-2.5",
     title: "text-sm",
     price: "text-sm",
-    gap: "mt-4",
+    gap: "mt-2",
   },
 };
 
@@ -52,8 +52,11 @@ export default function ProductCard({
     gap,
   } = sizeMap[size];
 
-const productHref =
-  href ?? (categoryId ? `/category/${categoryId}/product/${id}` : `/product/${id}`);  // Best-effort shape for the favorites cache's optimistic-add — fields the
+  const productHref =
+    href ??
+    (categoryId ? `/category/${categoryId}/product/${id}` : `/product/${id}`);
+
+  // Best-effort shape for the favorites cache's optimistic-add — fields the
   // card doesn't carry (description/type/category) are filled by the
   // background refetch that follows the toggle.
   const favoriteProduct: Product = {
@@ -69,10 +72,10 @@ const productHref =
 
   return (
     <Card
-      className={`flex flex-col items-center w-full mx-auto ${card} ${padding} transition-shadow hover:shadow-md ${className}`}
+      className={`flex flex-col items-center w-full h-full mx-auto ${card} ${padding} transition-shadow hover:shadow-md ${className}`}
     >
       <Link href={productHref} className="flex flex-col items-center w-full">
-        <div className="relative w-full aspect-square shrink-0">
+        <div className="relative w-full h-[140px] shrink-0 p-2">
           <ProductImage image={image} title={title} />
           <FavoriteButton
             product={favoriteProduct}
@@ -80,15 +83,15 @@ const productHref =
           />
         </div>
         <span
-          className={`${gap} ${titleClass} font-medium text-gray-800 text-center leading-snug line-clamp-2 min-h-[2.5em]`}
+          className={`${gap} ${titleClass} font-medium text-gray-800 text-center leading-snug line-clamp-2 min-h-[2.75em]`}
         >
           {title}
         </span>
-        <span className={`mt-0.5 ${priceClass} text-gray-500`}>
+        <span className={`mt-1 ${priceClass} text-gray-500`}>
           {Number(price).toFixed(2)} {currency}
         </span>
       </Link>
-      <div className="w-full mt-3">{actionSlot}</div>
+      <div className="w-full mt-auto pt-2">{actionSlot}</div>
     </Card>
   );
 }

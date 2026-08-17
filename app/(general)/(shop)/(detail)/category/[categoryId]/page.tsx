@@ -48,9 +48,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <section aria-label={currentCategory.name}>
-      <h1 className="text-lg font-semibold text-gray-900 mb-4">
+      <h2
+        aria-hidden="true"
+        className="invisible text-[24px] font-bold mb-[10px]"
+      >
         {currentCategory.name}
-      </h1>
+      </h2>
 
       {products.length === 0 ? (
         <div className="h-[333px] flex flex-col items-center justify-center py-16 text-center bg-white rounded-lg">
@@ -71,7 +74,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               image={product.img_url || "/image/apple.svg"}
               title={product.title}
               price={product.price}
-              actionSlot={<AddToBasketButton productId={product.id}   productType={product.type} />}
+              actionSlot={
+                <AddToBasketButton
+                  productId={product.id}
+                  productType={product.type}
+                />
+              }
             />
           ))}
         </Grid>
