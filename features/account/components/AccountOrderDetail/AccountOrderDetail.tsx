@@ -53,66 +53,54 @@ const AccountOrderDetail = ({ orderId }: AccountOrderDetailProps) => {
   }
 
   return (
-      <section className="bg-white rounded-[10px] border border-gray-100 p-4 sm:p-6 w-full">
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
-        <div>
-          <Link
-            href="/account/orders"
-            className="text-xs text-gray-400 hover:text-primary"
-          >
-            Sifarişlərimə qayıt
-          </Link>
-          <h1 className="mt-2 text-lg font-bold text-[#2B3043]">
-            Sifariş {getOrderNumber(order)}
-          </h1>
+    <section className="bg-white rounded-[10px] border border-gray-100 p-4 sm:p-6 w-full">
+      <div className="flex flex-col gap-[40px]">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 text-sm">
+          <div>
+            <p className="text-gray-500">Sifariş nömrəsi</p>
+            <p className="mt-2 text-[#687080]">{getOrderNumber(order)}</p>
+          </div>
+          <div>
+            <p className="text-gray-500">Sifariş vaxtı</p>
+            <p className="mt-2 text-[#687080]">
+              {formatDateTime(order.created_at)}
+            </p>
+          </div>
+          <div>
+            <p className="text-gray-500">Ödəniş üsulu</p>
+            <p className="mt-2 text-[#687080]">{order.payment_method ?? "-"}</p>
+          </div>
         </div>
-        <span className="text-sm text-gray-500">{order.status}</span>
-      </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 text-sm">
-        <div>
-          <p className="text-gray-500">Sifariş nömrəsi</p>
-          <p className="mt-2 text-[#687080]">{getOrderNumber(order)}</p>
-        </div>
-        <div>
-          <p className="text-gray-500">Sifariş vaxtı</p>
-          <p className="mt-2 text-[#687080]">
-            {formatDateTime(order.created_at)}
-          </p>
-        </div>
-        <div>
-          <p className="text-gray-500">Ödəniş üsulu</p>
-          <p className="mt-2 text-[#687080]">{order.payment_method ?? "-"}</p>
-        </div>
-        <div>
-          <p className="text-gray-500">Çatdırılma ünvanı</p>
-          <p className="mt-2 text-[#687080] whitespace-pre-line">
-            {order.delivery_address ?? order.address ?? "-"}
-          </p>
-        </div>
-        <div>
-          <p className="text-gray-500">Məhsul sayı</p>
-          <p className="mt-2 text-[#687080]">
-            {order.item_count ??
-              order.items?.reduce((sum, item) => sum + item.quantity, 0) ??
-              0}
-          </p>
-        </div>
-        <div>
-          <p className="text-gray-500">Ümumi məbləğ</p>
-          <p className="mt-2 text-[#687080]">{order.total ?? "-"} ₼</p>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 text-sm">
+          <div>
+            <p className="text-gray-500">Çatdırılma ünvanı</p>
+            <p className="mt-2 text-[#687080] whitespace-pre-line">
+              {order.delivery_address ?? order.address ?? "-"}
+            </p>
+          </div>
+          <div>
+            <p className="text-gray-500">Məhsul sayı</p>
+            <p className="mt-2 text-[#687080]">
+              {order.item_count ??
+                order.items?.reduce((sum, item) => sum + item.quantity, 0) ??
+                0}
+            </p>
+          </div>
+          <div>
+            <p className="text-gray-500">Ümumi məbləğ</p>
+            <p className="mt-2 text-[#687080]">{order.total ?? "-"} ₼</p>
+          </div>
         </div>
       </div>
 
-      <div className="mt-10">
-        <h2 className="mb-4 text-sm font-semibold text-[#2B3043]">
-          Məhsullar
-        </h2>
+      <div className="mt-[70px]">
+        <h2 className="mb-4 text-sm font-semibold text-[#2B3043]">Məhsullar</h2>
         <div className="divide-y divide-gray-100 border-y border-gray-100">
           {(order.items ?? []).map((item) => (
             <div
               key={item.id}
-              className="flex items-center gap-4 py-4 text-sm text-[#687080]"
+              className="grid grid-cols-4 items-center gap-4 py-[6px] text-sm text-[#687080]"
             >
               <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md bg-gray-50">
                 <Image
@@ -123,9 +111,9 @@ const AccountOrderDetail = ({ orderId }: AccountOrderDetailProps) => {
                   className="object-contain"
                 />
               </div>
-              <p className="min-w-0 flex-1 truncate">{item.product.title}</p>
-              <span className="w-16 text-center">{item.quantity}</span>
-              <span className="w-24 text-right">{getTotal(item)}</span>
+              <p className="min-w-0 truncate">{item.product.title}</p>
+              <span className="text-center">{item.quantity}</span>
+              <span className="text-right">{getTotal(item)}</span>
             </div>
           ))}
         </div>

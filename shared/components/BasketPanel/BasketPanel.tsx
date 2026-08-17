@@ -15,7 +15,7 @@ interface BasketPanelProps {
 
 export default function BasketPanel({
   headingAs = "h1",
-  headingClassName = "text-2xl font-semibold text-gray-900 mb-4",
+  headingClassName = "text-[24px] font-bold text-dark mb-[10px]",
 }: BasketPanelProps) {
   const { isAuthenticated, hasHydrated } = useRequireAuth();
   const pathname = usePathname();
@@ -26,8 +26,7 @@ export default function BasketPanel({
   const isItemMutating = (productId: number) =>
     (add.isPending && add.variables === productId) ||
     (remove.isPending && remove.variables === productId) ||
-    (deleteItem.isPending && deleteItem.variables === productId)
-
+    (deleteItem.isPending && deleteItem.variables === productId);
 
   const items = data?.items ?? [];
   const total = Number(data?.total ?? 0);
@@ -113,7 +112,6 @@ export default function BasketPanel({
               >
                 Sifarişi tamamla
               </Button>
-
             </div>
           </div>
         )}

@@ -55,10 +55,7 @@ export default async function CategoryDetailLayout({
 
         {children}
 
-        <BasketPanel
-          headingAs="h2"
-          headingClassName="text-lg font-semibold text-gray-900 mb-4"
-        />
+        <BasketPanel />
       </div>
     </>
   );

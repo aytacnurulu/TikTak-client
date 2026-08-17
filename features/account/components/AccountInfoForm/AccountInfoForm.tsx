@@ -62,7 +62,7 @@ const AccountInfoForm = ({ profile }: AccountInfoFormProps) => {
 
   return (
     <div className="bg-white rounded-[10px] border border-gray-100 p-4 sm:p-6 flex-1">
-      <h2 className="text-lg font-bold text-[#2B3043] mb-6">
+      <h2 className="text-[28px] font-normal leading-none tracking-normal text-dark mb-6">
         Əlaqə məlumatlarınız
       </h2>
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -99,7 +99,7 @@ const AccountInfoForm = ({ profile }: AccountInfoFormProps) => {
         </div>
 
         <div>
-          <h3 className="text-base font-semibold text-[#2B3043]">
+          <h3 className="text-[28px] font-normal leading-none tracking-normal text-dark mb-2">
             Şifrənin yenilənməsi
           </h3>
           <p className="text-xs text-gray-400 mb-3">

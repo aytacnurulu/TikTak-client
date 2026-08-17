@@ -42,7 +42,7 @@ interface AccountOrderTableProps {
 
 const AccountOrderTable = ({ orders }: AccountOrderTableProps) => (
   <div className="w-full overflow-x-auto">
-    <table className="w-full min-w-[640px] table-fixed text-left text-xs text-[#687080]">
+    <table className="w-full table-fixed text-left text-base font-light leading-none text-dark">
       <colgroup>
         <col className="w-[12%]" />
         <col className="w-[13%]" />
@@ -52,15 +52,15 @@ const AccountOrderTable = ({ orders }: AccountOrderTableProps) => (
         <col className="w-[13%]" />
         <col className="w-[10%]" />
       </colgroup>
-      <thead className="bg-[#F6F5FB] text-[#2B3043]">
-        <tr>
-          <th className="rounded-l-md px-2 py-3 font-medium sm:px-3">No</th>
-          <th className="px-2 py-3 font-medium sm:px-3">Tarix</th>
-          <th className="px-2 py-3 font-medium sm:px-3">Çatdırılma ünvanı</th>
-          <th className="px-2 py-3 font-medium sm:px-3">Məhsul sayı</th>
-          <th className="px-2 py-3 font-medium sm:px-3">Subtotal/Çatdırılma</th>
-          <th className="px-2 py-3 font-medium sm:px-3">Status</th>
-          <th className="rounded-r-md px-2 py-3 font-medium sm:px-3" />
+      <thead className="bg-[#F6F5FB] text-dark text-base font-normal leading-none">
+        <tr className="h-[60px]">
+          <th className="rounded-l-md px-2 py-3 sm:px-3">No</th>
+          <th className="px-2 py-3 sm:px-3">Tarix</th>
+          <th className="px-2 py-3 sm:px-3">Çatdırılma ünvanı</th>
+          <th className="px-2 py-3 sm:px-3">Məhsul sayı</th>
+          <th className="px-2 py-3 sm:px-3">Subtotal/Çatdırılma</th>
+          <th className="px-2 py-3 sm:px-3">Status</th>
+          <th className="rounded-r-md px-2 py-3 sm:px-3" />
         </tr>
       </thead>
       <tbody>
@@ -95,7 +95,7 @@ const AccountOrderTable = ({ orders }: AccountOrderTableProps) => (
               <td className="max-w-0 px-2 py-3 text-right whitespace-nowrap sm:px-3">
                 <Link
                   href={`/account/orders/${order.id}`}
-                  className="text-[11px] hover:text-primary"
+                  className="text-base font-light leading-none hover:text-primary"
                   title="Sifariş detallarına bax"
                 >
                   detallar &gt;

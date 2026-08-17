@@ -43,16 +43,16 @@ export default function FavoritesPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6 py-6 lg:grid lg:grid-cols-[1fr_320px] lg:items-start">
+    <div className="flex flex-col pb-6 lg:grid lg:grid-cols-[1fr_320px] lg:items-start lg:gap-x-6">
       <Breadcrumb
         items={[
           { label: "Ana səhifə", href: "/category" },
           { label: "Seçilmişlərim" },
         ]}
-        className=" lg:col-span-2"
+        className="lg:col-span-2"
       />
       <section aria-label="Seçilmiş məhsullar">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-4">
+        <h1 className="text-[24px] font-bold text-dark mb-[10px]">
           Siyahılarım
         </h1>
         <Grid columns={6} gap={3} ariaLabel="Seçilmiş məhsullar">
@@ -65,13 +65,20 @@ export default function FavoritesPage() {
               price={product.price}
               size="md"
               categoryId={product.category.id}
-              actionSlot={<AddToBasketButton productId={product.id}  productType={product.type} />}
+              actionSlot={
+                <AddToBasketButton
+                  productId={product.id}
+                  productType={product.type}
+                />
+              }
             />
           ))}
         </Grid>
       </section>
 
-      <BasketPanel />
+      <div className="mt-6 lg:mt-0">
+        <BasketPanel />
+      </div>
     </div>
   );
 }
