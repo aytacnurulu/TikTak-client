@@ -17,7 +17,7 @@ const formatDateTime = (value?: string | null) => {
   }).format(date);
 };
 
-const getOrderNumber = (order: Order) => `#${order.order_number ?? order.id}`;
+const getOrderNumber = (order: Order) => `#${order.orderNumber ?? order.id}`;
 
 const getTotal = (item: { total_price?: string | number }) =>
   `${Number(item.total_price ?? 0).toFixed(2)} ₼`;
@@ -63,12 +63,12 @@ const AccountOrderDetail = ({ orderId }: AccountOrderDetailProps) => {
           <div>
             <p className="text-gray-500">Sifariş vaxtı</p>
             <p className="mt-2 text-[#687080]">
-              {formatDateTime(order.created_at)}
+              {formatDateTime(order.createdAt)}
             </p>
           </div>
           <div>
             <p className="text-gray-500">Ödəniş üsulu</p>
-            <p className="mt-2 text-[#687080]">{order.payment_method ?? "-"}</p>
+            <p className="mt-2 text-[#687080]">{order.paymentMethod ?? "-"}</p>
           </div>
         </div>
 

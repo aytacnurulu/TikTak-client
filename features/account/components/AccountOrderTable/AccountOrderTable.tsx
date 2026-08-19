@@ -22,7 +22,7 @@ const getOrderTotal = (order: Order) => {
   if (order.total !== undefined) return `${order.total} ₼`;
 
   const subtotal = Number(order.subtotal ?? 0);
-  const deliveryFee = Number(order.delivery_fee ?? 0);
+  const deliveryFee = Number(order.deliveryFee ?? 0);
   return `${(subtotal + deliveryFee).toFixed(2)} ₼`;
 };
 
@@ -44,12 +44,13 @@ const AccountOrderTable = ({ orders }: AccountOrderTableProps) => (
   <div className="w-full overflow-x-auto">
     <table className="w-full table-fixed text-left text-base font-light leading-none text-dark">
       <colgroup>
+        <col className="w-[10%]" />
         <col className="w-[12%]" />
-        <col className="w-[13%]" />
-        <col className="w-[22%]" />
+        <col className="w-[17%]" />
+        <col className="w-[9%]" />
+        <col className="w-[14%]" />
         <col className="w-[12%]" />
-        <col className="w-[18%]" />
-        <col className="w-[13%]" />
+        <col className="w-[12%]" />
         <col className="w-[10%]" />
       </colgroup>
       <thead className="bg-[#F6F5FB] text-dark text-base font-normal leading-none">
@@ -59,6 +60,7 @@ const AccountOrderTable = ({ orders }: AccountOrderTableProps) => (
           <th className="px-2 py-3 sm:px-3">Çatdırılma ünvanı</th>
           <th className="px-2 py-3 sm:px-3">Məhsul sayı</th>
           <th className="px-2 py-3 sm:px-3">Subtotal/Çatdırılma</th>
+          <th className="px-2 py-3 sm:px-3">Ödəniş üsulu</th>
           <th className="px-2 py-3 sm:px-3">Status</th>
           <th className="rounded-r-md px-2 py-3 sm:px-3" />
         </tr>
@@ -74,11 +76,11 @@ const AccountOrderTable = ({ orders }: AccountOrderTableProps) => (
             >
               <td className="max-w-0 px-2 py-3 sm:px-3">
                 <TruncatedCell
-                  value={getOrderNumber(order.id, order.order_number)}
+                  value={getOrderNumber(order.id, order.orderNumber)}
                 />
               </td>
               <td className="max-w-0 px-2 py-3 whitespace-nowrap sm:px-3">
-                <TruncatedCell value={formatDate(order.created_at)} />
+                <TruncatedCell value={formatDate(order.createdAt)} />
               </td>
               <td className="max-w-0 px-2 py-3 sm:px-3">
                 <TruncatedCell value={address} />
@@ -88,6 +90,9 @@ const AccountOrderTable = ({ orders }: AccountOrderTableProps) => (
               </td>
               <td className="max-w-0 px-2 py-3 whitespace-nowrap sm:px-3">
                 <TruncatedCell value={getOrderTotal(order)} />
+              </td>
+              <td className="max-w-0 px-2 py-3 sm:px-3">
+                <TruncatedCell value={order.paymentMethod ?? "-"} />
               </td>
               <td className="max-w-0 px-2 py-3 sm:px-3">
                 <TruncatedCell value={order.status} />

@@ -111,15 +111,18 @@ export interface ProfileUpdatePayload {
 
 export interface Order {
   id: number;
-  order_number?: string | number;
-  created_at: string;
+  orderNumber?: string | number;
+  createdAt: string;
+  updatedAt?: string;
   delivery_address?: string | null;
   address?: string | null;
   items?: BasketItem[];
   item_count?: number;
   total?: string | number;
   subtotal?: string | number;
-  delivery_fee?: string | number;
+  deliveryFee?: string | number;
   status: string;
-  payment_method?: PaymentMethod;
+  paymentMethod?: PaymentMethod;
+  note?: string | null;
+  phone?: string;
 }
