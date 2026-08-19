@@ -16,7 +16,7 @@ const SpecialOffers = ({ campaigns }: SpecialOffersProps) => {
         Xüsusi təkliflər!
       </h2>
       <p className="text-sm sm:text-base text-[#195233] mb-4">
-        BRAVO-da hər gün üçün super təklifləri qaçırmayın!
+        TikTak-da hər gün üçün super təklifləri qaçırmayın!
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {campaigns.map((campaign, i) => (
@@ -38,7 +38,9 @@ const SpecialOffers = ({ campaigns }: SpecialOffersProps) => {
             )}
             <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-transparent" />
             <div className="relative min-w-0">
-              <h3 className="text-base sm:text-lg font-semibold line-clamp-2">{campaign.title}</h3>
+              <h3 className="text-base sm:text-lg font-semibold line-clamp-2">
+                {campaign.title}
+              </h3>
               <p className="text-sm opacity-90">
                 Kampanya tarixi: {campaign.created_at}
               </p>

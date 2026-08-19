@@ -1,11 +1,10 @@
 import HeroCarousel from "../components/HeroCarousel/HeroCarousel";
 import SpecialOffers from "../components/SpecialOffers/SpecialOffers";
 import StatsSection from "../components/StatsSection/StatsSection";
-import type { Campaign } from "@tiktak/types";
+import { getCampaigns } from "@/shared/lib/api/campaigns";
 
-interface LandingPageProps {
-  campaigns: Campaign[];
-}
+const LandingPage = async () => {
+  const campaigns = await getCampaigns();
 
 const LandingPage = ({ campaigns }: LandingPageProps) => {
   return (
