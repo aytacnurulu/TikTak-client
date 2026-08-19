@@ -6,6 +6,7 @@ import { getCampaigns } from "@/shared/lib/api/campaigns";
 const LandingPage = async () => {
   const campaigns = await getCampaigns();
 
+const LandingPage = ({ campaigns }: LandingPageProps) => {
   return (
     <div className="py-8 space-y-10">
       <HeroCarousel campaigns={campaigns} />
