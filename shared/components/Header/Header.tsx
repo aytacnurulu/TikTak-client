@@ -1,7 +1,9 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
+import Spinner from "@/shared/components/Spinner";
 import NavLinks from "@/shared/components/NavLinks";
 import { useProfileQuery } from "@/features/account/hooks/useProfile";
 import { useAuthStore } from "@/shared/store/useAuthStore";
@@ -39,7 +41,15 @@ const Header = ({ showAddress = true, showSearch = true }: HeaderProps) => {
         {showSearch ? (
           <div className="flex-1 flex justify-center min-w-0">
             <div className="w-full sm:max-w-[360px] lg:max-w-[480px] xl:max-w-[560px]">
-              <SearchBar />
+              <Suspense
+                fallback={
+                  <div className="flex justify-center py-2">
+                    <Spinner size="sm" color="primary" />
+                  </div>
+                }
+              >
+                <SearchBar />
+              </Suspense>
             </div>
           </div>
         ) : (
