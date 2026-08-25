@@ -1,5 +1,9 @@
 import Link from "next/link";
 import type { Order } from "@tiktak/types";
+import {
+  getOrderStatusLabel,
+  getPaymentMethodLabel,
+} from "../../utils/orderLabels";
 
 const formatDate = (value?: string | null) => {
   if (!value) return "-";
@@ -59,9 +63,9 @@ const AccountOrderTable = ({ orders }: AccountOrderTableProps) => (
           <th className="px-2 py-3 sm:px-3">Tarix</th>
           <th className="px-2 py-3 sm:px-3">Çatdırılma ünvanı</th>
           <th className="px-2 py-3 sm:px-3">Məhsul sayı</th>
-          <th className="px-2 py-3 sm:px-3">Subtotal/Çatdırılma</th>
+          <th className="px-2 py-3 sm:px-3">Ara cəm/Çatdırılma</th>
           <th className="px-2 py-3 sm:px-3">Ödəniş üsulu</th>
-          <th className="px-2 py-3 sm:px-3">Status</th>
+          <th className="px-2 py-3 sm:px-3">Sifariş statusu</th>
           <th className="rounded-r-md px-2 py-3 sm:px-3" />
         </tr>
       </thead>
@@ -92,10 +96,12 @@ const AccountOrderTable = ({ orders }: AccountOrderTableProps) => (
                 <TruncatedCell value={getOrderTotal(order)} />
               </td>
               <td className="max-w-0 px-2 py-3 sm:px-3">
-                <TruncatedCell value={order.paymentMethod ?? "-"} />
+                <TruncatedCell
+                  value={getPaymentMethodLabel(order.paymentMethod)}
+                />
               </td>
               <td className="max-w-0 px-2 py-3 sm:px-3">
-                <TruncatedCell value={order.status} />
+                <TruncatedCell value={getOrderStatusLabel(order.status)} />
               </td>
               <td className="max-w-0 px-2 py-3 text-right whitespace-nowrap sm:px-3">
                 <Link
