@@ -5,6 +5,7 @@ import Link from "next/link";
 import Spinner from "@/shared/components/Spinner";
 import type { Order } from "@tiktak/types";
 import { useOrdersQuery } from "../../hooks/useProfile";
+import { getPaymentMethodLabel } from "../../utils/orderLabels";
 
 const formatDateTime = (value?: string | null) => {
   if (!value) return "-";
@@ -68,7 +69,9 @@ const AccountOrderDetail = ({ orderId }: AccountOrderDetailProps) => {
           </div>
           <div>
             <p className="text-gray-500">Ödəniş üsulu</p>
-            <p className="mt-2 text-[#687080]">{order.paymentMethod ?? "-"}</p>
+            <p className="mt-2 text-[#687080]">
+              {getPaymentMethodLabel(order.paymentMethod)}
+            </p>
           </div>
         </div>
 
