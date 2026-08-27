@@ -28,9 +28,7 @@ export default function BasketPage() {
 
   if (!hasHydrated || !isAuthenticated || isLoading) {
     return (
-      <div className="flex justify-center py-20">
         <BasketSkeleton />
-      </div>
     );
   }
 

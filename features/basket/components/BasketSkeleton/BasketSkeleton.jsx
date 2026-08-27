@@ -4,10 +4,12 @@ import Card from "@/shared/components/Card";
 export default function BasketSkeleton() {
   return (
     <>
-      <Skeleton variant="text" width={160} height={16} className="lg:col-span-2 mb-2" />
+      <div className="lg:col-span-2 pt-[10px] pb-[10px]">
+        <Skeleton variant="text" width={160} height={24} />
+      </div>
 
-      <div>
-        <div className="flex items-center justify-between mb-[10px]">
+      <div className="self-start">
+        <div className="mb-[20px]">
           <Skeleton variant="text" width={140} height={28} />
         </div>
 
@@ -26,8 +28,30 @@ export default function BasketSkeleton() {
         </Card>
       </div>
 
-      <div className="flex flex-col gap-3">
-        <Skeleton variant="rounded" height={140} />
+       <div className="self-start">
+        <div className="mb-[25px]">
+          <Skeleton variant="text" width={140} height={24} />
+        </div>
+ 
+        <Card className="p-6">
+          <div className="space-y-4">
+            <div className="flex justify-between">
+              <Skeleton variant="text" width={60} height={14} />
+              <Skeleton variant="text" width={70} height={14} />
+            </div>
+            <div className="flex justify-between">
+              <Skeleton variant="text" width={80} height={14} />
+              <Skeleton variant="text" width={60} height={14} />
+            </div>
+          </div>
+ 
+          <div className="mt-8 flex justify-between">
+            <Skeleton variant="text" width={90} height={16} />
+            <Skeleton variant="text" width={70} height={16} />
+          </div>
+ 
+          <Skeleton variant="rounded" height={60} className="mt-4" />
+        </Card>
       </div>
     </>
   );
