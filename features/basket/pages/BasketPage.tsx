@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import Card from "@/shared/components/Card";
 import Breadcrumb from "@/shared/components/Breadcrumb";
-import Spinner from "@/shared/components/Spinner";
+import BasketSkeleton from "@/features/basket/components/BasketSkeleton";
 import { useRequireAuth } from "@/shared/hooks/useRequireAuth";
 import { useBasketQuery, useBasketMutations } from "@/shared/hooks/useBasket";
 import BasketCard from "../components/BasketCard";
@@ -29,7 +29,7 @@ export default function BasketPage() {
   if (!hasHydrated || !isAuthenticated || isLoading) {
     return (
       <div className="flex justify-center py-20">
-        <Spinner size="lg" color="primary" />
+        <BasketSkeleton />
       </div>
     );
   }
