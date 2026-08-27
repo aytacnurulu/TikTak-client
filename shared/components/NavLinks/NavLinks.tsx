@@ -4,33 +4,63 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { AccountIcon, FavoritesIcon, BasketIcon } from "./NavIcons";
+import Badge from "../Badge";
+import { useAuthStore } from "@/shared/store/useAuthStore";
+import { useBasketQuery } from "@/shared/hooks/useBasket";
+import { useFavoritesQuery } from "@/shared/hooks/useFavorites";
 
 interface NavItem {
   href: string;
   label: string;
   icon: ReactNode;
+  count?: number;
 }
-
-const navItems: NavItem[] = [
-  {
-    href: "/account",
-    label: "Hesabım",
-    icon: <AccountIcon />,
-  },
-  {
-    href: "/favorites",
-    label: "Siyahılarım",
-    icon: <FavoritesIcon />,
-  },
-  {
-    href: "/basket",
-    label: "Səbətim",
-    icon: <BasketIcon />,
-  },
-];
 
 const NavLinks = () => {
   const pathname = usePathname();
+  const isAuthenticated = useAuthStore((s) => !!s.accessToken);
+
+  const { data: basket } = useBasketQuery();
+  const { data: favorites } = useFavoritesQuery();
+
+  const cartCount = isAuthenticated ? (basket?.items.length ?? 0) : 0;
+  const favCount = isAuthenticated ? (favorites?.length ?? 0) : 0;
+
+  const navItems: NavItem[] = [
+    {
+      href: "/account",
+      label: "Hesabım",
+      icon: <AccountIcon />,
+    },
+    {
+      href: "/favorites",
+      label: "Siyahılarım",
+      icon: <FavoritesIcon />,
+      count: favCount,
+    },
+    {
+      href: "/basket",
+      label: "Səbətim",
+      icon: <BasketIcon />,
+      count: cartCount,
+    },
+  ];
+
+    const renderIcon = (item: NavItem) => (
+    <span className="relative inline-flex">
+      {item.icon}
+      {!!item.count && item.count > 0 && (
+        <Badge
+          variant="primary"
+          shape="circle"
+          size="sm"
+          className="absolute -top-2 -right-2 h-4 min-w-4 text-[10px]"
+        >
+          {item.count > 9 ? "9+" : item.count}
+        </Badge>
+      )}
+    </span>
+  );
 
   return (
     <>
@@ -41,11 +71,10 @@ const NavLinks = () => {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-1 text-sm transition-colors ${
-                isActive ? "text-primary" : "text-gray-600 hover:text-dark"
-              }`}
+              className={`flex items-center gap-1 text-sm transition-colors ${isActive ? "text-primary" : "text-gray-600 hover:text-dark"
+                }`}
             >
-              {item.icon}
+              {renderIcon(item)}
               {item.label}
             </Link>
           );
@@ -60,11 +89,10 @@ const NavLinks = () => {
               key={item.href}
               href={item.href}
               aria-label={item.label}
-              className={`flex items-center justify-center h-10 w-10 rounded-full ${
-                isActive ? "text-primary" : "text-gray-600"
-              }`}
+              className={`flex items-center justify-center h-10 w-10 rounded-full ${isActive ? "text-primary" : "text-gray-600"
+                }`}
             >
-              {item.icon}
+              {renderIcon(item)}
             </Link>
           );
         })}
