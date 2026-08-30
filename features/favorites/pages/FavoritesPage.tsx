@@ -43,7 +43,7 @@ export default function FavoritesPage() {
   }
 
   return (
-    <div className="flex flex-col pb-6 lg:grid lg:grid-cols-[1fr_320px] lg:items-start lg:gap-x-6">
+    <div className="flex flex-col pb-6 lg:grid lg:grid-cols-[1fr_360px] lg:items-start lg:gap-x-6">
       <Breadcrumb
         items={[
           { label: "Ana səhifə", href: "/category" },
