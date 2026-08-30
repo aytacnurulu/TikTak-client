@@ -8,7 +8,7 @@ export default function ToastContainer() {
   const closeToast = useToastStore((state) => state.closeToast);
 
   return (
-    <div className="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 flex w-[90%] max-w-[340px] flex-col gap-3">
+    <div className="fixed top-4 sm:top-6 right-4 sm:right-6 z-50 flex w-[90%] max-w-[340px] flex-col gap-3">
       {toasts.map((toast) => (
         <Toast
           key={toast.id}
