@@ -5,7 +5,6 @@ import LandingHeader from "@/shared/components/LandingHeader";
 import { getCampaigns } from "@/shared/lib/api/campaigns";
 
 export default async function RootPage() {
-  await new Promise((r) => setTimeout(r, 4000));
   const campaigns = await getCampaigns();
 
   return (
