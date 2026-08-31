@@ -34,6 +34,7 @@ export async function generateMetadata({
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
+   await new Promise((r) => setTimeout(r, 4000));
   const { categoryId } = await params;
   const categoryIdNum = Number(categoryId);
 

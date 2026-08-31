@@ -22,6 +22,12 @@ function ProductCardSkeleton() {
 export default function Loading() {
   return (
     <section>
+      <h2
+        aria-hidden="true"
+        className="invisible text-[24px] font-bold mb-[10px]"
+      >
+        placeholder
+      </h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {Array.from({ length: 8 }).map((_, index) => (
           <ProductCardSkeleton key={index} />
