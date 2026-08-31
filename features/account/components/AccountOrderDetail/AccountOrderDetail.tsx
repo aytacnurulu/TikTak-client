@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Spinner from "@/shared/components/Spinner";
+import AccountOrderDetailSkeleton from "../AccountOrderDetailSkeleton";
 import type { Order } from "@tiktak/types";
 import { useOrdersQuery } from "../../hooks/useProfile";
 import { getPaymentMethodLabel } from "../../utils/orderLabels";
@@ -33,9 +33,7 @@ const AccountOrderDetail = ({ orderId }: AccountOrderDetailProps) => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center py-20">
-        <Spinner size="lg" color="primary" />
-      </div>
+      <AccountOrderDetailSkeleton />
     );
   }
 
