@@ -38,6 +38,7 @@ export async function generateMetadata({
 export default async function ProductDetailPage({
   params,
 }: ProductDetailPageProps) {
+   await new Promise((r) => setTimeout(r, 4000));
   const { categoryId, id } = await params;
   const product = await getProductByIdCached(Number(id));
 
