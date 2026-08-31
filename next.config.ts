@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-remotePatterns: [
+    remotePatterns: [
       {
         protocol: 'https',
         hostname: 'uploads.sarkhanrahimli.dev',
@@ -12,6 +12,10 @@ remotePatterns: [
         protocol: 'https',
         hostname: 'encrypted-tbn0.gstatic.com',
         pathname: '/**',
+      },
+      {
+        protocol: "https",
+        hostname: "lalafo.az",
       },
     ],
     dangerouslyAllowSVG: true,
