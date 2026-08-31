@@ -17,7 +17,6 @@ export const metadata: Metadata = {
 };
 
 export default async function CategoryPage() {
-  await new Promise((r) => setTimeout(r, 2000));
     const categories = await getCategories();
     return  <section
       aria-label="Aksiyalar və kateqoriyalar"
