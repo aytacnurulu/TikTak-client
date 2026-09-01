@@ -10,3 +10,33 @@
   --color-text:#2B3043;
   --color-placeholder:#1A1D2845;
 }
+
+@keyframes toast-slide-in {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toast-slide-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+
+.toast-enter {
+  animation: toast-slide-in 250ms ease-out forwards;
+}
+
+.toast-exit {
+  animation: toast-slide-out 250ms ease-in forwards;
+}
