@@ -31,7 +31,7 @@ export default async function CategoryDetailLayout({
         ]}
       />
 
-      <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[240px_1fr_320px] lg:gap-6 lg:items-start">
+      <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[240px_1fr_360px] lg:gap-6 lg:items-start">
         <CategoryFilterAccordion
           categories={categories}
           currentCategoryId={categoryIdNum}

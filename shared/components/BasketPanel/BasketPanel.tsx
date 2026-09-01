@@ -72,7 +72,7 @@ export default function BasketPanel({
           </div>
         ) : (
           <div className="h-[360px] sm:h-[480px] flex flex-col">
-            <div className="flex-1 min-h-0 overflow-y-auto space-y-3 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-thumb]:rounded-full">
+            <div className="flex-1 min-h-0 overflow-y-auto space-y-3 [scrollbar-width:thin] [&::-webkit-scrollbar]:w-[2px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-100 [&::-webkit-scrollbar-thumb]:rounded-full">
               {items.map((item) => (
                 <BasketItemCard
                   key={item.id}

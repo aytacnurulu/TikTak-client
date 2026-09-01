@@ -10,6 +10,7 @@ interface ToastProps {
   type?: "success" | "error" | "info";
   onClose: () => void;
   duration?: number;
+  exiting?: boolean;
 }
 
 const Toast = ({
@@ -20,6 +21,7 @@ const Toast = ({
   type = "success",
   onClose,
   duration = 2500,
+  exiting = false,
 }: ToastProps) => {
   useEffect(() => {
     if (!open) return;
@@ -44,7 +46,11 @@ const Toast = ({
     );
 
   return (
-    <div className="w-full bg-white rounded-[10px] shadow-lg border border-gray-100 p-4 sm:p-5 animate-in zoom-in-50">
+    <div
+      className={`w-full bg-white rounded-[10px] shadow-lg border border-gray-100 p-4 sm:p-5 ${
+        exiting ? "toast-exit" : "toast-enter"
+      }`}
+    >
       <div className="flex items-start gap-3">
         <div
           className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${accentClass}`}

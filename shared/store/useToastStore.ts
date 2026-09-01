@@ -43,7 +43,7 @@ export const useToastStore = create<ToastState>((set) => ({
 
       return {
         id,
-        toasts: [...state.toasts, toast],
+        toasts: [toast],
         open: true,
         title,
         description,
@@ -54,7 +54,7 @@ export const useToastStore = create<ToastState>((set) => ({
   closeToast: (id) =>
     set((state) => ({
       toasts: state.toasts.filter((toast) => toast.id !== id),
-      open: state.toasts.some((toast) => toast.id !== id),
+      open: false,
     })),
   hideToast: () => set({ toasts: [], open: false }),
 }));
