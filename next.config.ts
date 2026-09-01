@@ -14,8 +14,14 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
-        protocol: "https",
-        hostname: "lalafo.az",
+        protocol: 'https',
+        hostname: 'lalafo.az',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.lalafo.com',
+        pathname: '/**',
       },
     ],
     dangerouslyAllowSVG: true,
