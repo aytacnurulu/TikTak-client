@@ -10,6 +10,7 @@ import { useFavoritesQuery } from "@/shared/hooks/useFavorites";
 import FavoriteEmptyState from "../components/FavoriteEmptyState";
 import BasketPanel from "@/shared/components/BasketPanel";
 import Breadcrumb from "@/shared/components/Breadcrumb/Breadcrumb";
+import FavoritesSkeleton from '../components/FavoritesSkeleton'
 
 export default function FavoritesPage() {
   const { requireAuth, isAuthenticated, hasHydrated } = useRequireAuth();
@@ -24,9 +25,7 @@ export default function FavoritesPage() {
 
   if (!hasHydrated || !isAuthenticated || isLoading) {
     return (
-      <div className="flex justify-center py-20">
-        <Spinner size="lg" color="primary" />
-      </div>
+      <FavoritesSkeleton />
     );
   }
 

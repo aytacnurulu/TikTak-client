@@ -1,8 +1,8 @@
 "use client";
 
-import Spinner from "@/shared/components/Spinner";
 import AccountOrderTable from "../components/AccountOrderTable/AccountOrderTable";
 import { useOrdersQuery } from "../hooks/useProfile";
+import AccountOrdersSkeleton from '../components/AccountOrderSkeleton'
 
 const OrdersPage = () => {
   const { data: orders = [], isLoading, isError } = useOrdersQuery();
@@ -14,9 +14,7 @@ const OrdersPage = () => {
       </h1>
 
       {isLoading ? (
-        <div className="flex justify-center py-16">
-          <Spinner size="lg" color="primary" />
-        </div>
+        <AccountOrdersSkeleton />
       ) : isError ? (
         <p className="py-10 text-center text-sm text-gray-500">
           Sifarişləri yükləmək mümkün olmadı.
