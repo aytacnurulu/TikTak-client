@@ -10,10 +10,15 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
           src="/image/auth-banner.svg"
           alt="TIK TAK"
           fill
-          className="object-contain"
+          sizes="50vw"
+          className="object-cover"
           priority
         />
-        <Link href="/category" className="absolute inset-0" aria-label="Ana səhifə" />
+        <Link
+          href="/category"
+          className="absolute inset-0"
+          aria-label="Ana səhifə"
+        />
       </div>
       <div className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-[560px]">{children}</div>
