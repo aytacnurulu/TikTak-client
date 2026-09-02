@@ -47,60 +47,69 @@ export default async function ProductDetailPage({
   }
 
   return (
-    <Card className="rounded-[10px] p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <Link
-          href={`/category/${categoryId}`}
-          className="inline-flex items-center gap-2 rounded-full bg-gray-50 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path
-              d="M12.5 8H3.5M3.5 8L7.5 4M3.5 8L7.5 12"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          geri qayıt
-        </Link>
+    <div>
+      <h2
+        aria-hidden="true"
+        className="invisible text-[24px] font-bold mb-[10px]"
+      >
+        {product.title}
+      </h2>
 
-        <FavoriteButton
-          product={{
-            id: product.id,
-            title: product.title,
-            img_url: product.img_url,
-            price: product.price,
-            description: product.description,
-            type: product.type,
-            created_at: product.created_at,
-            category: product.category,
-          }}
-        />
-      </div>
+      <Card className="rounded-[10px] p-6 space-y-6">
+        <div className="flex items-center justify-between">
+          <Link
+            href={`/category/${categoryId}`}
+            className="inline-flex items-center gap-2 rounded-full bg-gray-50 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M12.5 8H3.5M3.5 8L7.5 4M3.5 8L7.5 12"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            geri qayıt
+          </Link>
 
-      <div className="flex flex-col sm:flex-row gap-6">
-        <div className="relative w-full sm:w-45 aspect-square shrink-0">
-          <ProductImage
-            image={product.img_url || "/image/apple.svg"}
-            title={product.title}
+          <FavoriteButton
+            product={{
+              id: product.id,
+              title: product.title,
+              img_url: product.img_url,
+              price: product.price,
+              description: product.description,
+              type: product.type,
+              created_at: product.created_at,
+              category: product.category,
+            }}
           />
         </div>
 
-        <div className="flex flex-col gap-4 flex-1">
-          <h1 className="text-xl font-bold text-gray-900">
-            {product.title}
-          </h1>
-          <p className="text-sm text-gray-500 leading-relaxed line-clamp-3">
-            {product.description}
-          </p>
-          <p className="text-lg font-bold text-gray-900">
-            {Number(product.price).toFixed(2)} AZN
-          </p>
+        <div className="flex flex-col sm:flex-row gap-6">
+          <div className="relative w-full sm:w-45 aspect-square shrink-0">
+            <ProductImage
+              image={product.img_url || "/image/apple.svg"}
+              title={product.title}
+            />
+          </div>
 
-          <ProductDetailActions productId={product.id} product={product} />
+          <div className="flex flex-col gap-4 flex-1">
+            <h1 className="text-xl font-bold text-gray-900">
+              {product.title}
+            </h1>
+            <p className="text-sm text-gray-500 leading-relaxed line-clamp-3">
+              {product.description}
+            </p>
+            <p className="text-lg font-bold text-gray-900">
+              {Number(product.price).toFixed(2)} AZN
+            </p>
+
+            <ProductDetailActions productId={product.id} product={product} />
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 }

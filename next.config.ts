@@ -13,16 +13,6 @@ const nextConfig: NextConfig = {
         hostname: 'encrypted-tbn0.gstatic.com',
         pathname: '/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'lalafo.az',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.lalafo.com',
-        pathname: '/**',
-      },
     ],
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',
