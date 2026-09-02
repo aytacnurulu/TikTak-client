@@ -4,6 +4,7 @@ import { getCategories } from '@/shared/lib/api/categories';
 import Link from 'next/link';
 import CategoryCard from '@/features/category/components/CategoryCard';
 import Grid from '@/shared/components/Grid'
+import { getSafeImageSrc } from '@/shared/lib/getSafeImageSrc'
 
 export const metadata: Metadata = {
     title: 'Category Page',
@@ -35,7 +36,7 @@ export default async function CategoryPage() {
       <Grid ariaLabel="Kateqoriyalar" columns={6}>
         {categories.map((category) => (
           <Link key={category.id} href={`/category/${category.id}`}>
-            <CategoryCard image={category.img_url} label={category.name} />
+            <CategoryCard image={getSafeImageSrc(category.img_url)} label={category.name} />
           </Link>
         ))}
       </Grid>
