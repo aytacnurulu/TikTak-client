@@ -54,7 +54,7 @@ const NavLinks = () => {
           variant="primary"
           shape="circle"
           size="sm"
-          className="absolute -top-2 -right-2 h-4 min-w-4 text-[10px]"
+          className="absolute top-[-7px]! right-[-7px]! h-4! min-w-4! px-0! text-[9px]!"
         >
           {item.count > 9 ? "9+" : item.count}
         </Badge>
